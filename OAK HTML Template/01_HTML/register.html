@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Register form</title>
+  
+  
+  
+      <link rel="stylesheet" href="css/style_register.css">
+ <link rel="stylesheet" href="css/main.css">
+
+  
+</head>
+
+<body>
+<!-- Preloader -->
+    
+ <div class="register_body">
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="img/logo3.jpg" alt="Logo">
+                </a>
+            </div>
+            
+         
+       <div class="menu">
+          <a a href="index.html" class="link">
+            <div class="title">Accueil</div>
+            <div class="bar"></div>
+          </a>
+          <a href="#" class="link">
+            <div class="title">Inscription</div>
+            <div class="bar"></div>
+          </a>
+          <a a href="login.html"class="link">
+            <div class="title">Connexion</div>
+            <div class="bar"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  
+<div class="step-bar">
+  <ul>
+    <li>
+      <div class="number active">1</div>
+      <div class="text">account setup</div>
+    </li>
+    <li> 
+      <div class="number">2</div>
+      <div class="text">profiles</div>
+      <div class="line"></div>
+    </li>
+    <li> 
+      <div class="number">3</div>
+      <div class="text">details</div>
+      <div class="line"></div>
+    </li>
+  </ul>
+</div>
+<h1>Create new account</h1>
+<form>
+  <div class="account-setup register-form">
+    <h2>Step 1</h2>
+    <input name="email" type="email" placeholder="Email"/>
+    <input name="password" type="password" placeholder="Password"/>
+    <input name="confirmPassword" type="password" placeholder="Confirm Password"/>
+    <div class="button first">Next</div>
+  </div>
+  <div class="user-details register-form">
+    <h2>Step 2</h2>
+    <input name="name" type="text" placeholder="Full name"/>
+    <input name="counrty" type="text" placeholder="Country"/>
+    <input name="city" type="text" placeholder="City"/>
+    <div class="button firstPrev">Back</div>
+    <div class="button secondNext">Next</div>
+  </div>
+  <div class="finish-step register-form">
+    <h2>Step 3</h2>
+    <label for="birth-day">Birth date</label>
+    <input class="error" name="birth-day" type="date"/>
+    <div class="error-text">*This field is required</div>
+    <label class="accept-conditions" for="accept">Accept <a href="#"> terms & conditions</a>
+      <input name="accept" type="checkbox"/>
+    </label>
+    <div class="button secondPrev">Back</div>
+    <div class="button disabled">Register</div>
+  </div>
+</form>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+  
+
+    <script  src="js/register.js"></script>
+
+
+
+
+</body>
+
+</html>

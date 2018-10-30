@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f8f8f8;
+}
+h1 {
+  position: absolute;
+  z-index: 5;
+  text-align: center;
+  font-size: 60px;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-size: calc(1vw + 1vh + 2.8vmin);
+  white-space: nowrap;
+}
+h1:after {
+  content: 'Boring';
+  font-size: calc(1vw + 1vh + 2.8vmin);
+  margin-left: 3%;
+  background: #ddd6f3;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #faaca8, #ddd6f3);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #faaca8, #ddd6f3);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hoverbox {
+  width: 25%;
+  height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+.hoverbox.hover_1:hover ~ h1:after {
+  content: 'Exciting';
+  background: linear-gradient(to right, #96DEDA, #50C9C3);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_2:hover ~ h1:after {
+  content: 'Fun';
+  background: linear-gradient(to right, #c21500, #ffc500);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_3:hover ~ h1:after {
+  content: 'Boring';
+  background: linear-gradient(to right, #faaca8, #ddd6f3);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_4:hover ~ h1:after {
+  content: 'Unresponsive';
+  background: linear-gradient(to right, #414d0b, #727a17);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_5:hover ~ h1:after {
+  content: 'Challenging';
+  background: linear-gradient(to right, #e43a15, #e65245);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_6:hover ~ h1:after {
+  content: 'Pure';
+  background: linear-gradient(to right, #ED4264, #FFEDBC);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_7:hover ~ h1:after {
+  content: 'Available';
+  background: linear-gradient(to right, #DC2424, #4A569D);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_8:hover ~ h1:after {
+  content: 'Slow';
+  background: linear-gradient(to right, #757F9A, #D7DDE8);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_9:hover ~ h1:after {
+  content: 'Modular';
+  background: linear-gradient(to right, #2BC0E4, #EAECC6);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_10:hover ~ h1:after {
+  content: 'Powerful';
+  background: linear-gradient(to right, #4776E6, #8E54E9);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_11:hover ~ h1:after {
+  content: 'Offline Ready';
+  background: linear-gradient(to right, #1D976C, #93F9B9);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_12:hover ~ h1:after {
+  content: 'Open';
+  background: linear-gradient(to right, #EB3349, #F45C43);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_13:hover ~ h1:after {
+  content: 'New';
+  background: linear-gradient(to right, #DD5E89, #F7BB97);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_14:hover ~ h1:after {
+  content: 'Communities';
+  background: linear-gradient(to right, #1D2B64, #F8CDDA);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_15:hover ~ h1:after {
+  content: 'Storefronts';
+  background: linear-gradient(to right, #F09819, #EDDE5D);
+  -webkit-background-clip: text;
+}
+.hoverbox.hover_16:hover ~ h1:after {
+  content: 'Just The Start';
+  background: linear-gradient(to right, #E55D87, #5FC3E4);
+  -webkit-background-clip: text;
+}
