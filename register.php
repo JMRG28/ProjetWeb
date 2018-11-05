@@ -1,11 +1,11 @@
 <?php
 ini_set("display_errors",1);error_reporting(E_ALL);
 if(isset($_POST['email'])){
-  $servername = "86.210.13.52";
-  $port="3307";
-  $username = "jmr";
-  $password = "jeanmaurice28";
-  $dbname = "jmr";
+  $servername = "**.**.**.**";
+  $port="****";
+  $username = "***";
+  $password = "*******";
+  $dbname = "***";
 
   try {
 
