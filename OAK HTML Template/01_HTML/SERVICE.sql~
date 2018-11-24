@@ -1,0 +1,9 @@
+CREATE TABLE SERVICE(
+       ID_Service VARCHAR(6); /*commence par S*/
+       MotClef VARCHAR(30);
+       Descriptif VARCHAR(180);
+       /*SEMAINES ?*/
+       PrixH FLOAT;
+       Actif NUMERIC(1);
+       CONSTRAINT PK_Service PRIMARY KEY(ID_Service);
+);

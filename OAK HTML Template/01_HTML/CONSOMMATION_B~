@@ -1,0 +1,13 @@
+CREATE TABLE CONSOMMATION_B(
+       ID_ConsoB NUMERIC(6) AUTO_INCREMENT;
+       EmailProp VARCHAR(320);
+       EmailConso VARCHAR(320);
+       ID_Bien NUMERIC(6);
+       DateDeb TIMESTAMP NOT NULL;
+       DateFin TIMESTAMP NOT NULL;
+       /*Verifier longueur*/
+       CONSTRAINT PK_ConsoB PRIMARY KEY(ID_Conso);
+       CONSTRAINT FK_Prop FOREIGN KEY(EmailProp) REFERENCES MEMBRE(Email);
+       CONSTRAINT FK_Conso FOREIGN KEY(EmailConso) REFERENCES MEMBRE(Email);
+       CONSTRAINT FK_Bien FOREIGN KEY(ID_Bien) REFERENCES BIEN(ID_Bien);
+);
