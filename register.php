@@ -12,15 +12,13 @@ if(isset($_POST['email'])){
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $bd->prepare("INSERT INTO MEMBRE (email, mdp_hash, nom, prenom, ville,code_telephone,numero_telephone,description,sexe,statut,date_naissance)VALUES (:email, :mdp_hash, :nom, :prenom, :ville, :code_telephone, :numero_telephone, :description, :sexe, :statut, :date_naissance)");
+    $stmt = $bd->prepare("INSERT INTO MEMBRE (email, mdp_hash, nom, prenom, code_postal,numero_telephone,sexe,statut,date_naissance)VALUES (:email, :mdp_hash, :nom, :prenom,code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
     $stmt->bindValue(":email", $_POST['email']);
     $stmt->bindValue(":mdp_hash", md5($_POST['mdp']));
     $stmt->bindValue(":nom", $_POST['nom']);
     $stmt->bindValue(":prenom", $_POST['prenom']);
-    $stmt->bindValue(":ville", $_POST['ville']);
-    $stmt->bindValue(":code_telephone", $_POST['c_tel']);
+    $stmt->bindValue(":code_postal", $_POST['code_p']);
     $stmt->bindValue(":numero_telephone", $_POST['num_tel']);
-    $stmt->bindValue(":description", $_POST['desc']);
     $stmt->bindValue(":sexe", $_POST['sexe']);
     $stmt->bindValue(":statut", $_POST['statut']);
     $stmt->bindValue(":date_naissance", $_POST['date_n']);
