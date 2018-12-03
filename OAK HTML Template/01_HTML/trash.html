@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Profil</title>
+  <title>Profile Card</title>
   <meta name="viewport"
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -32,21 +32,50 @@
             <div class="bar"></div>
           </a>
            <a href="demande.html" class="link">
-            <div class="title">Poster une proposition</div>
+            <div class="title">Poster une demande</div>
             <div class="bar"></div>
           </a>
-           <a href="propositions.html" class="link">
-            <div class="title">Toutes les propositions</div>
+           <a href="#" class="link">
+            <div class="title">Toutes les demandes</div>
             <div class="bar"></div>
           </a>
         
-          <a a href="parameters.html"class="link">
+          <a a href="login.html"class="link">
             <div class="title">Paramètres</div>
             <div class="bar"></div>
           </a>
 
           <div class="container">
 
+  <div class="notification">
+    <a v-on:click="show = !show" class="tooltip-bell">
+      <i class="far fa-2x fa-bell"></i>
+      <span id="circle"></span>
+    </a>
+    <transition name="fadeStart" v-cloak>
+      <div v-if="show" class="tooltip">
+        <div id="heading">
+          <div class="heading-left">
+            <h6 class="heading-title">Notifications</h6>
+          </div>
+          <div class="heading-right">
+            <a class="notification-link" href="#">See all</a>
+          </div>
+        </div>
+        <ul class="notification-list">
+          <li class="notification-item" v-for="user of users">
+            <div class="img-left">
+              <img class="user-photo" alt="User Photo" v-bind:src="user.picture.thumbnail" />
+            </div>
+            <div class="user-content">
+              <p class="user-info"><span class="name">{{user.name.first | capitalize}} {{user.name.last | capitalize}}</span> left a comment.</p>
+              <p class="time">1 hour ago</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </transition>
+  </div>
 </div>
   <script src='https://unpkg.com/vue'></script>
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
@@ -54,7 +83,7 @@
 
   
 
-
+    <script  src="js/notifications.js"></script>
 
 
 
@@ -74,7 +103,7 @@
 
     <div class="profile-card__cnt js-profile-cnt">
       <div class="profile-card__name">Llivia Langevin</div>
-      <div class="profile-card__txt">Particulier</div>
+      <div class="profile-card__txt">Etudiante en Licence 3 Informatique </div>
       <div class="profile-card__txt"><strong>"</strong>Ceci sera une description.<strong>"</strong></div>
       <div class="profile-card-loc">
         <span class="profile-card-loc__icon">
@@ -84,9 +113,8 @@
         <span class="profile-card-loc__txt">
           Montpellier, France
         </span>
-
       </div>
-Dernière connexion: 12/11/2018
+
       <div class="profile-card-inf">
         <div class="profile-card-inf__item">
           <div class="profile-card-inf__title">34</div>
@@ -96,6 +124,16 @@ Dernière connexion: 12/11/2018
         <div class="profile-card-inf__item">
           <div class="profile-card-inf__title">45</div>
           <div class="profile-card-inf__txt">propositions</div>
+        </div>
+
+        <div class="profile-card-inf__item">
+          <div class="profile-card-inf__title">123</div>
+          <div class="profile-card-inf__txt">biens </div>
+        </div>
+
+        <div class="profile-card-inf__item">
+          <div class="profile-card-inf__title">85</div>
+          <div class="profile-card-inf__txt">Works</div>
         </div>
       </div>
 
