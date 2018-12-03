@@ -21,7 +21,7 @@ if(isset($_POST['email'])){
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $bd->prepare("INSERT INTO membre (email, mdp_hash, nom, prenom, code_postal,numero_telephone,sexe,statut,date_naissance)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
+    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
     $stmt->bindValue(":email", $_POST['email']);
     $stmt->bindValue(":mdp_hash", md5($_POST['mdp']));
     $stmt->bindValue(":nom", $_POST['nom']);

@@ -11,7 +11,7 @@ if(isset($_POST['email'])){
 
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $bd->prepare("SELECT * FROM membre WHERE email = ? AND mdp_hash = ?");
+    $stmt = $bd->prepare("SELECT * FROM MEMBRE WHERE Email = ? AND MdpHash = ?");
     $stmt->execute([$_POST['email'], md5($_POST['password'])]);
     $response = $stmt->rowCount();
     if($response==1){

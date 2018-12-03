@@ -1,5 +1,5 @@
 CREATE TABLE BIEN(
-       ID_Bien NUMERIC(6) AUTO_INCREMENT, /*commencera par un B*/
+       ID_Bien NUMERIC(6), /*commencera par un B*/
        /*MotClef VARCHAR(30),*/
        Descriptif VARCHAR(180) NOT NULL,
        Photo VARCHAR(300),
@@ -8,7 +8,6 @@ CREATE TABLE BIEN(
        EstDispo BOOLEAN NOT NULL DEFAULT '1',
        DateMES DATE DEFAULT CURRENT_TIMESTAMP,
        EmailProp VARCHAR(320),
-       CONSTRAINT PK_BIEN PRIMARY KEY(ID_BIEN),
-       CONSTRAINT FK_Prop FOREIGN KEY(EmailProp) REFERENCES MEMBRE(Email),
+       CONSTRAINT PK_BIEN PRIMARY KEY(ID_Bien),
+       CONSTRAINT FK_Prop2 FOREIGN KEY(EmailProp) REFERENCES MEMBRE(Email)
 );
-       

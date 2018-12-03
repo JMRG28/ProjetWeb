@@ -19,4 +19,3 @@ CREATE TABLE MEMBRE (
 	CONSTRAINT PK_Email PRIMARY KEY(Email),
 	CONSTRAINT CHK_Sexe CHECK (Sexe IN ('H','F'))
 );
---trigger possible sur rendu et recu
