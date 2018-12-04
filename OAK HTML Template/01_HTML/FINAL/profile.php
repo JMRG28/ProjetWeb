@@ -10,7 +10,7 @@ $member->toString();
 
 <head>
   <meta charset="UTF-8">
-  <title>Profil</title>
+  <title> <?php echo $member->Prenom." ".$member->Nom; ?></title>
   <meta name="viewport"
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -45,16 +45,10 @@ $member->toString();
 <script src='https://unpkg.com/vue'></script>
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
 <script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
-
-  
-        </div>
+         </div>
     </div>
 
-
-
-  <div class="wrapper">
-
-  
+<div class="wrapper">
   <div class="profile-card js-profile-card">
     <div class="profile-card__img">
       <img src="img/llivia.jpg" alt="profile card">
@@ -63,27 +57,27 @@ $member->toString();
     <div class="profile-card__cnt js-profile-cnt">
 
       <div class="profile-card__name"> <?php echo $member->Prenom." ".$member->Nom; ?> </div>
-      <div class="profile-card__txt">Particulier</div>
-      <div class="profile-card__txt"><strong>"</strong>Ceci sera une description.<strong>"</strong></div>
+      <div class="profile-card__txt"><?php echo $member->Statut; ?></div>
+      <div class="profile-card__txt"><strong>"</strong><?php echo $member->Description; ?><strong>"</strong></div>
       <div class="profile-card-loc">
         <span class="profile-card-loc__icon">
           <svg class="icon"><use xlink:href="#icon-location"></use></svg>
         </span>
 
         <span class="profile-card-loc__txt">
-          Montpellier, France
+          <?php echo $member->CodePostal; ?>
         </span>
 
       </div>
-Dernière connexion: 12/11/2018
+    Inscrit depuis : <?php echo $member->DateIns; ?>
       <div class="profile-card-inf">
         <div class="profile-card-inf__item">
-          <div class="profile-card-inf__title">34</div>
+          <div class="profile-card-inf__title"><?php echo $member->Recu; ?></div>
           <div class="profile-card-inf__txt">demandes</div>
         </div>
 
         <div class="profile-card-inf__item">
-          <div class="profile-card-inf__title">45</div>
+          <div class="profile-card-inf__title"><?php echo $member->Recu; ?></div>
           <div class="profile-card-inf__txt">propositions</div>
         </div>
       </div>

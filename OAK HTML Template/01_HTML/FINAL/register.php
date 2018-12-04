@@ -60,20 +60,47 @@ if(isset($_POST['email'])){
     <title>Au Register Forms by Colorlib</title>
 
     <!-- Icons font CSS-->
-    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="js/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="js/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <!-- Font special for pages-->
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Vendor CSS-->
-    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+    <link href="js/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="js/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    <link href="css/main.css" rel="stylesheet" media="all">
+     <link rel="stylesheet" href="css/menu.css"> 
+    <link href="css/style_register.css" rel="stylesheet" media="all">
 </head>
 
 <body>
+
+    <div class="header">
+          
+            <div class="logo">
+                <a href="index.html">
+                    <img src="img/shared/logo.jpg" alt="Logo">
+                </a>
+            </div>
+
+            
+         
+       <div class="menu">
+        <ul>
+          <li> <a a href="index.html">Accueil</a></li>
+          <li> <a href="demande.html">Poster une proposition</a></li>
+          <li><a href="propositions.html">Toutes les propositions</a></li>
+         <li> <a a href="parameters.html">Paramètres</a></li>
+       </ul>
+
+<script src='https://unpkg.com/vue'></script>
+<script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+<script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
+
+  
+        </div>
+    </div>
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
@@ -177,11 +204,11 @@ if(isset($_POST['email'])){
     </div>
 
     <!-- Jquery JS-->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/datepicker/moment.min.js"></script>
-    <script src="vendor/datepicker/daterangepicker.js"></script>
+    <script src="js/vendor/select2/select2.min.js"></script>
+    <script src="js/vendor/datepicker/moment.min.js"></script>
+    <script src="js/vendor/datepicker/daterangepicker.js"></script>
 
     <!-- Main JS-->
     <script src="js/global.js"></script>
