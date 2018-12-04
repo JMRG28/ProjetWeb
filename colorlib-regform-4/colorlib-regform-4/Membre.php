@@ -17,7 +17,7 @@ class Membre {
   public $DateIns;
   public $Actif;
   public $Suspendu;
-
+//privatiser apres
   function __construct($email,$mdp,$nom,$prenom,$codep,$num,$photo,$desc,$rendu,$recu,$sexe,$statut,$dateN,$dateI,$actif,$suspendu) {
     $this->Email= $email;
     $this->MdpHash=$mdp;
