@@ -1452,6 +1452,7 @@ ul.sub-menu li a {
 .history-wrapper {
     float: left;
     width: 100%;
+    margin-left: 50px;
 }
 .history-wrapper article {
     margin-top: 60px
@@ -3338,7 +3339,7 @@ a img.aligncenter {
 /* CONTAINER */
 
 .container{
-    margin:0;
+    margin:50;
     padding:0;
     width:100%;
   }

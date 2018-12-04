@@ -111,40 +111,24 @@ if(isset($_POST['email'])){
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Nom</label>
-                                    <input class="input--style-4" type="text" name="nom">
+                                    <label class="label">Titre</label>
+                                    <input class="input--style-4" type="text" name="titre">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Prénom</label>
-                                    <input class="input--style-4" type="text" name="prenom">
+                                    <label class="label">Descriptif</label>
+                                    <input class="input--style-4" type="text" name="descriptif">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" name="email">
+                                    <label class="label">Prix Neuf</label>
+                                    <input class="input--style-4" type="numeric" name="prixNeuf">
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Mot de passe</label>
-                                    <input class="input--style-4" type="password" name="mdp">
-                                </div>
-                            </div>
-                            <!-- <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Confirmation du mot de passe</label>
-                                    <input class="input--style-4" type="password" name="email">
-                                </div>
-                            </div> -->
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Code postal</label>
-                                    <input class="input--style-4" type="text" pattern="[0-9]{5}" name="code_p">
-                                </div>
-                            </div>
+                    
+                            
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
