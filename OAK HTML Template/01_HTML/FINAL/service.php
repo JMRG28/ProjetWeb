@@ -106,7 +106,7 @@ if(isset($_POST['email'])){
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
-                    <h2 class="title"> Proposition d'un service</h2>
+                    <h2 class="title">Inscription</h2>
                     <form method="POST">
                         <div class="row row-space">
                             <div class="col-2">
@@ -133,7 +133,7 @@ if(isset($_POST['email'])){
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">DPériode de disponibilité</label>
+                                    <label class="label">Date de naissance</label>
                                     <div class="input-group-icon">
                                         <input class="input--style-4 js-datepicker" type="text" name="date_n">
                                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>

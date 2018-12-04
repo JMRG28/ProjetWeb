@@ -106,40 +106,10 @@ if(isset($_POST['email'])){
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
-                    <h2 class="title"> Proposition d'un service</h2>
+                    <h2 class="title">Inscription</h2>
                     <form method="POST">
                         <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Titre</label>
-                                    <input class="input--style-4" type="text" name="titre">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Descriptif</label>
-                                    <input class="input--style-4" type="text" name="descriptif">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Prix Neuf</label>
-                                    <input class="input--style-4" type="numeric" name="prixNeuf">
-                                </div>
-                            </div>
-                    
-                            
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">DPériode de disponibilité</label>
-                                    <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="date_n">
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                    </div>
-                                </div>
-                            </div>
+                        
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Sexe</label>
@@ -156,29 +126,7 @@ if(isset($_POST['email'])){
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-space">
-
-
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Numéro</label>
-                                    <input class="input--style-4" type="text" name="num_tel">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label class="label">Statut</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="statut">
-
-                                    <option selected="selected">Particulier</option>
-                                    <option>Auto-entrepreneur Independant</option>
-                                    <option>Artisan Commerçant</option>
-                                    <option>Association à but non lucratif</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
+                        
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
                         </div>

@@ -38,6 +38,48 @@ class Membre {
     $this->Suspendu=$suspendu;
   }
 
+  function createFromTab($tab) {
+    
+    $this->Email= $tab[0];
+    $this->MdpHash=$tab[1];
+    $this->Nom=$tab[2];
+    $this->Prenom=$tab[3];
+    $this->CodePostal=$tab[4];
+    $this->NumeroTel=$tab[5];
+    $this->Photo=$tab[6];
+    $this->Description=$tab[7];
+    $this->Rendu=$tab[8];
+    $this->Recu=$tab[9];
+    $this->Sexe=$tab[10];
+    $this->Statut=$tab[11];
+    $this->DateNaiss=$tab[12];
+    $this->DateIns=$tab[13];
+    $this->Actif=$tab[14];
+    $this->Suspendu=$tab[15];
+    
+    
+  }
+
+ function  toString(){
+     echo $this->Email;
+    echo $this->MdpHash;
+    echo $this->Nom;
+    echo $this->Prenom;
+    echo $this->CodePostal;
+    echo $this->NumeroTel;
+    echo $this->Photo;
+    echo $this->Description;
+    echo $this->Rendu;
+    echo $this->Recu;
+    echo $this->Sexe;
+    echo $this->Statut;
+    echo $this->DateNaiss;
+    echo $this->DateIns;
+    echo $this->Actif;
+    echo $this->Suspendu;
+  }
+
+
   function insert($bd){
   //  echo "<h1>".$this->Email." coucou <h1>";
     $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
