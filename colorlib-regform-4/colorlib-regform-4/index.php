@@ -1,5 +1,5 @@
 <?php
-
+include 'Membre.php' ;
 function conversion($d){
   $nd=explode("/",$d);
   $r=[];
@@ -20,18 +20,20 @@ if(isset($_POST['email'])){
 
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
-    $stmt->bindValue(":email", $_POST['email']);
-    $stmt->bindValue(":mdp_hash", md5($_POST['mdp']));
-    $stmt->bindValue(":nom", $_POST['nom']);
-    $stmt->bindValue(":prenom", $_POST['prenom']);
-    $stmt->bindValue(":code_postal", $_POST['code_p']);
-    $stmt->bindValue(":numero_telephone", $_POST['num_tel']);
-    $stmt->bindValue(":sexe", $_POST['sexe']);
-    $stmt->bindValue(":statut", $_POST['statut']);
-    $stmt->bindValue(":date_naissance", conversion($_POST['date_n']));
-    $stmt->execute();
+  //  echo $_POST['email']."<br>".md5($_POST['mdp'])."<br>".$_POST['nom']."<br>".$_POST['prenom']."<br>".$_POST['code_p']."<br>".$_POST['num_tel']."<br>".null."<br>".null."<br>".null."<br>".null."<br>".$_POST['sexe']."<br>". $_POST['statut']."<br>".conversion($_POST['date_n'])."<br>";
+    $membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['code_p'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null);
+    $membre->insert($bd);
+    // $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
+    // $stmt->bindValue(":email", $_POST['email']);
+    // $stmt->bindValue(":mdp_hash", md5($_POST['mdp']));
+    // $stmt->bindValue(":nom", $_POST['nom']);
+    // $stmt->bindValue(":prenom", $_POST['prenom']);
+    // $stmt->bindValue(":code_postal", $_POST['code_p']);
+    // $stmt->bindValue(":numero_telephone", $_POST['num_tel']);
+    // $stmt->bindValue(":sexe", $_POST['sexe']);
+    // $stmt->bindValue(":statut", $_POST['statut']);
+    // $stmt->bindValue(":date_naissance", conversion($_POST['date_n']));
+    // $stmt->execute();
     echo "Successfully added the new user " . $_POST['nom'];
   } catch (PDOException $e) {
     echo "DataBase Error: The user could not be added.<br>".$e->getMessage();
