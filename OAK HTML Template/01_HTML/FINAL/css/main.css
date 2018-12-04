@@ -14,7 +14,7 @@
     /* =Preloader
     /* =Header
     /* =Full Width Slider
-    /* =Architecure Slider 
+    /* =Architecure Slider
     /* =Menu right
     /* =Home Content
     /* =Architecture Content
@@ -91,7 +91,7 @@ body {
 }
 :-moz-placeholder {
     /* Firefox 18- */
-    
+
     color: #787878;
     font-size: 14px;
     letter-spacing: 1pt;
@@ -99,7 +99,7 @@ body {
 }
 ::-moz-placeholder {
     /* Firefox 19+ */
-    
+
     color: #787878;
     font-size: 14px;
     letter-spacing: 1pt;
@@ -860,7 +860,7 @@ span.border-text {
     font-weight: 400;
 }
 
-/* =Architecure Slider 
+/* =Architecure Slider
 -------------------------------------------------------------- */
 .arch-slider {
     position: relative;
@@ -1029,7 +1029,7 @@ span.border-text {
     transition-delay: 0.15s;
 }
 .search-wrap.open input:focus {
-    border:0; 
+    border:0;
 }
 .search-wrap.open ::-webkit-input-placeholder {
     font-size: 12px;
@@ -1421,7 +1421,7 @@ ul.sub-menu li a {
 
 .menu-wrap-2 ul{
     padding:0;
-    margin-bottom:0; 
+    margin-bottom:0;
 }
 
 .menu-wrap-2 ul li{
@@ -2471,7 +2471,7 @@ ul.social-buttons li {
 }
 
 /*Play Button*/
-.playBut { 
+.playBut {
     display: inline-block;
     -webkit-transition: all 0.5s ease;
     background-color: rgba(255, 255, 255, 0.79);
@@ -3156,8 +3156,8 @@ a img.aligncenter {
     opacity: 0;
     transition: all 300ms;
   }
-  
-  
+
+
     .bar {
       opacity: 1;
       bottom: 5px;
@@ -3172,7 +3172,7 @@ a img.aligncenter {
     min-height:550px;
     /*background-image: url(https://static1.squarespace.com/static/55d344b4e4b0b49feaef5198/55ddfac4e4b0edc068bc3e3e/55ddfb08e4b0e281188cbcec/1440611087009/side-room2.jpg?format=1500w);
     */
-    
+
     background-color:#FF0000;
     background-repeat: no-repeat;
     background-size:cover;
@@ -3216,7 +3216,7 @@ a img.aligncenter {
 .login-reg-panel{
     color:#B8B8B8;
 }
-.login-reg-panel #label-login, 
+.login-reg-panel #label-login,
 .login-reg-panel #label-register{
     border:1px solid #9E9E9E;
     padding:0 5px;
@@ -3243,11 +3243,11 @@ a img.aligncenter {
     right:0;
     position:absolute;
     text-align:left;
-    
+
 }
 .right-log{right:50px !important;}
 
-.login-show, 
+.login-show,
 .register-show{
     z-index: 1;
     /* ICI */
@@ -3289,7 +3289,7 @@ a img.aligncenter {
 }
 
 .login-show a{
-    
+
     display:inline-block;
     padding:10px 0;
 
@@ -3338,8 +3338,8 @@ a img.aligncenter {
 /* CONTAINER */
 
 .container{
-    margin:0;
+    margin-left:50px;
+    margin-right:50px;
     padding:0;
     width:100%;
   }
-  
