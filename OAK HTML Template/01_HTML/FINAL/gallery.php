@@ -1,17 +1,65 @@
 <?php
-include "Membre.php";
+include 'Bien.php' ;
+include 'Membre.php';
 session_start();
 $member=unserialize($_SESSION['member']);
 $member->toString();
 
-?>
+function conversion($d){
+  $nd=explode("/",$d);
+  $r=[];
+  array_push($r, $nd[2], $nd[1],$nd[0]);
+  $res=implode("-",$r);
+  return $res;
+}
 
+ini_set("display_errors",1);error_reporting(E_ALL);
+// à améliorer
+  $servername = "86.210.13.52";
+  $port="3307";
+  $username = "jmr";
+  $password = "BaseDonnees1234";
+  $dbname = "jmr";
+
+  try {
+    
+
+    $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+    $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  //  echo $_POST['email']."<br>".md5($_POST['mdp'])."<br>".$_POST['nom']."<br>".$_POST['prenom']."<br>".$_POST['code_p']."<br>".$_POST['num_tel']."<br>".null."<br>".null."<br>".null."<br>".null."<br>".$_POST['sexe']."<br>". $_POST['statut']."<br>".conversion($_POST['date_n'])."<br>";
+
+
+    $biens=[];
+    $bien=new Bien(null,null,null,null,null,null,null,null,null);
+
+
+    foreach($bd->query('SELECT * FROM BIEN') as $row ){
+      //print_r($row);
+      array_push($biens, $bien->createFromTab($row));
+    echo $bien->ID_Bien;
+    echo $bien->Descriptif;
+    echo $bien->Photo;
+    echo $bien->PrixNeuf;
+    echo $bien->Actif;
+    echo $bien->DateMES;
+    echo $bien->EmailProp;
+    echo $bien->Titre;;
+    }
+
+    //print_r ($biens);
+    
+   
+  }finally{
+    $bd=null;
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="en" >
 
 <head>
   <meta charset="UTF-8">
-  <title>Protfolio Gallery</title>
+  <title>Toutes les propositions</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'>
   
   <link rel='stylesheet' href='https://npmcdn.com/basscss@8.0.0/css/basscss.min.css'>
