@@ -35,8 +35,8 @@ class Bien {
   $this->DateMES=$tab[6];
   $this->EmailProp=$tab[7];
   $this->Titre=$tab[8];
-    
-    
+
+
   }
 
  function  toString(){
@@ -48,16 +48,16 @@ class Bien {
     echo $this->DateMES;
     echo $this->EmailProp;
     echo $this->Titre;
-    
+
   }
 
 function affiche(){
-  echo '<div class="tile scale-anm biens all">
+  echo '<div class="tile scale-anm biens all">'.$this->Titre.'<br>'.$this->Descriptif.'<br>
         <a href="aff_bien.php"><img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" /></a>
   </div>';
 }
 
-// A VERIFIEEEER 
+// A VERIFIEEEER
   function insert($bd){
   //  echo "<h1>".$this->Email." coucou <h1>";
     $stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre)");

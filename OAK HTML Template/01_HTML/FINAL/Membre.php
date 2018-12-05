@@ -1,5 +1,5 @@
 <?php
-
+ini_set("display_errors",1);error_reporting(E_ALL);
 class Membre {
   public $Email;
   public $MdpHash;
@@ -39,7 +39,7 @@ class Membre {
   }
 
   function createFromTab($tab) {
-    
+
     $this->Email= $tab[0];
     $this->MdpHash=$tab[1];
     $this->Nom=$tab[2];
@@ -56,8 +56,8 @@ class Membre {
     $this->DateIns=$tab[13];
     $this->Actif=$tab[14];
     $this->Suspendu=$tab[15];
-    
-    
+
+
   }
 
  function  toString(){
@@ -92,6 +92,13 @@ class Membre {
     $stmt->bindValue(":sexe", $this->Sexe);
     $stmt->bindValue(":statut", $this->Statut);
     $stmt->bindValue(":date_naissance", $this->DateNaiss);
+    $stmt->execute();
+  }
+
+  function update($bd,$key,$value){
+  //  echo "<h1>".$this->Email." coucou <h1>";
+  echo " <br> UPDATE MEMBRE SET ".$key."='".$value."' where Email=".$this->Email ."<br>";
+    $stmt = $bd->prepare("UPDATE MEMBRE SET ".$key."='".$value."' where Email='".$this->Email."'");
     $stmt->execute();
   }
 

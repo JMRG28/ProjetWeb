@@ -22,7 +22,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
   $dbname = "jmr";
 
   try {
-    
+
 
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -38,7 +38,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
     $bien->createFromTab($row);
     array_push($biens, $bien);
     }
-   
+
   }finally{
     $bd=null;
   }
@@ -51,28 +51,28 @@ ini_set("display_errors",1);error_reporting(E_ALL);
   <meta charset="UTF-8">
   <title>Toutes les propositions</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'>
-  
+
   <link rel='stylesheet' href='https://npmcdn.com/basscss@8.0.0/css/basscss.min.css'>
 
       <link rel="stylesheet" href="css/style_gallery.css">
       <link rel="stylesheet" href="css/menu.css">
 
-  
+
 </head>
 
 <body>
 
 
 <div class="header">
-          
+
             <div class="logo">
                 <a href="index.html">
                     <img src="img/shared/logo.jpg" alt="Logo">
                 </a>
             </div>
 
-            
-         
+
+
        <div class="menu">
         <ul>
           <li> <a a href="index.html">Accueil</a></li>
@@ -85,24 +85,24 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
 <script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
 
-  
+
         </div>
     </div>
   <div class="toolbar mb2 mt2">
   <button class="btn fil-cat" href="" data-rel="all">All</button>
   <button class="btn fil-cat" data-rel="biens">Biens</button>
   <button class="btn fil-cat" data-rel="services">Services</button>
-</div> 
- 
+</div>
+
 <div id="portfolio">
 
-  <?php 
+  <?php
     foreach($biens as $i){
       $i->affiche();
     }
 
   ?>
-  <!-- 
+  <!--
   <div class="tile scale-anm web all">
         <a href="aff_bien.php"> <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/2-mon_1092-300x234.jpg" alt="" /></a>
   </div>
@@ -131,7 +131,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
         <img src="https://placeholdit.imgix.net/~text?txtsize=19&txt=200%C3%97290&w=200&h=290" alt="" />
   </div>
   <div class="tile scale-anm flyers all">
-           <img src="https://placeholdit.imgix.net/~text?txtsize=19&txt=200%C3%97290&w=200&h=290" alt="" /> 
+           <img src="https://placeholdit.imgix.net/~text?txtsize=19&txt=200%C3%97290&w=200&h=290" alt="" />
   </div>
   <div class="tile scale-anm web all">
         <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" />
@@ -140,18 +140,18 @@ ini_set("display_errors",1);error_reporting(E_ALL);
             <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/15-dia_1092-1-300x300.jpg" alt="" />
   </div>
   <div class="tile scale-anm web all">
-       <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97190&w=350&h=190" alt="" /> 
+       <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97190&w=350&h=190" alt="" />
   </div>
   <div class="tile scale-anm bcards all">
-          <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/emi_haze-300x201.jpg" alt="" />  
+          <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/emi_haze-300x201.jpg" alt="" />
   </div>
   <div class="tile scale-anm web all">
             <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/transmission_01-300x300.jpg" alt="" />
-  </div> 
+  </div>
   <div class="tile scale-anm web all">
-      <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97190&w=350&h=190" alt="" />  
-  </div> 
-  <div class="tile scale-anm bcards all">     
+      <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97190&w=350&h=190" alt="" />
+  </div>
+  <div class="tile scale-anm bcards all">
             <img src="https://placeholdit.imgix.net/~text?txtsize=19&txt=200%C3%97290&w=200&h=290" alt="" />
   </div>
 -->
@@ -160,7 +160,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 <div style="clear:both;"></div>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
-  
+
 
     <script  src="js/js_gallery.js"></script>
 
