@@ -14,7 +14,7 @@ class Bien {
 
 //privatiser apres
   function __construct($id_bien, $descriptif, $photo, $prixNeuf, $actif, $estDispo, $dateMES, $emailProp, $titre) {
-    $this->ID_Bien=$id_bien;
+  $this->ID_Bien=$id_bien;
   $this->Descriptif=$descriptif;
   $this->Photo=$photo;
   $this->PrixNeuf=$prixNeuf;
@@ -26,9 +26,7 @@ class Bien {
   }
 
   function createFromTab($tab) {
-
-  	emailProp, $titre) {
-    $this->ID_Bien=$tab[0];
+  $this->ID_Bien=$tab[0];
   $this->Descriptif=$tab[1];
   $this->Photo=$tab[2];
   $this->PrixNeuf=$tab[3];
@@ -57,13 +55,13 @@ class Bien {
 // A VERIFIEEEER 
   function insert($bd){
   //  echo "<h1>".$this->Email." coucou <h1>";
-    $stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, :dateMES, :emailProp, :titre)");
+    $stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre)");
     $stmt->bindValue(":id_bien", $this->ID_Bien);
     $stmt->bindValue(":descriptif", $this->Descriptif);
     $stmt->bindValue(":photo",$this->Photo);
     $stmt->bindValue(":prixNeuf", $this->PrixNeuf);
     $stmt->bindValue(":actif", $this->Actif);
-    $stmt->bindValue(":dateMES", $this->DateMES);
+    //$stmt->bindValue(":dateMES", $this->DateMES);
     $stmt->bindValue(":emailProp", $this->EmailProp);
     $stmt->bindValue(":titre", $this->Titre);
     $stmt->execute();

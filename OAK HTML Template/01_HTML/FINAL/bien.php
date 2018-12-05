@@ -1,4 +1,9 @@
 <?php
+include 'Bien.php' ;
+include 'Membre.php';
+session_start();
+$member=unserialize($_SESSION['member']);
+$member->toString();
 
 function conversion($d){
   $nd=explode("/",$d);
@@ -9,39 +14,42 @@ function conversion($d){
 }
 
 ini_set("display_errors",1);error_reporting(E_ALL);
-if(isset($_POST['email'])){
+if(isset($_POST['titre'])){ // à améliorer
   $servername = "86.210.13.52";
   $port="3307";
   $username = "jmr";
   $password = "BaseDonnees1234";
   $dbname = "jmr";
 
+
+
   try {
+    
 
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  //  echo $_POST['email']."<br>".md5($_POST['mdp'])."<br>".$_POST['nom']."<br>".$_POST['prenom']."<br>".$_POST['code_p']."<br>".$_POST['num_tel']."<br>".null."<br>".null."<br>".null."<br>".null."<br>".$_POST['sexe']."<br>". $_POST['statut']."<br>".conversion($_POST['date_n'])."<br>";
 
-    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
-    $stmt->bindValue(":email", $_POST['email']);
-    $stmt->bindValue(":mdp_hash", md5($_POST['mdp']));
-    $stmt->bindValue(":nom", $_POST['nom']);
-    $stmt->bindValue(":prenom", $_POST['prenom']);
-    $stmt->bindValue(":code_postal", $_POST['code_p']);
-    $stmt->bindValue(":numero_telephone", $_POST['num_tel']);
-    $stmt->bindValue(":sexe", $_POST['sexe']);
-    $stmt->bindValue(":statut", $_POST['statut']);
-    $stmt->bindValue(":date_naissance", conversion($_POST['date_n']));
-    $stmt->execute();
-    echo "Successfully added the new user " . $_POST['nom'];
+    $query=$bd->prepare('SELECT COUNT(*)  FROM BIEN');
+    $query->execute();
+    $result=$query->fetch();
+    $id=$result[0]+1;
+     
+
+    //$prix=floatval($_POST['prixNeuf']);
+    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre']);
+    $bien->insert($bd);
+    echo "Successfully added the new good " . $id;
   } catch (PDOException $e) {
-    echo "DataBase Error: The user could not be added.<br>".$e->getMessage();
+    echo "DataBase Error: The good could not be added.<br>".$e->getMessage();
   } catch (Exception $e) {
-    echo "General Error: The user could not be added.<br>".$e->getMessage();
+    echo "General Error: The good could not be added.<br>".$e->getMessage();
   }finally{
     $bd=null;
   }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +63,7 @@ if(isset($_POST['email'])){
     <meta name="keywords" content="Colorlib Templates">
 
     <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
+    <title>Le Bon Voisin</title>
 
     <!-- Icons font CSS-->
     <link href="js/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -106,7 +114,7 @@ if(isset($_POST['email'])){
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
-                    <h2 class="title"> Proposition d'un service</h2>
+                    <h2 class="title"> Proposition d'un bien</h2>
                     <form method="POST">
                         <div class="row row-space">
                             <div class="col-2">
@@ -133,7 +141,7 @@ if(isset($_POST['email'])){
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">DPériode de disponibilité</label>
+                                    <label class="label">Date de mise en service</label>
                                     <div class="input-group-icon">
                                         <input class="input--style-4 js-datepicker" type="text" name="date_n">
                                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
@@ -156,16 +164,7 @@ if(isset($_POST['email'])){
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-space">
-
-
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Numéro</label>
-                                    <input class="input--style-4" type="text" name="num_tel">
-                                </div>
-                            </div>
-                        </div>
+                       
                         <div class="input-group">
                             <label class="label">Statut</label>
                             <div class="rs-select2 js-select-simple select--no-search">
