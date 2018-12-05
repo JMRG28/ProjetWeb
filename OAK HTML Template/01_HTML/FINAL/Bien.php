@@ -40,7 +40,7 @@ class Bien {
   }
 
  function  toString(){
-     echo $this->ID_Bien;
+    echo $this->ID_Bien;
     echo $this->Descriptif;
     echo $this->Photo;
     echo $this->PrixNeuf;
@@ -51,6 +51,11 @@ class Bien {
     
   }
 
+function affiche(){
+  echo '<div class="tile scale-anm biens all">
+        <a href="aff_bien.php"><img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" /></a>
+  </div>';
+}
 
 // A VERIFIEEEER 
   function insert($bd){

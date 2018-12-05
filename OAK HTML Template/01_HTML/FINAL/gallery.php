@@ -35,19 +35,9 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 
     foreach($bd->query('SELECT * FROM BIEN') as $row ){
       //print_r($row);
-      array_push($biens, $bien->createFromTab($row));
-    echo $bien->ID_Bien;
-    echo $bien->Descriptif;
-    echo $bien->Photo;
-    echo $bien->PrixNeuf;
-    echo $bien->Actif;
-    echo $bien->DateMES;
-    echo $bien->EmailProp;
-    echo $bien->Titre;;
+    $bien->createFromTab($row);
+    array_push($biens, $bien);
     }
-
-    //print_r ($biens);
-    
    
   }finally{
     $bd=null;
@@ -100,14 +90,21 @@ ini_set("display_errors",1);error_reporting(E_ALL);
     </div>
   <div class="toolbar mb2 mt2">
   <button class="btn fil-cat" href="" data-rel="all">All</button>
-  <button class="btn fil-cat" data-rel="web">Websites</button>
-  <button class="btn fil-cat" data-rel="flyers">Flyers</button>
-  <button class="btn fil-cat" data-rel="bcards">Business Cards</button>
+  <button class="btn fil-cat" data-rel="biens">Biens</button>
+  <button class="btn fil-cat" data-rel="services">Services</button>
 </div> 
  
 <div id="portfolio">
+
+  <?php 
+    foreach($biens as $i){
+      $i->affiche();
+    }
+
+  ?>
+  <!-- 
   <div class="tile scale-anm web all">
-        <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/2-mon_1092-300x234.jpg" alt="" />
+        <a href="aff_bien.php"> <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/2-mon_1092-300x234.jpg" alt="" /></a>
   </div>
   <div class="tile scale-anm bcards all">
     <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/jti-icons_08-300x172.jpg" alt="" />
@@ -157,6 +154,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
   <div class="tile scale-anm bcards all">     
             <img src="https://placeholdit.imgix.net/~text?txtsize=19&txt=200%C3%97290&w=200&h=290" alt="" />
   </div>
+-->
 </div>
 
 <div style="clear:both;"></div>
