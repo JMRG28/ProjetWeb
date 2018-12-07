@@ -53,7 +53,7 @@ if ($uploadOk == 0) {
       $member->update($bd,"Photo",$target_file);
       $member->Photo=$target_file;
       $_SESSION['member']=serialize($member);
-      header('Location: profile2.php');
+      header('Location: parameters.php');
         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
     } else {
         echo "Sorry, there was an error uploading your file.";
