@@ -21,7 +21,7 @@ if(isset($_POST['email'])){
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   //  echo $_POST['email']."<br>".md5($_POST['mdp'])."<br>".$_POST['nom']."<br>".$_POST['prenom']."<br>".$_POST['code_p']."<br>".$_POST['num_tel']."<br>".null."<br>".null."<br>".null."<br>".null."<br>".$_POST['sexe']."<br>". $_POST['statut']."<br>".conversion($_POST['date_n'])."<br>";
-    $membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['code_p'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null);
+    $membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['code_p'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null,md5($_POST['email']));
     $membre->insert($bd);
     // $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
     // $stmt->bindValue(":email", $_POST['email']);
@@ -70,22 +70,22 @@ if(isset($_POST['email'])){
     <link href="js/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-     <link rel="stylesheet" href="css/menu.css"> 
+     <link rel="stylesheet" href="css/menu.css">
     <link href="css/style_register.css" rel="stylesheet" media="all">
 </head>
 
 <body>
 
     <div class="header">
-          
+
             <div class="logo">
                 <a href="index.html">
                     <img src="img/shared/logo.jpg" alt="Logo">
                 </a>
             </div>
 
-            
-         
+
+
        <div class="menu">
         <ul>
           <li> <a a href="index.html">Accueil</a></li>
@@ -98,7 +98,7 @@ if(isset($_POST['email'])){
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
 <script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
 
-  
+
         </div>
     </div>
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">

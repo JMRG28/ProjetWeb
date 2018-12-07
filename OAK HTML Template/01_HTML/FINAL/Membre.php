@@ -17,9 +17,10 @@ class Membre {
   public $DateIns;
   public $Actif;
   public $Suspendu;
+  public $url;
 
 //privatiser apres
-  function __construct($email,$mdp,$nom,$prenom,$codep,$num,$photo,$desc,$rendu,$recu,$sexe,$statut,$dateN,$dateI,$actif,$suspendu) {
+  function __construct($email,$mdp,$nom,$prenom,$codep,$num,$photo,$desc,$rendu,$recu,$sexe,$statut,$dateN,$dateI,$actif,$suspendu,$url) {
     $this->Email= $email;
     $this->MdpHash=$mdp;
     $this->Nom=$nom;
@@ -36,6 +37,7 @@ class Membre {
     $this->DateIns=$dateI;
     $this->Actif=$actif;
     $this->Suspendu=$suspendu;
+    $this->url=$url;
   }
 
   function createFromTab($tab) {
@@ -82,7 +84,7 @@ class Membre {
 
   function insert($bd){
   //  echo "<h1>".$this->Email." coucou <h1>";
-    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
+    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss,url)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance,:url)");
     $stmt->bindValue(":email", $this->Email);
     $stmt->bindValue(":mdp_hash", $this->MdpHash);
     $stmt->bindValue(":nom",$this->Nom);
@@ -92,9 +94,38 @@ class Membre {
     $stmt->bindValue(":sexe", $this->Sexe);
     $stmt->bindValue(":statut", $this->Statut);
     $stmt->bindValue(":date_naissance", $this->DateNaiss);
+    $stmt->bindValue(":url", $this->url);
     $stmt->execute();
   }
-
+  function getFromURL($uid){
+    $servername = "86.210.13.52";
+    $port="3307";
+    $username = "jmr";
+    $password = "BaseDonnees1234";
+    $dbname = "jmr";
+    $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+    $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt = $bd->prepare("SELECT * FROM MEMBRE WHERE url = ?");
+    $u=[];
+    array_push($u,$uid);
+    $stmt->execute($u);
+    $response = $stmt->rowCount();
+    if($response==1){
+      $tab=[];
+      while ($row = $stmt->fetch()) {
+        $index=0;
+        foreach ($row as $key=>$value){
+          if($index%2==0){
+            array_push($tab,$value);
+          }
+          $index++;
+        }
+      }
+      $this->createFromTab($tab);
+  }else{
+    echo "<h1>Utilisateur non trouvé</h1>";
+  }
+}
   function update($bd,$key,$value){
   //  echo "<h1>".$this->Email." coucou <h1>";
   echo " <br> UPDATE MEMBRE SET ".$key."='".$value."' where Email=".$this->Email ."<br>";

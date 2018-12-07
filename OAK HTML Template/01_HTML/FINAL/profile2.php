@@ -1,9 +1,10 @@
 <?php
 include "Membre.php";
-session_start();
-$member=unserialize($_SESSION['member']);
-$member->toString();
-$_SESSION['member']=serialize($member);
+ini_set("display_errors",1);error_reporting(E_ALL);
+$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+$member->getFromURL($_GET["uid"]);
+//$member->toString();
+
 
 ?>
 <!DOCTYPE html>
