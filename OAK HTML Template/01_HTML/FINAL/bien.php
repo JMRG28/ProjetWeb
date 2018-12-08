@@ -39,6 +39,7 @@ if(isset($_POST['titre'])){ // à améliorer
     //$prix=floatval($_POST['prixNeuf']);
     $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre']);
     $bien->insert($bd);
+    $bien->upload();
     echo "Successfully added the new good " . $id;
   } catch (PDOException $e) {
     echo "DataBase Error: The good could not be added.<br>".$e->getMessage();
@@ -48,6 +49,8 @@ if(isset($_POST['titre'])){ // à améliorer
     $bd=null;
   }
 }
+
+
 ?>
 
 
@@ -129,10 +132,20 @@ if(isset($_POST['titre'])){ // à améliorer
                                     <input class="input--style-4" type="text" name="descriptif">
                                 </div>
                             </div>
+
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Prix Neuf</label>
                                     <input class="input--style-4" type="numeric" name="prixNeuf">
+                                </div>
+                            </div>
+
+                             <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Photo </label>
+                                    <!-- <form action="upload.php" method="post" enctype="multipart/form-data"> -->
+									      <input type="file" name="fileToUpload" id="fileToUpload">
+									      <!-- </form> -->
                                 </div>
                             </div>
                     

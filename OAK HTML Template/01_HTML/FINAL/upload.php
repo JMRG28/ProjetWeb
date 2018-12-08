@@ -47,7 +47,6 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-      echo "caca";
       $member=unserialize($_SESSION['member']);
       $member->toString();
       $member->update($bd,"Photo",$target_file);

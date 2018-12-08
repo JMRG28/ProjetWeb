@@ -1,15 +1,15 @@
 <?php
 
 class Bien {
-  public $ID_Bien;
-  public $Descriptif;
-  public $Photo;
-  public $PrixNeuf;
-  public $Actif;
-  public $EstDispo;
-  public $DateMES;
-  public $EmailProp;
-  public $Titre;
+public $ID_Bien;
+public $Descriptif;
+public $Photo;
+public $PrixNeuf;
+public $Actif;
+public $EstDispo;
+public $DateMES;
+public $EmailProp;
+public $Titre;
 
 
 
@@ -109,17 +109,14 @@ function affiche(){
 }
 
   function update($bd,$key,$value){
-  echo " <br> UPDATE BIEN SET ".$key."='".$value."' where ID_Bien=".$this->ID_Bien ."<br>";
-    $stmt = $bd->prepare("UPDATE BIEN SET ".$key."='".$value."' where ID_Bien='".$this->ID_Bien."'");
+  echo " <br> UPDATE BIEN SET ".$key."='".$value."' where EmailProp=".$this->EmailProp ."<br>";
+    $stmt = $bd->prepare("UPDATE BIEN SET ".$key."='".$value."' where EmailProp='".$this->EmailProp."'");
     $stmt->execute();
   }
 
-  function upload(){
-    $servername = "86.210.13.52";
-    $port="3307";
-    $username = "jmr";
-    $password = "BaseDonnees1234";
-    $dbname = "jmr";
+
+
+  function upload($bien){
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $target_dir = "uploads/";
@@ -159,9 +156,10 @@ function affiche(){
     // if everything is ok, try to upload file
     } else {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-          $this->toString();
-          $this->update($bd,"Photo",$target_file);
-          $this->Photo=$target_file;
+          $bien->toString();
+          $bien->update($bd,"Photo",$target_file);
+          $member->Photo=$target_file;
+          $_SESSION['member']=serialize($member);
           header('Location: parameters.php');
             echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
         } else {
@@ -169,6 +167,7 @@ function affiche(){
         }
     }
   }
+
 }
 
 
