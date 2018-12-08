@@ -18,7 +18,7 @@ if(isset($_POST['email'])){
     $response = $stmt->rowCount();
     if($response==1){
         $tab=[];
-      $member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+      $member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
       echo "SALUT ".$_POST['email']."<br>";
       while ($row = $stmt->fetch()) {
         $index=0;
@@ -26,7 +26,7 @@ if(isset($_POST['email'])){
           if($index%2==0){
             array_push($tab,$value);
             //echo $key." ";
-          
+
             }
           $index++;
         }
@@ -75,7 +75,7 @@ if(isset($_POST['email'])){
     <link href="js/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-     <link rel="stylesheet" href="css/menu.css"> 
+     <link rel="stylesheet" href="css/menu.css">
     <link href="css/style_register.css" rel="stylesheet" media="all">
 
 </head>
@@ -83,15 +83,15 @@ if(isset($_POST['email'])){
 <body>
 
 	<div class="header">
-          
+
             <div class="logo">
                 <a href="index.html">
                     <img src="img/shared/logo.jpg" alt="Logo">
                 </a>
             </div>
 
-            
-         
+
+
        <div class="menu">
         <ul>
           <li> <a a href="index.html">Accueil</a></li>
@@ -104,7 +104,7 @@ if(isset($_POST['email'])){
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
 <script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
 
-  
+
         </div>
     </div>
 
@@ -128,9 +128,9 @@ if(isset($_POST['email'])){
                                     <input class="input--style-4" type="password"  name="password" required>
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" type="submit">Se connecter</button>
                         </div>

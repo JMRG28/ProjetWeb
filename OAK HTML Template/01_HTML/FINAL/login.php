@@ -18,7 +18,7 @@ if(isset($_POST['email'])){
     $response = $stmt->rowCount();
     if($response==1){
     	$tab=[];
-      $member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+      $member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
       echo "SALUT ".$_POST['email']."<br>";
       while ($row = $stmt->fetch()) {
         $index=0;
@@ -26,7 +26,7 @@ if(isset($_POST['email'])){
           if($index%2==0){
           	array_push($tab,$value);
             //echo $key." ";
-          
+
       		}
           $index++;
         }
@@ -83,7 +83,7 @@ if(isset($_POST['email'])){
     <button type="button" class="cancelbtn">Cancel</button>
     <span class="psw">Forgot <a href="#">password?</a></span>
   </div>
-</form> 
+</form>
 </body>
 
 </html>
