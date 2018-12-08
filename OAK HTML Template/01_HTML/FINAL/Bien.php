@@ -51,11 +51,8 @@ class Bien {
     
   }
 
-function affiche(){
-  echo '<div class="tile scale-anm biens all">
-        <a href="aff_bien.php"><img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" /></a>
-  </div>';
-}
+
+  function affiche(){ echo '<div class="tile scale-anm biens all">'.$this->Titre.'<br>'.$this->Descriptif.'<br> <a href="aff_bien.php"><img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" /></a> </div>'; }
 
 // A VERIFIEEEER 
   function insert($bd){
