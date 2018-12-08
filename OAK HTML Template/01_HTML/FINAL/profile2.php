@@ -57,11 +57,6 @@ $member->getFromURL($_GET["uid"]);
     </div>
 
     <div class="profile-card__cnt js-profile-cnt">
-  <form action="upload.php" method="post" enctype="multipart/form-data">
-Select image to upload:
-<input type="file" name="fileToUpload" id="fileToUpload">
-<input type="submit" value="Upload" name="submit">
-</form>
 
       <div class="profile-card__name"> <?php echo $member->Prenom." ".$member->Nom; ?> </div>
       <div class="profile-card__txt"><?php echo $member->Statut; ?></div>

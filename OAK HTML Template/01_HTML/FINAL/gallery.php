@@ -1,9 +1,9 @@
 <?php
 include 'Bien.php' ;
 include 'Membre.php';
-session_start();
-$member=unserialize($_SESSION['member']);
-$member->toString();
+//session_start();
+//$member=unserialize($_SESSION['member']);
+//$member->toString();
 
 function conversion($d){
   $nd=explode("/",$d);
@@ -30,11 +30,12 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 
 
     $biens=[];
-    $bien=new Bien(null,null,null,null,null,null,null,null,null);
+    //$bien=new Bien(null,null,null,null,null,null,null,null,null);
 
 
     foreach($bd->query('SELECT * FROM BIEN') as $row ){
       //print_r($row);
+      $bien=new Bien(null,null,null,null,null,null,null,null,null);
     $bien->createFromTab($row);
     array_push($biens, $bien);
     }
@@ -94,7 +95,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
   <button class="btn fil-cat" data-rel="services">Services</button>
 </div>
 
-<div id="portfolio">
+<div id="portfolio" class="wrap">
 
   <?php
     foreach($biens as $i){
