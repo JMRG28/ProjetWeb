@@ -15,25 +15,25 @@ $member->toString();
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
-     <link rel="stylesheet" href="css/menu.css"> 
-      <link rel="stylesheet" href="css/style_profile.css"> 
-   
+     <link rel="stylesheet" href="css/menu.css">
+      <link rel="stylesheet" href="css/style_profile.css">
 
 
-  
+
+
 </head>
 
 <body>
 <div class="header">
-          
+
             <div class="logo">
                 <a href="index.html">
                     <img src="img/shared/logo.jpg" alt="Logo">
                 </a>
             </div>
 
-            
-         
+
+
        <div class="menu">
         <ul>
           <li> <a a href="index.html">Accueil</a></li>
@@ -51,7 +51,7 @@ $member->toString();
 <div class="wrapper">
   <div class="profile-card js-profile-card">
     <div class="profile-card__img">
-      <img src="img/llivia.jpg" alt="profile card">
+      <img src="<?php echo $member->Photo;?>" alt="profile card">
     </div>
 
     <div class="profile-card__cnt js-profile-cnt">
@@ -82,7 +82,7 @@ $member->toString();
         </div>
       </div>
 
-    
+
 
       <div class="profile-card-ctr">
         <button class="profile-card__button button--blue js-message-btn">Message</button>
@@ -170,8 +170,8 @@ $member->toString();
     </symbol>
   </defs>
 </svg>
-  
-  
+
+
 
     <script  src="js/profile.js"></script>
 
