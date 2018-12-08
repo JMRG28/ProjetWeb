@@ -51,15 +51,40 @@ class Bien {
     echo $this->Titre;
 }
 
+
 function affiche(){
-  echo '<div class="tile scale-anm biens all">'
-  .$this->Titre.'<br>'
-  .$this->Descriptif.'<br>
-  <a href=profile2.php?uid='.md5($this->EmailProp).'>Vendeur</a><br>
-        <a href="aff_bien.php">
-        <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" />
-        </a>
-  </div>';
+  if($this->Photo!=null){
+    echo '<div class="tile scale-anm biens all">'
+    .$this->Titre.'<br>'
+    .$this->Descriptif.'<br>
+    <a href=profile2.php?uid='.md5($this->EmailProp).'>Vendeur</a><br>
+          <a href="aff_bien.php">
+          <img src='.$this->Photo.' alt="" />
+          </a>
+    </div>';
+  }
+  else{
+    echo '<div class="tile scale-anm biens all">'
+    .$this->Titre.'<br>'
+    .$this->Descriptif.'<br>
+    <a href=profile2.php?uid='.md5($this->EmailProp).'>Vendeur</a><br>
+          <a href="aff_bien.php">
+          <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" />
+          </a>
+    </div>';
+
+  }
+}
+
+function affiche2(){
+echo '<div class="tile scale-anm biens all">'
+    .$this->Titre.'<br>'
+    .$this->Descriptif.'<br>
+    <a href=profile2.php?uid='.md5($this->EmailProp).'>Vendeur</a><br>
+          <a href="aff_bien.php">
+          <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" />
+          </a>
+    </div>';
 
 }
 
@@ -162,7 +187,7 @@ function affiche(){
           $this->toString();
           $this->update($bd,"Photo",$target_file);
           $this->Photo=$target_file;
-          header('Location: parameters.php');
+          //header('Location: bien.php');
             echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
         } else {
             echo "Sorry, there was an error uploading your file.";

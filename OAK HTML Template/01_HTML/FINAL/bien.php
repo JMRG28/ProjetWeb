@@ -39,6 +39,8 @@ if(isset($_POST['titre'])){ // à améliorer
     //$prix=floatval($_POST['prixNeuf']);
     $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre']);
     $bien->insert($bd);
+    //echo $_FILES["fileToUpload"]["name"]);
+    print_r($_FILES);
     $bien->upload();
     echo "Successfully added the new good " . $id;
   } catch (PDOException $e) {
@@ -118,7 +120,7 @@ if(isset($_POST['titre'])){ // à améliorer
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title"> Proposition d'un bien</h2>
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
