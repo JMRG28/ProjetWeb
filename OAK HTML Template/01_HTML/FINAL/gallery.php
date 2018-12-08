@@ -30,14 +30,13 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 
 
     $biens=[];
-    //$bien=new Bien(null,null,null,null,null,null,null,null,null);
+
 
 
     foreach($bd->query('SELECT * FROM BIEN') as $row ){
-      //print_r($row);
       $bien=new Bien(null,null,null,null,null,null,null,null,null);
-    $bien->createFromTab($row);
-    array_push($biens, $bien);
+      $bien->createFromTab($row);
+      array_push($biens, $bien);
     }
 
   }finally{
