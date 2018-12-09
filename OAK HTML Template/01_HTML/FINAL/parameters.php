@@ -40,12 +40,14 @@ function updateDB($v,$k){
   $bien->update($bd,$v,$k); 
   $member->$v=$k ; 
  } 
+
+
 /*
  if(isset($_POST["enregistrer_B"] && isset($_POST["bien"])){ 
-  if($_POST["titre_B"]!=""){ 
-    updateDB_Bien($_POST["bien"],"Titre",$_POST["titre_B"]);
-     $callback_B=true; 
-  } 
+  //if($_POST["titre_B"]!=""){ 
+    //updateDB_Bien($_POST["bien"],"Titre",$_POST["titre_B"]);
+   //  $callback_B=true; 
+  //} 
 }
 */
 
@@ -313,16 +315,11 @@ if(isset($_POST["enregistrer"])){
 
              </div>
              <div class="tab-pane" id="biens">
-
                <h2></h2>
-
-
-
                <hr>
-                  <form class="form" action="##" method="post" id="registrationForm">
                       <form method="post" action="traitement.php"> 
                          <p>
-                               <label for="pays">Choisissez le bien à modifier</label><br />
+                               <label for="pays">Choisissez le bien à modifier</label><br/>
                                <select name="bien" id="bien">
 
                                 <?php
@@ -391,8 +388,7 @@ if(isset($_POST["enregistrer"])){
                                     echo "<button class='btn btn-lg btn-success' type='submit' name='enregistrer_B'><i class='glyphicon glyphicon-ok-sign'></i> Enregistrer</button>";
                                     echo "<button class='btn btn-lg' type='reset'><i class='glyphicon glyphicon-repeat'></i> Annuler</button>";
                                     echo "</div> </div>";
-                                    echo "</div> ";
-
+                                    echo "</div> </form>";
  
                                   }finally{
                                     $bd=null;
@@ -400,13 +396,9 @@ if(isset($_POST["enregistrer"])){
 
                                 ?>
 
-                        </form>
-                      
-
-
              </div><!--/tab-pane-->
-             <div class="tab-pane" id="settings">
 
+             <div class="tab-pane" id="settings">
 
                   <hr>
                   <form class="form" action="##" method="post" id="registrationForm">
@@ -419,10 +411,6 @@ if(isset($_POST["enregistrer"])){
                       </div>
                       <div class="form-group">
 
-
-
-
-
                       <div class="form-group">
                            <div class="col-xs-12">
                                 <br>
@@ -431,7 +419,6 @@ if(isset($_POST["enregistrer"])){
                             </div>
                       </div>
               	</form>
-              </div>
 
               </div><!--/tab-pane-->
           </div><!--/tab-content-->
