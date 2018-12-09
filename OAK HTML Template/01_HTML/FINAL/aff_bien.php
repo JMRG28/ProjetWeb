@@ -1,3 +1,12 @@
+<?php
+include "Bien.php";
+ini_set("display_errors",1);error_reporting(E_ALL);
+$bien=new Bien(null,null,null,null,null,null,null,null,null,null);
+$bien->getFromURL($_GET["bid"]);
+$bien->toString();
+
+
+?>
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -8,12 +17,12 @@
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
-  
-      <link rel="stylesheet" href="css/style_profile.css"> 
+
+      <link rel="stylesheet" href="css/style_profile.css">
 
       <link rel="stylesheet" href="css/main.css">
 
-  
+
 </head>
 
 <body>
@@ -24,8 +33,8 @@
                     <img src="img/logo3.jpg" alt="Logo">
                 </a>
             </div>
-            
-         
+
+
        <div class="menu">
           <a a href="index.html" class="link">
             <div class="title">Accueil</div>
@@ -39,7 +48,7 @@
             <div class="title">Toutes les propositions</div>
             <div class="bar"></div>
           </a>
-        
+
           <a a href="parameters.html"class="link">
             <div class="title">Paramètres</div>
             <div class="bar"></div>
@@ -60,24 +69,24 @@
 
   <div class="wrapper">
 
-  
+
   <div class="profile-card js-profile-card">
     <div class="profile-card__img">
-      <img src="img/llivia.jpg" alt="profile card">
+      <img src="<?php echo $bien->Prop->Photo;?>" alt="profile card">
     </div>
 
     <div class="profile-card__cnt js-profile-cnt">
-      <div class="profile-card__txt">Llivia LANGEVIN    </div>
+      <div class="profile-card__txt"><?php echo $bien->Prop->Prenom." ".$bien->Prop->Nom; ?> </div>
 
-      <div class="profile-card__name">ASPIRATEUR DYSON 10€/heure</div>
-      <div class="profile-card__txt"><strong>"</strong>Loue aspirateur Dyson<strong>"</strong></div>
+      <div class="profile-card__name"><?php echo $bien->Titre." ".$bien->PrixNeuf; ?> </div>
+      <div class="profile-card__txt"><strong>"</strong><?php echo $bien->Descriptif;?><strong>"</strong></div>
       <div class="profile-card-loc">
         <span class="profile-card-loc__icon">
           <svg class="icon"><use xlink:href="#icon-location"></use></svg>
         </span>
 
         <span class="profile-card-loc__txt">
-          Montpellier, France
+          <?php echo $bien->Prop->CodePostal;?>
         </span>
 
       </div>
@@ -94,7 +103,7 @@ Dernière connexion: 12/11/2018
         </div>
       </div>
 
-    
+
 
       <div class="profile-card-ctr">
         <button class="profile-card__button button--blue js-message-btn">Message</button>
@@ -182,8 +191,8 @@ Dernière connexion: 12/11/2018
     </symbol>
   </defs>
 </svg>
-  
-  
+
+
 
     <script  src="js/profile.js"></script>
 

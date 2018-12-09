@@ -37,7 +37,7 @@ if(isset($_POST['titre'])){ // à améliorer
 
 
     //$prix=floatval($_POST['prixNeuf']);
-    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre']);
+    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre'],md5($id));
     $bien->insert($bd);
     //echo $_FILES["fileToUpload"]["name"]);
     print_r($_FILES);

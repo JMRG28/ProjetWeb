@@ -1,5 +1,5 @@
 <?php
-
+include_once('Membre.php');
 class Bien {
   public $ID_Bien;
   public $Descriptif;
@@ -10,11 +10,13 @@ class Bien {
   public $DateMES;
   public $EmailProp;
   public $Titre;
+  public $Url;
+  public $Prop;
 
 
 
 //privatiser apres
-  function __construct($id_bien, $descriptif, $photo, $prixNeuf, $actif, $estDispo, $dateMES, $emailProp, $titre) {
+  function __construct($id_bien, $descriptif, $photo, $prixNeuf, $actif, $estDispo, $dateMES, $emailProp, $titre,$url) {
   $this->ID_Bien=$id_bien;
   $this->Descriptif=$descriptif;
   $this->Photo=$photo;
@@ -24,6 +26,9 @@ class Bien {
   $this->DateMES=$dateMES;
   $this->EmailProp=$emailProp;
   $this->Titre=$titre;
+  $this->Url=$url;
+  $this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+
   }
 
   function createFromTab($tab) {
@@ -36,8 +41,8 @@ class Bien {
   $this->DateMES=$tab[6];
   $this->EmailProp=$tab[7];
   $this->Titre=$tab[8];
-
-
+  $this->Url=$tab[9];
+  $this->Prop->getFromEmail($this->EmailProp);
   }
 
  function  toString(){
@@ -57,8 +62,8 @@ function affiche(){
     echo '<div class="tile scale-anm biens all">'
     .$this->Titre.'<br>'
     .$this->Descriptif.'<br>
-    <a href=profile2.php?uid='.md5($this->EmailProp).'>Vendeur</a><br>
-          <a href="aff_bien.php">
+    <a href=profile2.php?uid='.md5($this->EmailProp).'>'.$this->Prop->Prenom.' '.$this->Prop->Nom.'</a><br>
+          <a href=aff_bien.php?bid='.$this->Url.'>
           <img src='.$this->Photo.' alt="" />
           </a>
     </div>';
@@ -67,7 +72,7 @@ function affiche(){
     echo '<div class="tile scale-anm biens all">'
     .$this->Titre.'<br>'
     .$this->Descriptif.'<br>
-    <a href=profile2.php?uid='.md5($this->EmailProp).'>Vendeur</a><br>
+    <a href=profile2.php?uid='.md5($this->EmailProp).'>'.$this->Prop->Prenom.' '.$this->Prop->Nom.'</a><br>
           <a href="aff_bien.php">
           <img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" />
           </a>
@@ -91,7 +96,7 @@ echo '<div class="tile scale-anm biens all">'
 // A VERIFIEEEER
   function insert($bd){
   //  echo "<h1>".$this->Email." coucou <h1>";
-    $stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre)");
+    $stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre,Url)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre, :url)");
     $stmt->bindValue(":id_bien", $this->ID_Bien);
     $stmt->bindValue(":descriptif", $this->Descriptif);
     $stmt->bindValue(":photo",$this->Photo);
@@ -100,10 +105,11 @@ echo '<div class="tile scale-anm biens all">'
     //$stmt->bindValue(":dateMES", $this->DateMES);
     $stmt->bindValue(":emailProp", $this->EmailProp);
     $stmt->bindValue(":titre", $this->Titre);
+    $stmt->bindValue(":url", $this->Url);
     $stmt->execute();
   }
 
-  function getFromURL($uid){
+  function getFromURL($bid){
     $servername = "86.210.13.52";
     $port="3307";
     $username = "jmr";
@@ -111,9 +117,9 @@ echo '<div class="tile scale-anm biens all">'
     $dbname = "jmr";
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $bd->prepare("SELECT * FROM BIEN WHERE PHOTO = ?");
+    $stmt = $bd->prepare("SELECT * FROM BIEN WHERE Url = ?");
     $u=[];
-    array_push($u,$uid);
+    array_push($u,$bid);
     $stmt->execute($u);
     $response = $stmt->rowCount();
     if($response==1){

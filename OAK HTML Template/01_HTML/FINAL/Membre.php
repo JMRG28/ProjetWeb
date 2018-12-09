@@ -126,6 +126,38 @@ class Membre {
       echo "<h1>Utilisateur non trouvé</h1>";
     }
   }
+  function getFromEmail($email){
+    echo " Email: ".$email;
+    $servername = "86.210.13.52";
+    $port="3307";
+    $username = "jmr";
+    $password = "BaseDonnees1234";
+    $dbname = "jmr";
+    $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+    $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt = $bd->prepare("SELECT * FROM MEMBRE WHERE Email = ?");
+    $u=[];
+    array_push($u,$email);
+    $stmt->execute($u);
+    $response = $stmt->rowCount();
+    if($response==1){
+      $tab=[];
+      while ($row = $stmt->fetch()) {
+        $index=0;
+        foreach ($row as $key=>$value){
+          if($index%2==0){
+            array_push($tab,$value);
+          }
+          $index++;
+        }
+      }
+      $this->createFromTab($tab);
+    }else{
+      echo "<h1>Utilisateur non trouvé</h1>";
+    }
+  }
+
+
   function update($bd,$key,$value){
     //  echo "<h1>".$this->Email." coucou <h1>";
     if($value!=""){

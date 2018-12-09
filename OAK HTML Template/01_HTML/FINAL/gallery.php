@@ -1,6 +1,6 @@
 <?php
 include 'Bien.php' ;
-include 'Membre.php';
+//include 'Membre.php';
 //session_start();
 //$member=unserialize($_SESSION['member']);
 //$member->toString();
@@ -34,7 +34,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 
 
     foreach($bd->query('SELECT * FROM BIEN') as $row ){
-      $bien=new Bien(null,null,null,null,null,null,null,null,null);
+      $bien=new Bien(null,null,null,null,null,null,null,null,null,null);
       $bien->createFromTab($row);
       array_push($biens, $bien);
     }
