@@ -10,6 +10,8 @@ if (!isset($_SESSION['member'])){
 $member=unserialize($_SESSION['member']);
 $member->toString();
 
+echo 
+
 
 $callback=false; 
 $callback_B=false; 
@@ -354,9 +356,9 @@ if(isset($_POST["enregistrer"])){
                                     foreach($bd->query("SELECT * FROM BIEN WHERE EmailProp='".$member->Email."'") as $row){
                                       //$bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
                                       echo  "<option value=".$row[0].">".$row[8]."</option>";
-                                      $_SESSION["current_b"]=$row[0];
                                       //affiche($bien);
                                       }
+
 
                                   }finally{
                                     $bd=null;
@@ -382,6 +384,7 @@ if(isset($_POST["enregistrer"])){
                                     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                   
                                     if(isset($_POST["bien"])){
+                                      $_SESSION["current_b"]=$_POST["bien"];
                                       echo "<form class='form' action='##'' method='post' id='bienForm'> <div class='form-group'>";
                                     foreach($bd->query("SELECT * FROM BIEN WHERE ID_Bien='".$_POST["bien"]."'") as $row){
                                       $bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);

@@ -41,7 +41,6 @@ if(isset($_POST['titre'])){ // à améliorer
     //echo $_FILES["fileToUpload"]["name"]);
     print_r($_FILES);
     $bien->upload();
-    ($bien->Prop)->
     echo "Successfully added the new good " . $id;
   } catch (PDOException $e) {
     echo "DataBase Error: The good could not be added.<br>".$e->getMessage();
