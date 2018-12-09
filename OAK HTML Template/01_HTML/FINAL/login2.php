@@ -26,11 +26,11 @@ if(isset($_POST['email'])){
           if($index%2==0){
             array_push($tab,$value);
             //echo $key." ";
-
             }
           $index++;
         }
       }
+      print_r($tab);
       $member->createFromTab($tab);
       $_SESSION['member']=serialize($member);
       header('Location: profile.php');

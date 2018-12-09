@@ -1,7 +1,7 @@
 <?php
 include "Membre.php";
 ini_set("display_errors",1);error_reporting(E_ALL);
-$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 $member->getFromURL($_GET["uid"]);
 //$member->toString();
 
