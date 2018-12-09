@@ -33,7 +33,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 
 
 
-    foreach($bd->query('SELECT * FROM BIEN') as $row ){
+    foreach($bd->query('SELECT * FROM BIEN where EstDispo=1') as $row ){
       $bien=new Bien(null,null,null,null,null,null,null,null,null,null);
       $bien->createFromTab($row);
       array_push($biens, $bien);

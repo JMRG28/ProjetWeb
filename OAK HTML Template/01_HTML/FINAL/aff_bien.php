@@ -1,11 +1,30 @@
 <?php
+session_start();
 include "Bien.php";
 ini_set("display_errors",1);error_reporting(E_ALL);
+if (!isset($_SESSION['member'])){
+  header('Location: login2.php');
+}else{
 $bien=new Bien(null,null,null,null,null,null,null,null,null,null);
 $bien->getFromURL($_GET["bid"]);
 $bien->toString();
-
-
+$member=unserialize($_SESSION['member']);
+if(isset($_POST["reserver"]) && $bien->Prop->Email!=$member->Email){
+  $servername = "86.210.13.52";
+  $port="3307"; $username = "jmr";
+  $password = "BaseDonnees1234";
+  $dbname = "jmr";
+  $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $stmt = $bd->prepare("INSERT INTO CONSOMMATION_B (EmailProp, EmailConso, ID_Bien, DateDeb,DateFin)VALUES (:EmailProp, :EmailConso, :ID_Bien, :DateDeb,:DateFin)");
+  $stmt->bindValue(":EmailProp", $bien->Prop->Email);
+  $stmt->bindValue(":EmailConso", $member->Email);
+  $stmt->bindValue(":ID_Bien",$bien->ID_Bien);
+  $stmt->bindValue(":DateDeb", date("Y-m-d"));
+  $stmt->bindValue(":DateFin", null);
+  $stmt->execute();
+  $bien->update($bd,"EstDispo",0);
+}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" >
@@ -80,6 +99,10 @@ $bien->toString();
 
       <div class="profile-card__name"><?php echo $bien->Titre." ".$bien->PrixNeuf; ?> </div>
       <div class="profile-card__txt"><strong>"</strong><?php echo $bien->Descriptif;?><strong>"</strong></div>
+      <div class="">
+        <img style="height:300px;" src="<?php echo $bien->Photo;?>" alt="profile card">
+      </div>
+      <br>
       <div class="profile-card-loc">
         <span class="profile-card-loc__icon">
           <svg class="icon"><use xlink:href="#icon-location"></use></svg>
@@ -106,8 +129,10 @@ Dernière connexion: 12/11/2018
 
 
       <div class="profile-card-ctr">
-        <button class="profile-card__button button--blue js-message-btn">Message</button>
-        <button class="profile-card__button button--orange">Follow</button>
+        <form action="" method="post">
+        <button name="reserver" type="submit" class="profile-card__button button--blue js-message-btn">Réserver</button>
+        <!-- <button class="profile-card__button button--orange">Follow</button> -->
+      </form>
       </div>
     </div>
 
