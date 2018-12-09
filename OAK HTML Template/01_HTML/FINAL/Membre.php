@@ -19,7 +19,7 @@ class Membre {
   public $Suspendu;
   public $url;
 
-//privatiser apres
+  //privatiser apres
   function __construct($email,$mdp,$nom,$prenom,$codep,$num,$photo,$desc,$rendu,$recu,$sexe,$statut,$dateN,$dateI,$actif,$suspendu,$url) {
     $this->Email= $email;
     $this->MdpHash=$mdp;
@@ -62,8 +62,8 @@ class Membre {
 
   }
 
- function  toString(){
-     echo $this->Email;
+  function  toString(){
+    echo $this->Email;
     echo $this->MdpHash;
     echo $this->Nom;
     echo $this->Prenom;
@@ -83,7 +83,7 @@ class Membre {
 
 
   function insert($bd){
-  //  echo "<h1>".$this->Email." coucou <h1>";
+    //  echo "<h1>".$this->Email." coucou <h1>";
     $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss,url)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance,:url)");
     $stmt->bindValue(":email", $this->Email);
     $stmt->bindValue(":mdp_hash", $this->MdpHash);
@@ -122,15 +122,17 @@ class Membre {
         }
       }
       $this->createFromTab($tab);
-  }else{
-    echo "<h1>Utilisateur non trouvé</h1>";
+    }else{
+      echo "<h1>Utilisateur non trouvé</h1>";
+    }
   }
-}
   function update($bd,$key,$value){
-  //  echo "<h1>".$this->Email." coucou <h1>";
-  echo " <br> UPDATE MEMBRE SET ".$key."='".$value."' where Email=".$this->Email ."<br>";
-    $stmt = $bd->prepare("UPDATE MEMBRE SET ".$key."='".$value."' where Email='".$this->Email."'");
-    $stmt->execute();
+    //  echo "<h1>".$this->Email." coucou <h1>";
+    if($value!=""){
+      echo " <br> UPDATE MEMBRE SET ".$key."='".$value."' where Email=".$this->Email ."<br>";
+      $stmt = $bd->prepare("UPDATE MEMBRE SET ".$key."='".$value."' where Email='".$this->Email."'");
+      $stmt->execute();
+    }
   }
 
 }

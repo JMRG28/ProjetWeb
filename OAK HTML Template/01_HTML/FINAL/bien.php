@@ -24,7 +24,7 @@ if(isset($_POST['titre'])){ // à améliorer
 
 
   try {
-    
+
 
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -34,11 +34,13 @@ if(isset($_POST['titre'])){ // à améliorer
     $query->execute();
     $result=$query->fetch();
     $id=$result[0]+1;
-     
+
 
     //$prix=floatval($_POST['prixNeuf']);
     $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre']);
     $bien->insert($bd);
+    //echo $_FILES["fileToUpload"]["name"]);
+    print_r($_FILES);
     $bien->upload();
     echo "Successfully added the new good " . $id;
   } catch (PDOException $e) {
@@ -79,7 +81,7 @@ if(isset($_POST['titre'])){ // à améliorer
     <link href="js/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-     <link rel="stylesheet" href="css/menu.css"> 
+     <link rel="stylesheet" href="css/menu.css">
     <link href="css/style_register.css" rel="stylesheet" media="all">
 
 </head>
@@ -87,15 +89,15 @@ if(isset($_POST['titre'])){ // à améliorer
 <body>
 
 	<div class="header">
-          
+
             <div class="logo">
                 <a href="index.html">
                     <img src="img/shared/logo.jpg" alt="Logo">
                 </a>
             </div>
 
-            
-         
+
+
        <div class="menu">
         <ul>
           <li> <a a href="index.html">Accueil</a></li>
@@ -108,7 +110,7 @@ if(isset($_POST['titre'])){ // à améliorer
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
 <script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
 
-  
+
         </div>
     </div>
 
@@ -118,7 +120,7 @@ if(isset($_POST['titre'])){ // à améliorer
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title"> Proposition d'un bien</h2>
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
@@ -148,8 +150,8 @@ if(isset($_POST['titre'])){ // à améliorer
 									      <!-- </form> -->
                                 </div>
                             </div>
-                    
-                            
+
+
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
@@ -177,7 +179,7 @@ if(isset($_POST['titre'])){ // à améliorer
                                 </div>
                             </div>
                         </div>
-                       
+
                         <div class="input-group">
                             <label class="label">Statut</label>
                             <div class="rs-select2 js-select-simple select--no-search">
