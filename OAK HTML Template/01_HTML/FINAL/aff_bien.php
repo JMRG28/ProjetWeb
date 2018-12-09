@@ -22,6 +22,8 @@ if(isset($_POST["reserver"]) && $bien->Prop->Email!=$member->Email){
   $stmt->bindValue(":DateDeb", date("Y-m-d"));
   $stmt->bindValue(":DateFin", null);
   $stmt->execute();
+  $bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
+  $member->update($bd,"Recu",$member->Recu+1);
   $bien->update($bd,"EstDispo",0);
 }
 }
