@@ -76,9 +76,9 @@ ini_set("display_errors",1);error_reporting(E_ALL);
        <div class="menu">
         <ul>
           <li> <a a href="index.html">Accueil</a></li>
-          <li> <a href="demande.html">Poster une proposition</a></li>
-          <li><a href="propositions.html">Toutes les propositions</a></li>
-         <li> <a a href="parameters.html">Paramètres</a></li>
+          <li> <a href="bien.php">Poster une proposition</a></li>
+          <li><a href="gallery.php">Toutes les propositions</a></li>
+         <li> <a a href="parameters.php">Paramètres</a></li>
        </ul>
 
 <script src='https://unpkg.com/vue'></script>
