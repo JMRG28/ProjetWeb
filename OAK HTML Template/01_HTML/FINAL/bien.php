@@ -1,6 +1,5 @@
 <?php
 include 'Bien.php' ;
-include 'Membre.php';
 session_start();
 $member=unserialize($_SESSION['member']);
 $member->toString();
@@ -42,6 +41,7 @@ if(isset($_POST['titre'])){ // à améliorer
     //echo $_FILES["fileToUpload"]["name"]);
     print_r($_FILES);
     $bien->upload();
+    ($bien->Prop)->
     echo "Successfully added the new good " . $id;
   } catch (PDOException $e) {
     echo "DataBase Error: The good could not be added.<br>".$e->getMessage();
@@ -101,9 +101,9 @@ if(isset($_POST['titre'])){ // à améliorer
        <div class="menu">
         <ul>
           <li> <a a href="index.html">Accueil</a></li>
-          <li> <a href="demande.html">Poster une proposition</a></li>
-          <li><a href="propositions.html">Toutes les propositions</a></li>
-         <li> <a a href="parameters.html">Paramètres</a></li>
+          <li> <a href="bien.php">Poster une proposition</a></li>
+          <li><a href="gallery.php">Toutes les propositions</a></li>
+         <li> <a a href="parameters.php">Paramètres</a></li>
        </ul>
 
 <script src='https://unpkg.com/vue'></script>

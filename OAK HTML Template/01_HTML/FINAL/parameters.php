@@ -1,6 +1,8 @@
 <?php
 include "Membre.php";
 include "Bien.php";
+
+
 session_start();
 if (!isset($_SESSION['member'])){
   header('Location: login2.php');
@@ -8,27 +10,69 @@ if (!isset($_SESSION['member'])){
 $member=unserialize($_SESSION['member']);
 $member->toString();
 
-ini_set("display_errors",1);error_reporting(E_ALL);
-  $servername = "86.210.13.52";
-  $port="3307";
-  $username = "jmr";
-  $password = "BaseDonnees1234";
-  $dbname = "jmr";
 
-  try {
-    echo $member->Email;
-    $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
-    $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query=$bd->prepare("SELECT * FROM BIEN WHERE EmailProp='".$member->Email."'");
-    $query->execute();
-    $result=$query->fetch();
-    echo "test";
-    print_r($result);
-  
-  }finally{
-    $bd=null;
-  }
+$callback=false; 
+$callback_B=false; 
+$member=unserialize($_SESSION['member']); 
+$member->toString(); 
+function updateDB($v,$k){ 
+  $servername = "86.210.13.52"; 
+  $port="3307"; $username = "jmr"; 
+  $password = "BaseDonnees1234"; 
+  $dbname = "jmr"; 
+  $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+  $member=unserialize($_SESSION['member']);
+   //$member->toString(); 
+   $member->update($bd,$v,$k); 
+   $member->$v=$k ; 
+   $_SESSION['member']=serialize($member);
+    //header('Location: parameters.php'); 
+ } 
 
+ function updateDB_Bien($id,$v,$k){ 
+  $servername = "86.210.13.52"; 
+  $port="3307"; $username = "jmr"; 
+  $password = "BaseDonnees1234"; 
+  $dbname = "jmr"; 
+  $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+  $row=$bd->query("SELECT * FROM BIEN WHERE ID_Bien='".$_POST["bien"]."'");
+  $bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]); 
+  $bien->update($bd,$v,$k); 
+  $member->$v=$k ; 
+ } 
+/*
+ if(isset($_POST["enregistrer_B"] && isset($_POST["bien"])){ 
+  if($_POST["titre_B"]!=""){ 
+    updateDB_Bien($_POST["bien"],"Titre",$_POST["titre_B"]);
+     $callback_B=true; 
+  } 
+}
+*/
+
+if(isset($_POST["enregistrer"])){ 
+  if($_POST["first_name"]!=""){ 
+    updateDB("Prenom",$_POST["first_name"]);
+     $callback=true; 
+  } 
+  if($_POST["last_name"]!=""){
+    updateDB("Nom",$_POST["last_name"]); 
+    $callback=true;
+  } 
+  if($_POST["mobile"]!=""){ 
+    updateDB("NumeroTel",$_POST["mobile"]);
+    $callback=true; 
+  } 
+  if($_POST["codeP"]!=""){ 
+    updateDB("CodePostal",$_POST["codeP"]); 
+    $callback=true; 
+  } 
+  if($_POST["description"]!=""){ 
+    updateDB("Description",$_POST["description"]); 
+    $callback=true; } 
+  if($callback){ 
+    header('Location: parameters.php'); 
+  } 
+}
 
 ?>
 
@@ -149,7 +193,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">Mon compte</a></li>
                 <li><a data-toggle="tab" href="#biens">Mes biens</a></li>
-                <li><a data-toggle="tab" href="#biens">Mes services</a></li>
+                <li><a data-toggle="tab" href="#test">Mes services</a></li>
                 <li><a data-toggle="tab" href="#settings">Tableau de bord</a></li>
               </ul>
 
@@ -177,7 +221,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
                       <div class="form-group">
                           <div class="col-xs-6">
                              <label for="mobile"><h4>Numéro de téléphone</h4></label>
-                              <input type="text" class="form-control" name="mobile" id="mobile" placeholder=<?php echo $member->Prenom; ?> title="enter your mobile number if any.">
+                              <input type="text" class="form-control" name="mobile" id="mobile" placeholder=<?php echo $member->NumeroTel; ?> title="enter your mobile number if any.">
                           </div>
                       </div>
                       <div class="form-group">
@@ -220,7 +264,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
                       <div class="form-group">
                            <div class="col-xs-12">
                                 <br>
-                              	<button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Enregistrer</button>
+                              	<button class="btn btn-lg btn-success" type="submit" name="enregistrer"><i class="glyphicon glyphicon-ok-sign"></i> Enregistrer</button>
                                	<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Annuler</button>
                             </div>
                       </div>
@@ -229,6 +273,45 @@ ini_set("display_errors",1);error_reporting(E_ALL);
               <hr>
 
              </div><!--/tab-pane-->
+
+
+               <div class="tab-pane" id="test">
+                  <hr>
+                  <form class="form" action="##" method="post" id="registrationForm">
+                      <div class="form-group">
+
+                          <div class="col-xs-6">
+                              <label for="titre"><h4>Titre</h4></label>
+                              <input type="text" class="form-control" name="titre" id="titre" placeholder=<?php echo $member->Prenom; ?> >
+                          </div>
+                      </div>
+                      <div class="form-group">
+
+                          <div class="col-xs-6">
+                            <label for="descriptif"><h4>Descriptif</h4></label>
+                              <input type="text" class="form-control" name="descriptif" id="descriptif" placeholder=<?php echo $member->Nom; ?> >
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                             <label for="mobile"><h4>Prix</h4></label>
+                              <input type="numeric" class="form-control" name="" id="prix" placeholder=<?php echo $member->Prenom; ?> >
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                           <div class="col-xs-12">
+                                <br>
+                                <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Enregistrer</button>
+                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Annuler</button>
+                            </div>
+                      </div>
+                </form>
+
+              <hr>
+
+             </div>
              <div class="tab-pane" id="biens">
 
                <h2></h2>
@@ -237,71 +320,89 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 
                <hr>
                   <form class="form" action="##" method="post" id="registrationForm">
-                      <div class="form-group">
+                      <form method="post" action="traitement.php"> 
+                         <p>
+                               <label for="pays">Choisissez le bien à modifier</label><br />
+                               <select name="bien" id="bien">
 
-                          <div class="col-xs-6">
-                              <label for="first_name"><h4>First name</h4></label>
-                              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
-                          </div>
-                      </div>
-                      <div class="form-group">
+                                <?php
+                                  ini_set("display_errors",1);error_reporting(E_ALL);
+                                  $servername = "86.210.13.52";
+                                  $port="3307";
+                                  $username = "jmr";
+                                  $password = "BaseDonnees1234";
+                                  $dbname = "jmr";
 
-                          <div class="col-xs-6">
-                            <label for="last_name"><h4>Last name</h4></label>
-                              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">
-                          </div>
-                      </div>
+                                  try {
+                                    echo $member->Email;
+                                    $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+                                    $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                      <div class="form-group">
+                                    foreach($bd->query("SELECT * FROM BIEN WHERE EmailProp='".$member->Email."'") as $row){
+                                      //$bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+                                      echo  "<option value=".$row[0].">".$row[8]."</option>";
+                                      //affiche($bien);
+                                      }
 
-                          <div class="col-xs-6">
-                              <label for="phone"><h4>Phone</h4></label>
-                              <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any.">
-                          </div>
-                      </div>
+                                  }finally{
+                                    $bd=null;
+                                  }
 
-                      <div class="form-group">
-                          <div class="col-xs-6">
-                             <label for="mobile"><h4>Mobile</h4></label>
-                              <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number" title="enter your mobile number if any.">
-                          </div>
-                      </div>
-                      <div class="form-group">
+                                ?>
 
-                          <div class="col-xs-6">
-                              <label for="email"><h4>Email</h4></label>
-                              <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
-                          </div>
-                      </div>
-                      <div class="form-group">
+                               </select>
+                           </p>
+                           <button > Sélectionner</button>
+                         </form>
 
-                          <div class="col-xs-6">
-                              <label for="email"><h4>Location</h4></label>
-                              <input type="email" class="form-control" id="location" placeholder="somewhere" title="enter a location">
-                          </div>
-                      </div>
-                      <div class="form-group">
+                              <?php
+                                  ini_set("display_errors",1);error_reporting(E_ALL);
+                                  $servername = "86.210.13.52";
+                                  $port="3307";
+                                  $username = "jmr";
+                                  $password = "BaseDonnees1234";
+                                  $dbname = "jmr";
 
-                          <div class="col-xs-6">
-                              <label for="password"><h4>Password</h4></label>
-                              <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
-                          </div>
-                      </div>
-                      <div class="form-group">
+                                  try {
+                                    $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+                                    $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                  
+                                    if($_POST!=null){
+                                      echo "<form class='form' action='##'' method='post' id='bienForm'> <div class='form-group'>";
+                                    foreach($bd->query("SELECT * FROM BIEN WHERE ID_Bien='".$_POST["bien"]."'") as $row){
+                                      $bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+                                      echo " <div class='form-group'> <div class='col-xs-6'>";
+                                      echo "<label for='first_name'><h4>Titre</h4></label>";
+                                      echo "<input type='text' class='form-control' name='titre_B' id='titre_B' placeholder=".$bien->Titre.">";
+                                      echo "</div> </div>";
 
-                          <div class="col-xs-6">
-                            <label for="password2"><h4>Verify</h4></label>
-                              <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                           <div class="col-xs-12">
-                                <br>
-                              	<button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                               	<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
-                            </div>
-                      </div>
-              	</form>
+                                      echo "<div class='form-group'> <div class='col-xs-6'>";
+                                      echo "<label for='mobile'><h4>Descriptif</h4></label>";
+                                      echo "<input type='numeric' class='form-control' name='descriptif_B' id='descriptif_B' placeholder=".$bien->Descriptif.">";
+                                      echo "</div> </div>";
+
+                                      echo "<div class='form-group'> <div class='col-xs-6'>";
+                                      echo "<label for='mobile'><h4>Prix</h4></label>";
+                                      echo "<input type='numeric' class='form-control' name='prix_B' id='prix_B' placeholder=".$bien->PrixNeuf.">";
+                                      echo "</div> </div>";
+                                      }
+                                    }
+                                    echo "<div class='form-group'> <div class='col-xs-12'><br>";
+                                    echo "<button class='btn btn-lg btn-success' type='submit' name='enregistrer_B'><i class='glyphicon glyphicon-ok-sign'></i> Enregistrer</button>";
+                                    echo "<button class='btn btn-lg' type='reset'><i class='glyphicon glyphicon-repeat'></i> Annuler</button>";
+                                    echo "</div> </div>";
+                                    echo "</div> ";
+
+ 
+                                  }finally{
+                                    $bd=null;
+                                  } 
+
+                                ?>
+
+                        </form>
+                      
+
 
              </div><!--/tab-pane-->
              <div class="tab-pane" id="settings">
