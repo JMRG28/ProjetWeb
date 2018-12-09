@@ -35,22 +35,36 @@ function updateDB($v,$k){
   $password = "BaseDonnees1234"; 
   $dbname = "jmr"; 
   $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-  $row=$bd->query("SELECT * FROM BIEN WHERE ID_Bien='".$_POST["bien"]."'");
+  $query=$bd->prepare("SELECT * FROM BIEN WHERE ID_Bien='".$_SESSION["current_b"]."'");
+  $query->execute();
+  $row=$query->fetch();
   $bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]); 
   $bien->update($bd,$v,$k); 
-  $member->$v=$k ; 
+  $bien->$v=$k ; 
  } 
 
 
-/*
- if(isset($_POST["enregistrer_B"] && isset($_POST["bien"])){ 
-  //if($_POST["titre_B"]!=""){ 
-    //updateDB_Bien($_POST["bien"],"Titre",$_POST["titre_B"]);
-   //  $callback_B=true; 
-  //} 
-}
-*/
+ if(isset($_POST["enregistrer_B"])){
+   if($_POST["titre_B"]!=""){
+    updateDB_Bien($_SESSION["current_b"],"Titre",$_POST["titre_B"]);
+    $callback_B=true; 
+   }
+   if($_POST["descriptif_B"]!=""){
+    updateDB_Bien($_SESSION["current_b"],"Descriptif",$_POST["descriptif_B"]);
+    $callback_B=true; 
+   }
+   if($_POST["prix_B"]!=""){
+    updateDB_Bien($_SESSION["current_b"],"PrixNeuf",$_POST["prix_B"]);
+    $callback_B=true; 
+   }
+ } 
+  /*
+  if($_POST["titre_B"]!=""){ 
+    
+  } */
 
+
+print_r ($_POST);
 if(isset($_POST["enregistrer"])){ 
   if($_POST["first_name"]!=""){ 
     updateDB("Prenom",$_POST["first_name"]);
@@ -314,10 +328,12 @@ if(isset($_POST["enregistrer"])){
               <hr>
 
              </div>
+
+
              <div class="tab-pane" id="biens">
                <h2></h2>
                <hr>
-                      <form method="post" action="traitement.php"> 
+                      <form method="post" > <!-- action="traitement.php"> -->
                          <p>
                                <label for="pays">Choisissez le bien à modifier</label><br/>
                                <select name="bien" id="bien">
@@ -338,6 +354,7 @@ if(isset($_POST["enregistrer"])){
                                     foreach($bd->query("SELECT * FROM BIEN WHERE EmailProp='".$member->Email."'") as $row){
                                       //$bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
                                       echo  "<option value=".$row[0].">".$row[8]."</option>";
+                                      $_SESSION["current_b"]=$row[0];
                                       //affiche($bien);
                                       }
 
@@ -364,7 +381,7 @@ if(isset($_POST["enregistrer"])){
                                     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
                                     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                   
-                                    if($_POST!=null){
+                                    if(isset($_POST["bien"])){
                                       echo "<form class='form' action='##'' method='post' id='bienForm'> <div class='form-group'>";
                                     foreach($bd->query("SELECT * FROM BIEN WHERE ID_Bien='".$_POST["bien"]."'") as $row){
                                       $bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
@@ -388,13 +405,14 @@ if(isset($_POST["enregistrer"])){
                                     echo "<button class='btn btn-lg btn-success' type='submit' name='enregistrer_B'><i class='glyphicon glyphicon-ok-sign'></i> Enregistrer</button>";
                                     echo "<button class='btn btn-lg' type='reset'><i class='glyphicon glyphicon-repeat'></i> Annuler</button>";
                                     echo "</div> </div>";
-                                    echo "</div> </form>";
+                                    echo "</div> </div></form>";
  
                                   }finally{
                                     $bd=null;
                                   } 
 
                                 ?>
+                              </div> <!-- ?? -->
 
              </div><!--/tab-pane-->
 
