@@ -77,18 +77,6 @@ class Bien {
 		}
 	}
 
-	function affiche2(){
-		echo '<div class="tile scale-anm biens all">'
-		.$this->Titre.'<br>'
-		.$this->Descriptif.'<br>
-		<a href=profile2.php?uid='.md5($this->EmailProp).'>Vendeur</a><br>
-		<a href="aff_bien.php">
-		<img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" />
-		</a>
-		</div>';
-
-	}
-
 	function insert($bd){
 		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre,Url)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre, :url)");
 		$stmt->bindValue(":id_bien", $this->ID_Bien);

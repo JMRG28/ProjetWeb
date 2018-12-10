@@ -41,6 +41,11 @@ try {
 </head>
 
 <body>
+  <div class="toolbar mb2 mt2">
+  <button class="btn fil-cat" href="" data-rel="all">All</button>
+  <button class="btn fil-cat" data-rel="biens">Biens</button>
+  <button class="btn fil-cat" data-rel="services">Services</button>
+</div>
 <div id="portfolio" class="wrap">
   <?php
   foreach($biens as $i){

@@ -1,6 +1,6 @@
 <?php
 include "Membre.php";
-include 'header.php';
+include 'header_b4.php';
 include 'bd.php';
 
 session_start();

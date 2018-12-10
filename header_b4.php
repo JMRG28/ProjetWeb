@@ -22,10 +22,9 @@
   <div class="menu">
     <ul>
       <li> <a a href="index.html">Accueil</a></li>
-      <li> <a href="choice.php">Poster une proposition</a></li>
-      <li><a href="gallery.php">Toutes les propositions</a></li>
-      <li> <a a href="parameters.php">Paramètres</a></li>
-      <li> <a href="deconnexion.php">Déconnexion</a></li>
+      <li> <a href="register.php">S'inscrire</a></li>
+      <li><a href="login2.php">Se connecter</a></li>
+      
     </ul>
 
     <script src='https://unpkg.com/vue'></script>

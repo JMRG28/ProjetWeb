@@ -1,6 +1,6 @@
 <?php
 include 'Membre.php' ;
-include 'header.php';
+include 'header_b4.php';
 include 'bd.php';
 
 function conversion($d){
@@ -24,6 +24,7 @@ if(isset($_POST['email'])){
 		$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['code_p'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null,md5($_POST['email']));
 		$membre->insert($bd);
+        header('Location: profile.php');
 		echo "Successfully added the new user " . $_POST['nom'];
 	} catch (PDOException $e) {
 		echo "DataBase Error: The user could not be added.<br>".$e->getMessage();

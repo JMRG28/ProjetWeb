@@ -1,4 +1,5 @@
 <?php
+include "header.php";
 session_start();
 include "Bien.php";
 ini_set("display_errors",1);error_reporting(E_ALL);
@@ -33,7 +34,7 @@ if (!isset($_SESSION['member'])){
 
 <head>
 	<meta charset="UTF-8">
-	<title>Profil</title>
+	<title></title>
 	<meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -47,49 +48,8 @@ if (!isset($_SESSION['member'])){
 </head>
 
 <body>
-	<div class="header">
-		<div class="container">
-			<div class="logo">
-				<a href="index.html">
-					<img src="img/logo3.jpg" alt="Logo">
-				</a>
-			</div>
-
-
-			<div class="menu">
-				<a a href="index.html" class="link">
-					<div class="title">Accueil</div>
-					<div class="bar"></div>
-				</a>
-				<a href="demande.html" class="link">
-					<div class="title">Poster une proposition</div>
-					<div class="bar"></div>
-				</a>
-				<a href="propositions.html" class="link">
-					<div class="title">Toutes les propositions</div>
-					<div class="bar"></div>
-				</a>
-
-				<a a href="parameters.html"class="link">
-					<div class="title">Paramètres</div>
-					<div class="bar"></div>
-				</a>
-
-				<div class="container">
-
-				</div>
-				<script src='https://unpkg.com/vue'></script>
-				<script src='https://unpkg.com/axios/dist/axios.min.js'></script>
-				<script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
-
-
-			</div>
-		</div>
-	</div>
-
 
 	<div class="wrapper">
-
 
 		<div class="profile-card js-profile-card">
 			<div class="profile-card__img">
@@ -101,10 +61,6 @@ if (!isset($_SESSION['member'])){
 
 				<div class="profile-card__name"><?php echo $bien->Titre." ".$bien->PrixNeuf; ?> </div>
 				<div class="profile-card__txt"><strong>"</strong><?php echo $bien->Descriptif;?><strong>"</strong></div>
-				<div class="">
-					<img style="height:300px;" src="<?php echo $bien->Photo;?>" alt="profile card">
-				</div>
-				<br>
 				<div class="profile-card-loc">
 					<span class="profile-card-loc__icon">
 						<svg class="icon"><use xlink:href="#icon-location"></use></svg>
@@ -115,20 +71,12 @@ if (!isset($_SESSION['member'])){
 					</span>
 
 				</div>
-				Dernière connexion: 12/11/2018
-				<div class="profile-card-inf">
-					<div class="profile-card-inf__item">
-						<div class="profile-card-inf__title">34</div>
-						<div class="profile-card-inf__txt">demandes</div>
-					</div>
-
-					<div class="profile-card-inf__item">
-						<div class="profile-card-inf__title">45</div>
-						<div class="profile-card-inf__txt">propositions</div>
-					</div>
+				<br>
+				<div class="">
+					<img style="height:300px;" src="<?php echo $bien->Photo;?>" alt="profile card">
 				</div>
-
-
+				<br>
+				
 
 				<div class="profile-card-ctr">
 					<form action="" method="post">
