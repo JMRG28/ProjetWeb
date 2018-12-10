@@ -180,7 +180,7 @@ echo '<div class="tile scale-anm biens all">'
         $uploadOk = 0;
     }
     // Allow certain file formats
-    if($imageFileType != "jpg" ) {
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"  && $imageFileType != "gif" && $imageFileType != "tif" ) {
         echo "Sorry, only .jpg files are allowed.";
         $uploadOk = 0;
     }
