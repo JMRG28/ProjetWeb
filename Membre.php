@@ -58,7 +58,8 @@ class Membre {
     $this->DateNaiss=$tab[12];
     $this->DateIns=$tab[13];
     $this->Actif=$tab[14];
-    //$this->url=$tab[15];
+    $this->Suspendu=$tab[15];
+    $this->url=$tab[16];
     $this->Admin=$tab[17];
 
 

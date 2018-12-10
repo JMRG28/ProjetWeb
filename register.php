@@ -129,7 +129,7 @@ if(isset($_POST['email'])){
                         					<span class="checkmark"></span>
                         				</label>
                         				<label class="radio-container">Femme
-                        					<input type="radio" name="sexe" value="H">
+                        					<input type="radio" name="sexe" value="F">
                         					<span class="checkmark"></span>
                         				</label>
                         			</div>
