@@ -1,5 +1,5 @@
 <?php 
-$servername = "86.210.13.52";
+$servername = "k1nd0ne.com";
 $port="3307";
 $username = "jmr";
 $password = "BaseDonnees1234";
