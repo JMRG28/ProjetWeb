@@ -18,7 +18,7 @@ try {
   $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $biens=[];
   foreach($bd->query('SELECT * FROM BIEN where EstDispo=1') as $row ){
-    $bien=new Bien(null,null,null,null,null,null,null,null,null,null);
+    $bien=new Bien(null,null,null,null,null,null,null,null,null,null,null,null);
     $bien->createFromTab($row);
     array_push($biens, $bien);
   }

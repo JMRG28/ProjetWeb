@@ -42,7 +42,8 @@ function updateDB_Bien($id,$v,$k){
 	$query=$bd->prepare("SELECT * FROM BIEN WHERE ID_Bien='".$_SESSION["current_b"]."'");
 	$query->execute();
 	$row=$query->fetch();
-	$bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+	//WARNING
+	$bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9],$row[10],$row[11]);
 	$bien->update($bd,$v,$k);
 	$bien->$v=$k ;
 }
@@ -284,7 +285,7 @@ if(isset($_POST["enregistrer"])){
 							$_SESSION["current_b"]=$_POST["bien"];
 							echo "<form class='form' action='##'' method='post' id='bienForm'> <div class='form-group'>";
 							foreach($bd->query("SELECT * FROM BIEN WHERE ID_Bien='".$_POST["bien"]."'") as $row){
-								$bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+								$bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9],$row[10],$row[11]);
 								$_SESSION["bien"]=serialize($bien);
 								echo " <div class='form-group'> <div class='col-xs-6'>";
 								echo "<label for='first_name'><h4>Titre</h4></label>";

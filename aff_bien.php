@@ -6,7 +6,7 @@ ini_set("display_errors",1);error_reporting(E_ALL);
 if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
 }else{
-	$bien=new Bien(null,null,null,null,null,null,null,null,null,null);
+	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null,null);
 	$bien->getFromURL($_GET["bid"]);
 	$bien->toString();
 	$member=unserialize($_SESSION['member']);
