@@ -11,7 +11,7 @@ if (!isset($_SESSION['member'])){
 	$bien->toString();
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && $bien->Prop->Email!=$member->Email){
-		$servername = "86.210.13.52";
+		$servername = "k1nd0ne.com";
 		$port="3307"; $username = "jmr";
 		$password = "BaseDonnees1234";
 		$dbname = "jmr";

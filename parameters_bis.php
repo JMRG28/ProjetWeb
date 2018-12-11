@@ -12,8 +12,11 @@ $member=unserialize($_SESSION['member']);
 $member->toString();
 $callback=false;
 $callback_B=false;
+$callback_U=false;
 $member=unserialize($_SESSION['member']);
 $member->toString();
+
+print_r($_POST);
 
 //Améliorer les fonctions
 function updateDB($v,$k){
@@ -47,6 +50,62 @@ function updateDB_Bien($id,$v,$k){
 	$bien->$v=$k ;
 }
 
+//SUPPRESSION DUN BIEN
+function deleteBien($id){
+	$servername = "k1nd0ne.com";
+	$port="3307";
+	$username = "jmr";
+	$password = "BaseDonnees1234";
+	$dbname = "jmr";
+	$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query=$bd->prepare("SELECT * FROM BIEN WHERE ID_Bien='".$_SESSION["current_b"]."'");
+	$query->execute();
+	$row=$query->fetch();
+	$bien=new Bien($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+	$bien->delete($bd);
+	//unset($bien);
+}
+
+
+function updateDB_StatutUser($email,$v,$k){
+	$servername = "k1nd0ne.com";
+	$port="3307";
+	$username = "jmr";
+	$password = "BaseDonnees1234";
+	$dbname = "jmr";
+	$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query=$bd->prepare("SELECT * FROM MEMBRE WHERE Email='".$email."'");
+	$query->execute();
+	$row=$query->fetch();
+	$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+	$member->createFromTab($row);
+	$member->update($bd,$v,$k);
+	$member->$v=$k ;
+	/*
+	echo $member->Email;
+	echo $member->MdpHash;
+	echo $member->Nom;
+	echo $member->Prenom;
+	echo $member->CodePostal;
+	echo $member->NumeroTel;
+	echo $member->Photo;
+	echo $member->Description;
+	echo $member->Rendu;
+	echo $member->Recu;
+	echo $member->Sexe;
+	echo $member->Statut;
+	echo $member->DateNaiss;
+	echo "  DATEINS".$member->DateIns;
+	echo "  ACTIF".$member->Actif;
+	echo "  SUSP".$member->Suspendu;
+	echo "  URL".$member->url;
+	echo "  ADMIN".$member->Admin;
+	*/
+
+
+	
+}
+
 
 if(isset($_POST["enregistrer_B"])){
 	if($_POST["titre_B"]!=""){
@@ -63,18 +122,39 @@ if(isset($_POST["enregistrer_B"])){
 	}
 	if($_POST["statut_B"]=="actif"){
 		updateDB_Bien($_SESSION["current_b"],"Actif",1);
+		$callback_B=true;
 	}
 	if($_POST["statut_B"]=="desactive"){
 		updateDB_Bien($_SESSION["current_b"],"Actif",0);
+		$callback_B=true;
+	}
+	if($_POST["statut_B"]=="asupprimer"){
+		//ICI
+		//deleteBien($_SESSION["current_b"]);
+		$callback_B=true;
 	}
 }
 
 
 //ICI
+//VERIFICATION SI EST 
 if(isset($_POST["enregistrer_A"])){
 	if($_POST["nom_D"]!=""){
-		updateDB_Bien($_POST["nomD"],"Titre",$_POST["titre_B"]);
-		$callback_B=true;
+		if($_POST["duree"]=="definitif"){
+			updateDB_StatutUser($_POST["nom_D"],"Suspendu",1);
+			echo "suspendu";
+			$callback_U=true;
+		}
+		if($_POST["duree"]=="temporaire"){
+			updateDB_StatutUser($_POST["nom_D"],"Actif",0);
+			echo "tmp";
+			$callback_U=true;
+		}
+		if($_POST["duree"]=="activer"){
+			updateDB_StatutUser($_POST["nom_D"],"Actif",1);
+			echo "actif";
+			$callback_U=true;
+		}
 	}
 }
 
@@ -308,6 +388,9 @@ if(isset($_POST["enregistrer"])){
 									echo "<label class='radio-container'> Désactivé";
 									echo "<input type='radio' name='statut_B' value='desactive'>";
 									echo "<span class='checkmark'></span>";
+									echo "<label class='radio-container'> Je souhaite supprimer ce bien";
+									echo "<input type='radio' name='statut_B' value='asupprimer'>";
+									echo "<span class='checkmark'></span>";
 									echo "</label>";
 									echo "</div>";
 									echo "</div>";
@@ -337,16 +420,12 @@ if(isset($_POST["enregistrer"])){
 								$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
 								$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-								echo "<form method='post' > <p>";
-								echo "<label for='member'>Selectionner un membre</label><br/>";
-								echo "<select name='user' id='user'>";
-
-								foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 1") as $row){
-									echo  "<option value=".$row[0].">".$row[0]."</option>"; 
+								echo "<h2> Utilisateurs à surveiller</h2>";
+								//MODIFIER
+								foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 1 AND Actif=1 AND Suspendu=0") as $row){
+									echo  $row[0]; 
 								}
 
-								echo " </select> </p>";
-								echo"	 <button > Sélectionner</button></form>";
 							}finally{
 								$bd=null;
 							}
@@ -356,19 +435,23 @@ if(isset($_POST["enregistrer"])){
 							echo "<form class='form' action='##'' method='post' id='userToDeleteForm'>";
 							echo "<div class='form-group'>";
 							echo "<div class='col-xs-6'>";
-							echo "<label for='first_name'><h4>[TMP] Entrer l'adresse mail de l'utilisateur à désactiver</h4></label>";
+							echo "<label for='first_name'><h4>Email de l'utilisateur</h4></label>";
 							echo "<input type='text' class='form-control' name='nom_D' id='nom_D'>";
 							echo "</div>";
 							echo "</div>";
 
 							echo "<div class='form-group'>";
 							echo "<div class='col-xs-6'>";
-							echo "<label class='radio-container m-r-45'>Temporairement";
+							echo "<label class='radio-container m-r-45'>Désactiver temporairement";
 							echo "<input type='radio' checked='checked' name='duree' value='temporaire'>";
 							echo "<span class='checkmark'></span>";
 							echo "</label>";
-							echo "<label class='radio-container'>Définitivement";
+							echo "<label class='radio-container'>Désactiver définitivement";
 							echo "<input type='radio' name='duree' value='definitif'>";
+							echo "<span class='checkmark'></span>";
+							echo "</label>";
+							echo "<label class='radio-container'>Activiter";
+							echo "<input type='radio' name='duree' value='activer'>";
 							echo "<span class='checkmark'></span>";
 							echo "</label>";
 							echo "</div>";

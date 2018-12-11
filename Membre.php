@@ -104,7 +104,7 @@ class Membre {
     $stmt->execute();
   }
   function getFromURL($uid){
-    $servername = "86.210.13.52";
+    $servername = "k1nd0ne.com";
     $port="3307";
     $username = "jmr";
     $password = "BaseDonnees1234";
@@ -134,7 +134,7 @@ class Membre {
   }
   function getFromEmail($email){
     echo " Email: ".$email;
-    $servername = "86.210.13.52";
+    $servername = "k1nd0ne.com";
     $port="3307";
     $username = "jmr";
     $password = "BaseDonnees1234";
@@ -165,8 +165,7 @@ class Membre {
 
 
   function update($bd,$key,$value){
-    //  echo "<h1>".$this->Email." coucou <h1>";
-    if($value!=""){
+    if($value!="" || $value==0){
       echo " <br> UPDATE MEMBRE SET ".$key."='".$value."' where Email=".$this->Email ."<br>";
       $stmt = $bd->prepare("UPDATE MEMBRE SET ".$key."='".$value."' where Email='".$this->Email."'");
       $stmt->execute();

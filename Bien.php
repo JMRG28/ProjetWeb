@@ -92,7 +92,7 @@ class Bien {
 	}
 
 	function getFromURL($bid){
-		$servername = "86.210.13.52";
+		$servername = "k1nd0ne.com";
 		$port="3307";
 		$username = "jmr";
 		$password = "BaseDonnees1234";
@@ -127,8 +127,14 @@ class Bien {
 		$stmt->execute();
 	}
 
+	function delete($bd){
+		echo " <br> DELETE FROM BIEN WHERE  ID_Bien=".$this->ID_Bien ."<br>";
+		$stmt = $bd->prepare("DELETE FROM BIEN WHERE ID_Bien='".$this->ID_Bien."'");
+		$stmt->execute();
+	}
+
 	function upload(){
-		$servername = "86.210.13.52";
+		$servername = "k1nd0ne.com";
 		$port="3307";
 		$username = "jmr";
 		$password = "BaseDonnees1234";
