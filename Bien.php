@@ -12,9 +12,11 @@ class Bien {
 	public $Titre;
 	public $Url;
 	public $Prop;
+	public $ID_Catego;
+	public $Categorie;
 
 //privatiser apres
-	function __construct($id_bien, $descriptif, $photo, $prixNeuf, $actif, $estDispo, $dateMES, $emailProp, $titre,$url) {
+	function __construct($id_bien, $descriptif, $photo, $prixNeuf, $actif, $estDispo, $dateMES, $emailProp, $titre,$url,$id_catego,$categorie) {
 		$this->ID_Bien=$id_bien;
 		$this->Descriptif=$descriptif;
 		$this->Photo=$photo;
@@ -26,6 +28,8 @@ class Bien {
 		$this->Titre=$titre;
 		$this->Url=$url;
 		$this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+		$this->ID_Catego=$id_catego;
+		$this->Categorie=new Categorie(null,null,null,null);
 	}
 
 	function createFromTab($tab) {
@@ -39,6 +43,8 @@ class Bien {
 		$this->EmailProp=$tab[7];
 		$this->Titre=$tab[8];
 		$this->Url=$tab[9];
+		$this->ID_Catego=$tab[10];
+		$this->Categorie=getFromID($this->ID_Catego);
 		$this->Prop->getFromEmail($this->EmailProp);
 	}
 
@@ -51,6 +57,7 @@ class Bien {
 		echo $this->DateMES;
 		echo $this->EmailProp;
 		echo $this->Titre;
+		echo $this->ID_Catego;
 	}
 
 	function affiche(){
@@ -78,7 +85,7 @@ class Bien {
 	}
 
 	function insert($bd){
-		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre,Url)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre, :url)");
+		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre,Url, ID_Categorie)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre, :url, :id_catego)");
 		$stmt->bindValue(":id_bien", $this->ID_Bien);
 		$stmt->bindValue(":descriptif", $this->Descriptif);
 		$stmt->bindValue(":photo",$this->Photo);
@@ -88,6 +95,7 @@ class Bien {
 		$stmt->bindValue(":emailProp", $this->EmailProp);
 		$stmt->bindValue(":titre", $this->Titre);
 		$stmt->bindValue(":url", $this->Url);
+		$stmt->bindValue(":id_catego", $this->ID_Categorie);
 		$stmt->execute();
 	}
 
