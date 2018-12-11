@@ -16,7 +16,7 @@ function conversion($d){
 }
 
 ini_set("display_errors",1);error_reporting(E_ALL);
-if(isset($_POST['titre'])){ 
+if(isset($_POST['titre'])){
   try {
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -120,16 +120,25 @@ if(isset($_POST['titre'])){
                         </div>
                         <div class="col-2">
                             <div class="input-group">
-                                <label class="label">Sexe</label>
-                                <div class="p-t-10">
-                                    <label class="radio-container m-r-45">Homme
-                                        <input type="radio" checked="checked" name="sexe" value="H">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="radio-container">Femme
-                                        <input type="radio" name="sexe" value="H">
-                                        <span class="checkmark"></span>
-                                    </label>
+                              <label for="pays">Choisissez la catégorie</label><br/>
+                              <select name="categorie">
+
+                                <?php
+                                try {
+                                  $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+                                  $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                  foreach($bd->query("SELECT * FROM CATEGORIE WHERE SuperCategorie IS NOT NULL") as $row){
+                                    echo  "<option value=".$row[0].">".$row[1]."</option>";
+                                  }
+
+                                }finally{
+                                  $bd=null;
+                                }
+
+                                ?>
+
+                              </select>
                                 </div>
                             </div>
                         </div>
