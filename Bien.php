@@ -7,27 +7,27 @@ class Bien {
 	public $Photo;
 	public $PrixNeuf;
 	public $Actif;
-	public $EstDispo;
-	public $DateMES;
+	public $DateDebut;
+	public $DateFin;
 	public $EmailProp;
 	public $Titre;
-	public $Url;
+	public $URL;
 	public $Prop;
 	public $ID_Catego;
 	public $Categorie;
 
 //privatiser apres
-	function __construct($id_bien, $descriptif, $photo, $prixNeuf, $actif, $estDispo, $dateMES, $emailProp, $titre,$url,$id_catego,$categorie) {
+	function __construct($id_bien, $descriptif, $photo, $prixNeuf, $actif, $dateDeb,  $emailProp, $titre,$url,$id_catego,$dateFin) {
 		$this->ID_Bien=$id_bien;
 		$this->Descriptif=$descriptif;
 		$this->Photo=$photo;
 		$this->PrixNeuf=$prixNeuf;
 		$this->Actif=$actif;
-		$this->EstDispo=$estDispo;
-		$this->DateMES=$dateMES;
+		$this->DateDebut=$dateDeb;
+		$this->DateFin=$dateFin;
 		$this->EmailProp=$emailProp;
 		$this->Titre=$titre;
-		$this->Url=$url;
+		$this->URL=$url;
 		$this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 		$this->ID_Catego=$id_catego;
 		$this->Categorie=new Categorie(null,null,null,null);
@@ -39,14 +39,16 @@ class Bien {
 		$this->Photo=$tab[2];
 		$this->PrixNeuf=$tab[3];
 		$this->Actif=$tab[4];
-		$this->EstDispo=$tab[5];
-		$this->DateMES=$tab[6];
-		$this->EmailProp=$tab[7];
-		$this->Titre=$tab[8];
-		$this->Url=$tab[9];
-		$this->ID_Catego=$tab[10];
-		$this->Categorie=getFromID($this->ID_Catego);
+		$this->DateDebut=$tab[5];
+		$this->EmailProp=$tab[6];
+		$this->Titre=$tab[7];
+		$this->URL=$tab[8];
+		$this->ID_Catego=$tab[9];
+		$cat=new Categorie(null,null,null,null);
+		$cat->getFromID($this->ID_Catego);
+		$this->Categorie=$cat;
 		$this->Prop->getFromEmail($this->EmailProp);
+		$this->DateFin=$tab[10];
 	}
 
 	function  toString(){
@@ -55,7 +57,7 @@ class Bien {
 		echo $this->Photo;
 		echo $this->PrixNeuf;
 		echo $this->Actif;
-		echo $this->DateMES;
+		echo $this->DateDebut;
 		echo $this->EmailProp;
 		echo $this->Titre;
 		echo $this->ID_Catego;
@@ -67,7 +69,7 @@ class Bien {
 			.$this->Titre.'<br>'
 			.$this->Descriptif.'<br>
 			<a href=profile2.php?uid='.md5($this->EmailProp).'>'.$this->Prop->Prenom.' '.$this->Prop->Nom.'</a><br>
-			<a href=aff_bien.php?bid='.$this->Url.'>
+			<a href=aff_bien.php?bid='.$this->URL.'>
 			<img src='.$this->Photo.' alt="" />
 			</a>
 			</div>';
@@ -86,17 +88,18 @@ class Bien {
 	}
 
 	function insert($bd){
-		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre,Url,Categorie)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre, :url, :id_catego)");
+		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateDebut,EmailProp,Titre,URL,Categorie,DateFin)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, :dateDeb, :emailProp, :titre, :url, :id_catego,:dateFin)");
 		$stmt->bindValue(":id_bien", $this->ID_Bien);
 		$stmt->bindValue(":descriptif", $this->Descriptif);
 		$stmt->bindValue(":photo",$this->Photo);
 		$stmt->bindValue(":prixNeuf", $this->PrixNeuf);
 		$stmt->bindValue(":actif", $this->Actif);
-    //$stmt->bindValue(":dateMES", $this->DateMES);
+    $stmt->bindValue(":dateDeb", $this->DateDebut);
 		$stmt->bindValue(":emailProp", $this->EmailProp);
 		$stmt->bindValue(":titre", $this->Titre);
-		$stmt->bindValue(":url", $this->Url);
+		$stmt->bindValue(":url", $this->URL);
 		$stmt->bindValue(":id_catego", $this->ID_Catego);
+		$stmt->bindValue(":dateFin", $this->DateFin);
 		$stmt->execute();
 	}
 
@@ -108,7 +111,7 @@ class Bien {
 		$dbname = "jmr";
 		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
 		$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $bd->prepare("SELECT * FROM BIEN WHERE Url = ?");
+		$stmt = $bd->prepare("SELECT * FROM BIEN WHERE URL = ?");
 		$u=[];
 		array_push($u,$bid);
 		$stmt->execute($u);

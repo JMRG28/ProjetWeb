@@ -26,7 +26,7 @@ if(isset($_POST['titre'])){
     $result=$query->fetch();
     $id=$result[0]+1;
 
-    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre'],md5($id),$_POST['categorie'],null);
+    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1,conversion($_POST['date_deb']),$member->Email,  $_POST['titre'],md5($id),$_POST['categorie'],conversion($_POST['date_fin']));
     $bien->insert($bd);
     $bien->upload();
     echo "Successfully added the new good " . $id;
@@ -97,6 +97,25 @@ if(isset($_POST['titre'])){
                                 <input class="input--style-4" type="numeric" name="prixNeuf">
                             </div>
                         </div>
+                        <div class="col-2">
+                          <div class="input-group">
+                            <label class="label">Date de Debut</label>
+                            <div class="input-group-icon">
+                              <input class="input--style-4 js-datepicker" type="text" name="date_deb">
+                              <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-2">
+                          <div class="input-group">
+                            <label class="label">Date de Fin</label>
+                            <div class="input-group-icon">
+                              <input class="input--style-4 js-datepicker" type="text" name="date_fin">
+                              <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                            </div>
+                          </div>
+                        </div>
 
                         <div class="col-2">
                             <div class="input-group">
@@ -108,17 +127,7 @@ if(isset($_POST['titre'])){
                            </div>
 
                        </div>
-                       <div class="row row-space">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Date de mise en service</label>
-                                <div class="input-group-icon">
-                                    <input class="input--style-4 js-datepicker" type="text" name="date_n">
-                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
+
                         <div class="input-group">
 
                               <label for="pays">Choisissez la catégorie</label><br/>
