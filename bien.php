@@ -21,12 +21,12 @@ if(isset($_POST['titre'])){
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query=$bd->prepare('SELECT COUNT(*)  FROM BIEN');
+    $query=$bd->prepare('SELECT MAX(ID_BIEN)  FROM BIEN');
     $query->execute();
     $result=$query->fetch();
     $id=$result[0]+1;
 
-    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre'],md5($id));
+    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1, 1,null,$member->Email,  $_POST['titre'],md5($id),$_POST['categorie'],null);
     $bien->insert($bd);
     $bien->upload();
     echo "Successfully added the new good " . $id;
@@ -118,9 +118,11 @@ if(isset($_POST['titre'])){
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2">
-                            <div class="input-group">
+                      </div>
+                        <div class="input-group">
+
                               <label for="pays">Choisissez la catégorie</label><br/>
+                              <div class="rs-select2 js-select-simple select--no-search">
                               <select name="categorie">
 
                                 <?php
@@ -129,6 +131,7 @@ if(isset($_POST['titre'])){
                                   $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                   foreach($bd->query("SELECT * FROM CATEGORIE WHERE SuperCategorie IS NOT NULL") as $row){
+                                    echo "<br>".$row[0];
                                     echo  "<option value=".$row[0].">".$row[1]."</option>";
                                   }
 
@@ -139,10 +142,11 @@ if(isset($_POST['titre'])){
                                 ?>
 
                               </select>
+                              <div class="select-dropdown"></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+
+
 
                     <div class="input-group">
                         <label class="label">Statut</label>

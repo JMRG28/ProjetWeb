@@ -1,5 +1,6 @@
 <?php
 include_once('Membre.php');
+include_once('Categorie.php');
 class Bien {
 	public $ID_Bien;
 	public $Descriptif;
@@ -85,7 +86,7 @@ class Bien {
 	}
 
 	function insert($bd){
-		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre,Url, ID_Categorie)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre, :url, :id_catego)");
+		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateMES,EmailProp,Titre,Url,Categorie)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, NOW(), :emailProp, :titre, :url, :id_catego)");
 		$stmt->bindValue(":id_bien", $this->ID_Bien);
 		$stmt->bindValue(":descriptif", $this->Descriptif);
 		$stmt->bindValue(":photo",$this->Photo);
@@ -95,7 +96,7 @@ class Bien {
 		$stmt->bindValue(":emailProp", $this->EmailProp);
 		$stmt->bindValue(":titre", $this->Titre);
 		$stmt->bindValue(":url", $this->Url);
-		$stmt->bindValue(":id_catego", $this->ID_Categorie);
+		$stmt->bindValue(":id_catego", $this->ID_Catego);
 		$stmt->execute();
 	}
 
