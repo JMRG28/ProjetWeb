@@ -1,6 +1,14 @@
 <?php
 include "header.php";
 session_start();
+function conversion($d){
+	$nd=explode("/",$d);
+	$r=[];
+	array_push($r, $nd[2], $nd[1],$nd[0]);
+	$res=implode("-",$r);
+	return $res;
+}
+
 include "Bien.php";
 ini_set("display_errors",1);error_reporting(E_ALL);
 if (!isset($_SESSION['member'])){
@@ -12,25 +20,26 @@ else{
 	$bien->toString();
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $bien->Prop->Email!=$member->Email){
-		if($_POST["date_deb"]>=$bien->DateDebut && $_POST["date_fin"]<=$bien->DateFin){
-		$servername = "k1nd0ne.com";
-		$port="3307"; $username = "jmr";
-		$password = "BaseDonnees1234";
-		$dbname = "jmr";
-		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $bd->prepare("INSERT INTO CONSOMMATION_B (EmailProp, EmailConso, ID_Bien, DateDeb,DateFin)VALUES (:EmailProp, :EmailConso, :ID_Bien, :DateDeb,:DateFin)");
-		$stmt->bindValue(":EmailProp", $bien->Prop->Email);
-		$stmt->bindValue(":EmailConso", $member->Email);
-		$stmt->bindValue(":ID_Bien",$bien->ID_Bien);
-		$stmt->bindValue(":DateDeb", date("Y-m-d"));
-		$stmt->bindValue(":DateFin", null);
-		$stmt->execute();
-		$bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
-		$member->update($bd,"Recu",$member->Recu+1);
-		// $bien->update($bd,"EstDispo",0);
-	}else{
-		echo "<h1> IMPOSSIBLE DE RESERVER</h1>";
-	}
+		if(strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)){
+			//echo "caca: ".strtotime($bien->DateDebut);
+			$servername = "k1nd0ne.com";
+			$port="3307"; $username = "jmr";
+			$password = "BaseDonnees1234";
+			$dbname = "jmr";
+			$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$stmt = $bd->prepare("INSERT INTO CONSOMMATION (EmailProp, EmailConso, ID_BS, DateDeb,DateFin)VALUES (:EmailProp, :EmailConso, :ID_BS, :DateDeb,:DateFin)");
+			$stmt->bindValue(":EmailProp", $bien->Prop->Email);
+			$stmt->bindValue(":EmailConso", $member->Email);
+			$stmt->bindValue(":ID_BS",$bien->ID_Bien);
+			$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
+			$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
+			$stmt->execute();
+			$bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
+			$member->update($bd,"Recu",$member->Recu+1);
+			//$bien->update($bd,"EstDispo",0);
+		}else{
+			echo "<h1> IMPOSSIBLE DE RESERVER</h1>";
+		}
 	}
 }
 ?>
