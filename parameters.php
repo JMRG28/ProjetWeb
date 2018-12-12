@@ -352,21 +352,28 @@ if(isset($_POST["enregistrer"])){
 								echo "</div> </div>";
 
 								echo "<div class='form-group'>";
-									echo "<div class='col-xs-6'>";
-									echo "Statut:";
-									echo "<label class='radio-container m-r-45'>Actif";
-									echo "<input type='radio' checked='checked' name='statut_B' value='actif'>";
-									echo "<span class='checkmark'></span>";
-									echo "</label>";
-									echo "<label class='radio-container'> Désactivé";
-									echo "<input type='radio' name='statut_B' value='desactive'>";
-									echo "<span class='checkmark'></span>";
-									echo "<label class='radio-container'> Je souhaite supprimer ce bien";
-									echo "<input type='radio' name='statut_B' value='asupprimer'>";
-									echo "<span class='checkmark'></span>";
-									echo "</label>";
-									echo "</div>";
-									echo "</div>";
+								echo "<div class='col-xs-6'>";
+								echo "Statut:";
+								echo "<label class='radio-container m-r-45'>Actif";
+								echo "<input type='radio' checked='checked' name='statut_B' value='actif'>";
+								echo "<span class='checkmark'></span>";
+								echo "</label>";
+								echo "<label class='radio-container'> Désactivé";
+								echo "<input type='radio' name='statut_B' value='desactive'>";
+								echo "<span class='checkmark'></span>";
+								echo "<label class='radio-container'> Je souhaite supprimer ce bien";
+								echo "<input type='radio' name='statut_B' value='asupprimer'>";
+								echo "<span class='checkmark'></span>";
+								echo "</label>";
+								echo "</div>";
+								echo "</div>";
+
+								echo "<div class='form-group'>";
+								echo "<div class='col-xs-6'>";
+								echo "<label for='mobile'><h4>Photo</h4></label>";
+								echo "<img style='width:300px;' src=".$bien->Photo.">";
+								echo "</div>";
+								echo "</div>";
 								echo '
 								Select image to upload:
 								<input form="updateimgbien" type="file" name="fileToUpload" id="fileToUpload">
