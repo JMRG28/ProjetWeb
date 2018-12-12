@@ -58,13 +58,11 @@ function deleteBien($id){
 	$password = "BaseDonnees1234";
 	$dbname = "jmr";
 	$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$query=$bd->prepare("SELECT * FROM BIEN WHERE ID_Bien='".$_SESSION["current_b"]."'");
+	$query=$bd->prepare("DELETE FROM CONSOMMATION WHERE ID_BS='".$_SESSION["current_b"]."'");
 	$query->execute();
-	$row=$query->fetch();
-	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null);
-	$bien->createFromTab($row);
-	$bien->delete($bd);
-	//unset($bien);
+	$query=$bd->prepare("DELETE FROM BIEN WHERE ID_Bien='".$_SESSION["current_b"]."'");
+	$query->execute();
+	
 }
 
 
@@ -106,7 +104,7 @@ if(isset($_POST["enregistrer_B"])){
 	}
 	if($_POST["statut_B"]=="asupprimer"){
 		//ICI
-		//deleteBien($_SESSION["current_b"]);
+		deleteBien($_SESSION["current_b"]);
 		$callback_B=true;
 	}
 }

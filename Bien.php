@@ -125,13 +125,14 @@ class Bien {
 		$stmt = $bd->prepare("UPDATE BIEN SET ".$key."='".$value."' where ID_Bien='".$this->ID_Bien."'");
 		$stmt->execute();
 	}
+	/*
 
 	function delete($bd){
 		echo " <br> DELETE FROM BIEN WHERE  ID_Bien=".$this->ID_Bien ."<br>";
 		$stmt = $bd->prepare("DELETE FROM BIEN WHERE ID_Bien='".$this->ID_Bien."'");
 		$stmt->execute();
 	}
-
+*/
 	function upload(){
 		$servername = "k1nd0ne.com";
 		$port="3307";
