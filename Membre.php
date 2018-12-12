@@ -17,7 +17,7 @@ class Membre {
   public $DateIns;
   public $Actif;
   public $Suspendu;
-  public $url;
+  public $URL;
   public $Admin;
 
   //privatiser apres
@@ -38,7 +38,7 @@ class Membre {
     $this->DateIns=$dateI;
     $this->Actif=$actif;
     $this->Suspendu=$suspendu;
-    $this->url=$url;
+    $this->URL=$url;
     $this->Admin=0;
   }
 
@@ -59,10 +59,8 @@ class Membre {
     $this->DateIns=$tab[13];
     $this->Actif=$tab[14];
     $this->Suspendu=$tab[15];
-    $this->url=$tab[16];
+    $this->URL=$tab[16];
     $this->Admin=$tab[17];
-
-
   }
 
   function  toString(){
@@ -82,14 +80,12 @@ class Membre {
     echo "  DATEINS".$this->DateIns;
     echo "  ACTIF".$this->Actif;
     echo "  SUSP".$this->Suspendu;
-    echo "  URL".$this->url;
+    echo "  URL".$this->URL;
     echo "  ADMIN".$this->Admin;
   }
 
-
   function insert($bd){
-    //  echo "<h1>".$this->Email." coucou <h1>";
-    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss,url, Admin)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance,:url,:admin)");
+    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss,URL, Admin)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance,:url,:admin)");
     $stmt->bindValue(":email", $this->Email);
     $stmt->bindValue(":mdp_hash", $this->MdpHash);
     $stmt->bindValue(":nom",$this->Nom);
@@ -99,10 +95,11 @@ class Membre {
     $stmt->bindValue(":sexe", $this->Sexe);
     $stmt->bindValue(":statut", $this->Statut);
     $stmt->bindValue(":date_naissance", $this->DateNaiss);
-    $stmt->bindValue(":url", $this->url);
+    $stmt->bindValue(":url", $this->URL);
     $stmt->bindValue(":admin", $this->Admin);
     $stmt->execute();
   }
+
   function getFromURL($uid){
     $servername = "k1nd0ne.com";
     $port="3307";
@@ -111,7 +108,7 @@ class Membre {
     $dbname = "jmr";
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $bd->prepare("SELECT * FROM MEMBRE WHERE url = ?");
+    $stmt = $bd->prepare("SELECT * FROM MEMBRE WHERE URL = ?");
     $u=[];
     array_push($u,$uid);
     $stmt->execute($u);
@@ -132,6 +129,7 @@ class Membre {
       echo "<h1>Utilisateur non trouvé</h1>";
     }
   }
+
   function getFromEmail($email){
     echo " Email: ".$email;
     $servername = "k1nd0ne.com";
@@ -163,7 +161,6 @@ class Membre {
     }
   }
 
-
   function update($bd,$key,$value){
     if($value!="" || $value==0){
       echo " <br> UPDATE MEMBRE SET ".$key."='".$value."' where Email=".$this->Email ."<br>";
@@ -173,6 +170,5 @@ class Membre {
   }
 
 }
-
 
 ?>

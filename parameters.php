@@ -198,17 +198,11 @@ if(isset($_POST["enregistrer"])){
 							</div>
 						</div>
 
+						
 						<div class="form-group">
 							<div class="col-xs-6">
-								<label for="email"><h4>Email</h4></label>
-								<input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-xs-6">
-								<label for="email"><h4>Code Postal</h4></label>
-								<input type="email" class="form-control" id="location" placeholder=<?php echo $member->CodePostal; ?> title="enter a location">
+								<label for="codePostal"><h4>Code Postal</h4></label>
+								<input type="codePostal" class="form-control" id="location" placeholder=<?php echo $member->CodePostal; ?> title="enter a location">
 							</div>
 						</div>
 
@@ -222,14 +216,14 @@ if(isset($_POST["enregistrer"])){
 						<div class="form-group">
 							<div class="col-xs-6">
 								<label for="password"><h4>Mot de passe</h4></label>
-								<input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
+								<input type="password" class="form-control" name="password" id="password"  title="enter your password.">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-xs-6">
 								<label for="password2"><h4>Vérification du mot de passe</h4></label>
-								<input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
+								<input type="password" class="form-control" name="password2" id="password2"  title="enter your password2.">
 							</div>
 						</div>
 

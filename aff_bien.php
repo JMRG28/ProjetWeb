@@ -5,7 +5,8 @@ include "Bien.php";
 ini_set("display_errors",1);error_reporting(E_ALL);
 if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
-}else{
+}
+else{
 	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null,null);
 	$bien->getFromURL($_GET["bid"]);
 	$bien->toString();
@@ -29,6 +30,7 @@ if (!isset($_SESSION['member'])){
 	}
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -37,13 +39,10 @@ if (!isset($_SESSION['member'])){
 	<title></title>
 	<meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-
 	<link rel="stylesheet" href="css/style_profile.css">
-
 	<link rel="stylesheet" href="css/main.css">
-
 
 </head>
 
