@@ -44,9 +44,7 @@ class Bien {
 		$this->Titre=$tab[7];
 		$this->URL=$tab[8];
 		$this->ID_Catego=$tab[9];
-		$cat=new Categorie(null,null,null,null);
-		$cat->getFromID($this->ID_Catego);
-		$this->Categorie=$cat;
+	//	$this->Categorie->getFromID($this->ID_Catego);
 		$this->Prop->getFromEmail($this->EmailProp);
 		$this->DateFin=$tab[10];
 	}
@@ -104,6 +102,7 @@ class Bien {
 	}
 
 	function getFromURL($bid){
+		echo " Email: ".$email;
 		$servername = "k1nd0ne.com";
 		$port="3307";
 		$username = "jmr";
@@ -111,28 +110,16 @@ class Bien {
 		$dbname = "jmr";
 		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
 		$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $bd->prepare("SELECT * FROM BIEN WHERE URL = ?");
-		$u=[];
-		array_push($u,$bid);
-		$stmt->execute($u);
-		$response = $stmt->rowCount();
-		if($response==1){
-			$tab=[];
-			while ($row = $stmt->fetch()) {
-				$index=0;
-				foreach ($row as $key=>$value){
-					if($index%2==0){
-						array_push($tab,$value);
-					}
-					$index++;
-				}
-			}
-			$this->createFromTab($tab);
-		}else{
+		$response=0;
+		foreach($bd->query("SELECT * FROM BIEN where URL='".$bid."'") as $row){
+			$this->createFromTab($row);
+			$response=1;
+		}
+		if($response==0){
 			echo "<h1>Bien non trouvé</h1>";
 		}
-	}
 
+	}
 	function update($bd,$key,$value){
 		echo " <br> UPDATE BIEN SET ".$key."='".$value."' where ID_Bien=".$this->ID_Bien ."<br>";
 		$stmt = $bd->prepare("UPDATE BIEN SET ".$key."='".$value."' where ID_Bien='".$this->ID_Bien."'");

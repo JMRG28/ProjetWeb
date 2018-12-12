@@ -27,12 +27,13 @@ else{
 			$password = "BaseDonnees1234";
 			$dbname = "jmr";
 			$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$stmt = $bd->prepare("INSERT INTO CONSOMMATION (EmailProp, EmailConso, ID_BS, DateDeb,DateFin)VALUES (:EmailProp, :EmailConso, :ID_BS, :DateDeb,:DateFin)");
+			$stmt = $bd->prepare("INSERT INTO CONSOMMATION (EmailProp, EmailConso, ID_BS, DateDeb,DateFin,Type)VALUES (:EmailProp, :EmailConso, :ID_BS, :DateDeb,:DateFin,:Type)");
 			$stmt->bindValue(":EmailProp", $bien->Prop->Email);
 			$stmt->bindValue(":EmailConso", $member->Email);
 			$stmt->bindValue(":ID_BS",$bien->ID_Bien);
 			$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
 			$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
+			$stmt->bindValue(":Type", "b");
 			$stmt->execute();
 			$bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
 			$member->update($bd,"Recu",$member->Recu+1);

@@ -100,7 +100,8 @@ class Membre {
     $stmt->execute();
   }
 
-  function getFromURL($uid){
+  function getFromURL($url){
+    echo " Email: ".$email;
     $servername = "k1nd0ne.com";
     $port="3307";
     $username = "jmr";
@@ -108,26 +109,15 @@ class Membre {
     $dbname = "jmr";
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $bd->prepare("SELECT * FROM MEMBRE WHERE URL = ?");
-    $u=[];
-    array_push($u,$uid);
-    $stmt->execute($u);
-    $response = $stmt->rowCount();
-    if($response==1){
-      $tab=[];
-      while ($row = $stmt->fetch()) {
-        $index=0;
-        foreach ($row as $key=>$value){
-          if($index%2==0){
-            array_push($tab,$value);
-          }
-          $index++;
-        }
-      }
-      $this->createFromTab($tab);
-    }else{
+    $response=0;
+    foreach($bd->query("SELECT * FROM MEMBRE where URL='".$url."'") as $row){
+      $this->createFromTab($row);
+      $response=1;
+    }
+    if($response==0){
       echo "<h1>Utilisateur non trouvé</h1>";
     }
+
   }
 
   function getFromEmail($email){
@@ -139,27 +129,17 @@ class Membre {
     $dbname = "jmr";
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $bd->prepare("SELECT * FROM MEMBRE WHERE Email = ?");
-    $u=[];
-    array_push($u,$email);
-    $stmt->execute($u);
-    $response = $stmt->rowCount();
-    if($response==1){
-      $tab=[];
-      while ($row = $stmt->fetch()) {
-        $index=0;
-        foreach ($row as $key=>$value){
-          if($index%2==0){
-            array_push($tab,$value);
-          }
-          $index++;
-        }
-      }
-      $this->createFromTab($tab);
-    }else{
+    $response=0;
+    foreach($bd->query("SELECT * FROM MEMBRE where Email='".$email."'") as $row){
+      $this->createFromTab($row);
+      $response=1;
+    }
+    if($response==0){
       echo "<h1>Utilisateur non trouvé</h1>";
     }
+
   }
+
 
   function update($bd,$key,$value){
     if($value!="" || $value==0){

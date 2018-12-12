@@ -24,7 +24,7 @@ if(isset($_POST['titre'])){
     $query=$bd->prepare('SELECT MAX(ID_BIEN)  FROM BIEN');
     $query->execute();
     $result=$query->fetch();
-    $id=$result[0]+1;
+    $id=$result[0]+2;
 
     $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1,conversion($_POST['date_deb']),$member->Email,  $_POST['titre'],md5($id),$_POST['categorie'],conversion($_POST['date_fin']));
     $bien->insert($bd);

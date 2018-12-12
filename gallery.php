@@ -1,4 +1,4 @@
-<?php
+  <?php
 include 'Bien.php' ;
 include 'header.php';
 include 'bd.php';
@@ -34,11 +34,11 @@ try {
 <head>
   <meta charset="UTF-8">
   <title>Toutes les propositions</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'>
-
+  <!-- /<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'> -->
+<!--
   <link rel='stylesheet' href='https://npmcdn.com/basscss@8.0.0/css/basscss.min.css'>
   <link rel="stylesheet" href="css/style_gallery.css">
-  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/menu.css"> -->
 </head>
 
 <body>
@@ -56,7 +56,7 @@ try {
 </div>
 
 <div style="clear:both;"></div>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script> -->
 <script  src="js/js_gallery.js"></script>
 
 </body>
