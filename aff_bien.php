@@ -7,11 +7,12 @@ if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
 }
 else{
-	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null,null);
+	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null);
 	$bien->getFromURL($_GET["bid"]);
 	$bien->toString();
 	$member=unserialize($_SESSION['member']);
-	if(isset($_POST["reserver"]) && $bien->Prop->Email!=$member->Email){
+	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $bien->Prop->Email!=$member->Email){
+		if($_POST["date_deb"]>=$bien->DateDebut && $_POST["date_fin"]<=$bien->DateFin){
 		$servername = "k1nd0ne.com";
 		$port="3307"; $username = "jmr";
 		$password = "BaseDonnees1234";
@@ -26,7 +27,10 @@ else{
 		$stmt->execute();
 		$bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
 		$member->update($bd,"Recu",$member->Recu+1);
-		$bien->update($bd,"EstDispo",0);
+		// $bien->update($bd,"EstDispo",0);
+	}else{
+		echo "<h1> IMPOSSIBLE DE RESERVER</h1>";
+	}
 	}
 }
 ?>
@@ -43,6 +47,20 @@ else{
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 	<link rel="stylesheet" href="css/style_profile.css">
 	<link rel="stylesheet" href="css/main.css">
+
+	<!-- Icons font CSS-->
+	<link href="js/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+	<link href="js/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+	<!-- Font special for pages-->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	<!-- Vendor CSS-->
+	<link href="js/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+	<link href="js/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+	<!-- Main CSS-->
+	<link rel="stylesheet" href="css/menu.css">
+	<link href="css/style_register.css" rel="stylesheet" media="all">
 
 </head>
 
@@ -75,11 +93,31 @@ else{
 					<img style="height:300px;" src="<?php echo $bien->Photo;?>" alt="profile card">
 				</div>
 				<br>
-				
+
 
 				<div class="profile-card-ctr">
 					<form action="" method="post">
+						<div class="col-2">
+							<div class="input-group">
+								<label class="label">Date de Debut</label>
+								<div class="input-group-icon">
+									<input class="input--style-4 js-datepicker" type="text" name="date_deb">
+									<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-2">
+							<div class="input-group">
+								<label class="label">Date de Fin</label>
+								<div class="input-group-icon">
+									<input class="input--style-4 js-datepicker" type="text" name="date_fin">
+									<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+								</div>
+							</div>
+						</div>
 						<button name="reserver" type="submit" class="profile-card__button button--blue js-message-btn">Réserver</button>
+
 						<!-- <button class="profile-card__button button--orange">Follow</button> -->
 					</form>
 				</div>
@@ -167,7 +205,15 @@ else{
 	</svg>
 
 	<script  src="js/profile.js"></script>
+	<!-- Jquery JS-->
+	<script src="js/vendor/jquery/jquery.min.js"></script>
+	<!-- Vendor JS-->
+	<script src="js/vendor/select2/select2.min.js"></script>
+	<script src="js/vendor/datepicker/moment.min.js"></script>
+	<script src="js/vendor/datepicker/daterangepicker.js"></script>
 
+	<!-- Main JS-->
+	<script src="js/global.js"></script>
 </body>
 
 </html>
