@@ -92,7 +92,7 @@ class Bien {
 		$stmt->bindValue(":photo",$this->Photo);
 		$stmt->bindValue(":prixNeuf", $this->PrixNeuf);
 		$stmt->bindValue(":actif", $this->Actif);
-    $stmt->bindValue(":dateDeb", $this->DateDebut);
+    	$stmt->bindValue(":dateDeb", $this->DateDebut);
 		$stmt->bindValue(":emailProp", $this->EmailProp);
 		$stmt->bindValue(":titre", $this->Titre);
 		$stmt->bindValue(":url", $this->URL);
@@ -102,7 +102,6 @@ class Bien {
 	}
 
 	function getFromURL($bid){
-		echo " Email: ".$email;
 		$servername = "k1nd0ne.com";
 		$port="3307";
 		$username = "jmr";

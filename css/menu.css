@@ -2,18 +2,32 @@
 	text-align:right;
 	vertical-align:middle;
 	float:right;
-
+	font-family: 'Quicksand', sans-serif;
 }
 
 li {
     display: inline;
+
 }
+
+
 
 .logo{
 	vertical-align:top;
-	float:left;
-	
+	float:left;	
 }
+
+.monIcon {
+display: inline-block;
+  width: 2em;
+  height: 2em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+	border-radius:50%;
+
+}
+
 
 .menu, .logo{ display:inline-block;
   vertical-align:middle;
@@ -21,4 +35,6 @@ li {
   	height:50px;
 	background-color: white;
 }
+
+
 

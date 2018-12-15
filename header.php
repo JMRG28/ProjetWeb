@@ -1,3 +1,11 @@
+<?php
+include_once( "Membre.php");
+session_start();
+$member=unserialize($_SESSION['member']);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -26,6 +34,9 @@
       <li><a href="gallery.php">Toutes les propositions</a></li>
       <li> <a a href="parameters.php">Paramètres</a></li>
       <li> <a href="deconnexion.php">Déconnexion</a></li>
+      <li><a href="profile.php" >
+        <img src=<?php echo $member->Photo;?> alt="Logo" class="monIcon">
+      </a></li>
     </ul>
 
     <script src='https://unpkg.com/vue'></script>
