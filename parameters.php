@@ -4,12 +4,12 @@ include "Bien.php";
 include 'bd.php';
 include "header.php";
 
-session_start();
+
 if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
 }
-$member=unserialize($_SESSION['member']);
-$member->toString();
+
+
 $callback=false;
 $callback_B=false;
 $callback_U=false;

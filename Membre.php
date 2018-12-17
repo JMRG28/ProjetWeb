@@ -121,7 +121,6 @@ class Membre {
   }
 
   function getFromEmail($email){
-    echo " Email: ".$email;
     $servername = "k1nd0ne.com";
     $port="3307";
     $username = "jmr";

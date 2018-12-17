@@ -1,9 +1,6 @@
 <?php
 include "Membre.php";
 include 'header.php';
-session_start();
-$member=unserialize($_SESSION['member']);
-$member->toString();
 ?>
 
 <!DOCTYPE html>
