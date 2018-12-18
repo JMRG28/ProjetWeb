@@ -47,12 +47,8 @@ class Service {
 		$this->Categorie->getFromID($this->ID_Catego);
 		$this->Prop->getFromEmail($this->EmailProp);
 		$this->DateFin=$tab[9];
-
-
-		
+	
 		//echo $this->ID_Catego;
-
-
 	}
 
 	function  toString(){
