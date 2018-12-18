@@ -14,21 +14,22 @@ function conversion($d){
 ini_set("display_errors",1);error_reporting(E_ALL);
 $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
 $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $biens=[];
+$biens=[];
 if(isset($_POST["cat"])){
-try {
-
   //WARNING
   foreach($bd->query("select * from BIEN,CATEGORIE where Categorie=ID_Categorie and (ID_Categorie='".$_POST['cat']."' or SuperCategorie='".$_POST['cat']."')") as $row ){
     $bien=new Bien($row["ID_Bien"],$row["Descriptif"],$row["Photo"],$row["PrixNeuf"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
-  //  $bien->createFromTab($row);
+    //  $bien->createFromTab($row);
     array_push($biens, $bien);
   }
+}else{
+  foreach($bd->query("select * from BIEN") as $row ){
+    $bien=new Bien($row["ID_Bien"],$row["Descriptif"],$row["Photo"],$row["PrixNeuf"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
+    //$bien->createFromTab($row);
+    array_push($biens, $bien);
+  }
+}
 
-}finally{
-  // $bd=null;
-}
-}
 ?>
 <!DOCTYPE html>
 <html lang="en" >
