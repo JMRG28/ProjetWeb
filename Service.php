@@ -29,7 +29,8 @@ class Service {
 		$this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 		$this->ID_Catego=$id_catego;
 		$this->Categorie=new Categorie(null,null,null,null);
-		$this->Categorie->getFromID($this->ID_Catego);
+		if($this->ID_Catego != null)
+		 $this->Categorie->getFromID($this->ID_Catego);
 
 	}
 
@@ -46,6 +47,12 @@ class Service {
 		$this->Categorie->getFromID($this->ID_Catego);
 		$this->Prop->getFromEmail($this->EmailProp);
 		$this->DateFin=$tab[9];
+
+
+		
+		//echo $this->ID_Catego;
+
+
 	}
 
 	function  toString(){

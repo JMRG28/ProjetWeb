@@ -28,7 +28,7 @@ class Bien {
 		$this->EmailProp=$emailProp;
 		$this->Titre=$titre;
 		$this->URL=$url;
-		$this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+		$this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 		$this->ID_Catego=$id_catego;
 		$this->Categorie=new Categorie(null,null,null,null);
 	}
@@ -65,7 +65,7 @@ class Bien {
 		if($this->Photo!=null){
 			echo '<div class="tile scale-anm biens all">'
 			.$this->Titre.'<br>'
-			.$this->Descriptif.'<br>
+			.'<br>
 			<a href=profile2.php?uid='.md5($this->EmailProp).'>'.$this->Prop->Prenom.' '.$this->Prop->Nom.'</a><br>
 			<a href=aff_bien.php?bid='.$this->URL.'>
 			<img src='.$this->Photo.' alt="" />
@@ -85,12 +85,8 @@ class Bien {
 		}
 	}
 
-	function affiche2(){
 
-
-
-	}
-
+	
 	function insert($bd){
 		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateDebut,EmailProp,Titre,URL,Categorie,DateFin)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, :dateDeb, :emailProp, :titre, :url, :id_catego,:dateFin)");
 		$stmt->bindValue(":id_bien", $this->ID_Bien);

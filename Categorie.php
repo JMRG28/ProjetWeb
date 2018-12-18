@@ -55,6 +55,8 @@ class Categorie {
     array_push($u,$cid);
     $stmt->execute($u);
     $response = $stmt->rowCount();
+
+
     if($response==1){
       $tab=[];
       while ($row = $stmt->fetch()) {

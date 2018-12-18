@@ -16,7 +16,6 @@ if (!isset($_SESSION['member'])){
 else{
 	$service=new Service(null,null,null,null,null,null,null,null,null,null);
 	$service->getFromURL($_GET["sid"]);
-	//$bien->toString();
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $service->Prop->Email!=$member->Email){
 		if(strtotime(conversion($_POST["date_deb"]))>=strtotime($service->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($service->DateFin)){
@@ -40,7 +39,10 @@ else{
 			echo "<h1> IMPOSSIBLE DE RESERVER</h1>";
 		}
 	}
+
 }
+
+
 ?>
 
 <!DOCTYPE html>
