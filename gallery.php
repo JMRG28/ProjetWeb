@@ -46,6 +46,8 @@ try {
   <button class="btn fil-cat" href="" data-rel="all">All</button>
   <button class="btn fil-cat" data-rel="biens">Biens</button>
   <button class="btn fil-cat" data-rel="services">Services</button>
+  <?php
+  ?>
 </div>
 <div id="portfolio" class="wrap">
   <?php
@@ -56,7 +58,7 @@ try {
 </div>
 
 <div style="clear:both;"></div>
-<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script  src="js/js_gallery.js"></script>
 
 </body>
