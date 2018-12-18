@@ -1,4 +1,8 @@
 <?php
+include 'Service.php' ;
+include 'bd.php';
+include 'header.php';
+
 
 function conversion($d){
   $nd=explode("/",$d);
@@ -9,37 +13,27 @@ function conversion($d){
 }
 
 ini_set("display_errors",1);error_reporting(E_ALL);
-if(isset($_POST['email'])){
-  $servername = "86.210.13.52";
-  $port="3307";
-  $username = "jmr";
-  $password = "BaseDonnees1234";
-  $dbname = "jmr";
-
+if(isset($_POST['titre'])){
   try {
-
     $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
     $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance)");
-    $stmt->bindValue(":email", $_POST['email']);
-    $stmt->bindValue(":mdp_hash", md5($_POST['mdp']));
-    $stmt->bindValue(":nom", $_POST['nom']);
-    $stmt->bindValue(":prenom", $_POST['prenom']);
-    $stmt->bindValue(":code_postal", $_POST['code_p']);
-    $stmt->bindValue(":numero_telephone", $_POST['num_tel']);
-    $stmt->bindValue(":sexe", $_POST['sexe']);
-    $stmt->bindValue(":statut", $_POST['statut']);
-    $stmt->bindValue(":date_naissance", conversion($_POST['date_n']));
-    $stmt->execute();
-    echo "Successfully added the new user " . $_POST['nom'];
-  } catch (PDOException $e) {
-    echo "DataBase Error: The user could not be added.<br>".$e->getMessage();
-  } catch (Exception $e) {
-    echo "General Error: The user could not be added.<br>".$e->getMessage();
-  }finally{
+    $query=$bd->prepare('SELECT MAX(ID_SERVICE)  FROM SERVICE');
+    $query->execute();
+    $result=$query->fetch();
+    $id=$result[0]+2;
+
+    $service=new Service($id, $_POST['descriptif'], $_POST['prixH'], 1,conversion($_POST['date_deb']),$member->Email,  $_POST['titre'],md5($id),$_POST['categorie'],conversion($_POST['date_fin']));
+    $service->insert($bd);
+    
+    echo "Successfully added the new service " . $id;
+} catch (PDOException $e) {
+    echo "DataBase Error: The service could not be added.<br>".$e->getMessage();
+} catch (Exception $e) {
+    echo "General Error: The service could not be added.<br>".$e->getMessage();
+}finally{
     $bd=null;
-  }
+}
 }
 ?>
 
@@ -55,7 +49,7 @@ if(isset($_POST['email'])){
     <meta name="keywords" content="Colorlib Templates">
 
     <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
+    <title>Le Bon Voisin</title>
 
     <!-- Icons font CSS-->
     <link href="js/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -68,135 +62,104 @@ if(isset($_POST['email'])){
     <link href="js/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-     <link rel="stylesheet" href="css/menu.css"> 
+    <link rel="stylesheet" href="css/menu.css">
     <link href="css/style_register.css" rel="stylesheet" media="all">
 
 </head>
 
 <body>
-
-	<div class="header">
-          
-            <div class="logo">
-                <a href="index.html">
-                    <img src="img/shared/logo.jpg" alt="Logo">
-                </a>
-            </div>
-
-            
-         
-       <div class="menu">
-        <ul>
-          <li> <a a href="index.html">Accueil</a></li>
-          <li> <a href="demande.html">Poster une proposition</a></li>
-          <li><a href="propositions.html">Toutes les propositions</a></li>
-         <li> <a a href="parameters.html">Paramètres</a></li>
-       </ul>
-
-<script src='https://unpkg.com/vue'></script>
-<script src='https://unpkg.com/axios/dist/axios.min.js'></script>
-<script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
-
-  
-        </div>
-    </div>
-
-
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
-                <div class="card-body">
-                    <h2 class="title">Inscription</h2>
-                    <form method="POST">
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Titre</label>
-                                    <input class="input--style-4" type="text" name="titre">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Descriptif</label>
-                                    <input class="input--style-4" type="text" name="descriptif">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Prix Neuf</label>
-                                    <input class="input--style-4" type="numeric" name="prixNeuf">
-                                </div>
-                            </div>
-                    
-                            
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Date de naissance</label>
-                                    <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="date_n">
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Sexe</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">Homme
-                                            <input type="radio" checked="checked" name="sexe" value="H">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">Femme
-                                            <input type="radio" name="sexe" value="H">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
+  <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title"> Proposition d'un Service</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Titre</label>
+                                <input class="input--style-4" type="text" name="titre">
                             </div>
                         </div>
-                        <div class="row row-space">
-
-
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Numéro</label>
-                                    <input class="input--style-4" type="text" name="num_tel">
-                                </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Descriptif</label>
+                                <input class="input--style-4" type="text" name="descriptif">
                             </div>
                         </div>
+
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Prix à l'heure</label>
+                                <input class="input--style-4" type="numeric" name="prixH">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="input-group">
+                            <label class="label">Date de Debut</label>
+                            <div class="input-group-icon">
+                              <input class="input--style-4 js-datepicker" type="text" name="date_deb">
+                              <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-2">
+                          <div class="input-group">
+                            <label class="label">Date de Fin</label>
+                            <div class="input-group-icon">
+                              <input class="input--style-4 js-datepicker" type="text" name="date_fin">
+                              <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                            </div>
+                          </div>
+                        </div>
+
+
                         <div class="input-group">
-                            <label class="label">Statut</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="statut">
 
-                                    <option selected="selected">Particulier</option>
-                                    <option>Auto-entrepreneur Independant</option>
-                                    <option>Artisan Commerçant</option>
-                                    <option>Association à but non lucratif</option>
-                                </select>
-                                <div class="select-dropdown"></div>
+                              <label for="pays">Choisissez la catégorie</label><br/>
+                              <div class="rs-select2 js-select-simple select--no-search">
+                              <select name="categorie">
+
+                                <?php
+                                try {
+                                  $bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+                                  $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                  foreach($bd->query("SELECT * FROM CATEGORIE WHERE SuperCategorie IS NOT NULL") as $row){
+                                    echo "<br>".$row[0];
+                                    echo  "<option value=".$row[0].">".$row[1]."</option>";
+                                  }
+
+                                }finally{
+                                  $bd=null;
+                                }
+
+                                ?>
+
+                              </select>
+                              <div class="select-dropdown"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
-                        </div>
-                    </form>
-                </div>
+                          </div>
+                    <div class="p-t-15">
+                        <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Jquery JS-->
-    <script src="js/vendor/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="js/vendor/select2/select2.min.js"></script>
-    <script src="js/vendor/datepicker/moment.min.js"></script>
-    <script src="js/vendor/datepicker/daterangepicker.js"></script>
+<!-- Jquery JS-->
+<script src="js/vendor/jquery/jquery.min.js"></script>
+<!-- Vendor JS-->
+<script src="js/vendor/select2/select2.min.js"></script>
+<script src="js/vendor/datepicker/moment.min.js"></script>
+<script src="js/vendor/datepicker/daterangepicker.js"></script>
 
-    <!-- Main JS-->
-    <script src="js/global.js"></script>
+<!-- Main JS-->
+<script src="js/global.js"></script>
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
