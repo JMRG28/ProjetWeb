@@ -118,80 +118,20 @@ include 'header_b4.php';
             </div>
         </div>
     </div>
-    <div class="container margin-top">
-        <div class="main-title">
-            <h1>WHY CHOOSE US?</h1>
-            <hr>
-            <h6>Except to obtain some advantage from it</h6>
-        </div>
-        <div class="services-home-page">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="services-icon">
-                        <span class="icon-tools"></span>
-                        <hr>
-                    </div>
-                    <h4>BRANDING</h4>
-                    <p>Expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because procure him.</p>
-                </div>
-                <div class="col-md-4">
-                    <div class="services-icon">
-                        <span class="icon-globe"></span>
-                        <hr>
-                    </div>
-                    <h4>PLAN OF WORK</h4>
-                    <p>Expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because procure him.</p>
-                </div>
-                <div class="col-md-4">
-                    <div class="services-icon">
-                        <span class="icon-paintbrush"></span>
-                        <hr>
-                    </div>
-                    <h4>ILUSTRATION</h4>
-                    <p>Expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because procure him.</p>
-                </div>
-            </div>
-        </div>
+ 
     </div>
 
 
     <div class="footer margin-top">
         <div class="container">
             <div class="row">
-                    <div class="col-md-2 col-sm-4 col-xs-12">
-                        <div class="footer-inner">
-                            <div class="footer-content">
-                                <h4>O.A.K THEME</h4>
-                                    <address>City 35 AM <br>Street 1395 p.n <br>your Country</address>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 col-md-push-8 col-sm-4 col-xs-12">
-                        <div class="footer-inner">
-                            <div class="footer-content">
-                               <h4>CONTACT INFO</h4>
-                                <p>
-                                    T:003 124 115 <br>
-                                    E:info@mail.com <br>
-                                    W:www.website.com
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                   
 
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="footer-inner">
                             <div class="footer-content">
-                            <ul class="social-media">
-                                <li><a href="#"><i class="iconmoon-facebook"></i></a></li>
-                                <li><a href="#"><i class="iconmoon-twitter"></i></a></li>
-                                <li><a href="#"><i class="iconmoon-flickr2"></i></a></li>
-                                <li><a href="#"><i class="iconmoon-dribbble3"></i></a></li>
-                                <li><a href="#"><i class="iconmoon-pinterest"></i></a></li>
-                                <li><a href="#"><i class="iconmoon-linkedin2"></i></a></li>
-                            </ul>
-                            <span class="copyright-mark">&copy; 2018 JML, ALL RIGHTS RESERVED</span>
+                            
+                            <span class="copyright-mark">&copy; 2018 Jean-Maurice & Llivia, ALL RIGHTS RESERVED</span>
                             </div>
                         </div>
                     </div>

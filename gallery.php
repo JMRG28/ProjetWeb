@@ -74,6 +74,7 @@ else{
     <button class="btn fil-cat" href="" data-rel="all">All</button>
     <button class="btn fil-cat" data-rel="biens">Biens</button>
     <button class="btn fil-cat" data-rel="services">Services</button>
+</div>
 
     <div class="tab-pane" id="search">
       <h2></h2>

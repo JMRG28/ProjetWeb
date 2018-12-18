@@ -67,7 +67,7 @@ class Service {
 		if(($this->Categorie)->Photo!=null){
 			echo '<div class="tile scale-anm services all">'
 			.$this->Titre.'<br>'
-			.$this->Descriptif.'<br>
+			.'<br>
 			<a href=profile2.php?uid='.md5($this->EmailProp).'>'.$this->Prop->Prenom.' '.$this->Prop->Nom.'</a><br>
 			<a href=aff_service.php?sid='.$this->URL.'>
 			<img src='.($this->Categorie)->Photo.' alt="" />
@@ -77,7 +77,7 @@ class Service {
 		else{
 			echo '<div class="tile scale-anm services all">'
 			.$this->Titre.'<br>'
-			.$this->Descriptif.'<br>
+			.'<br>
 			<a href=profile2.php?uid='.md5($this->EmailProp).'>'.$this->Prop->Prenom.' '.$this->Prop->Nom.'</a><br>
 			<a href="aff_service.php?sid='.$this->URL.'>
 			<img src="http://demo.themerain.com/charm/wp-content/uploads/2015/04/the-ninetys-brand_02-300x300.jpg" alt="" />
