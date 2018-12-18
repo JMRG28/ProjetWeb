@@ -279,7 +279,7 @@ if(isset($_POST["enregistrer"])){
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" href="#home">Mon compte</a></li>
 				<li><a data-toggle="tab" id="bien" href="#biens">Mes biens</a></li>
-				<li><a data-toggle="tab" href="#services">Mes services</a></li>
+				<li><a data-toggle="tab" id="service"href="#services">Mes services</a></li>
 				<li><a data-toggle="tab" href="#settings">Notifications </a></li>
 			</ul>
 
@@ -547,7 +547,7 @@ if(isset($_POST["enregistrer"])){
 								echo "<div class='form-group'>";
 								echo "<div class='col-xs-6'>";
 
-								
+
 								echo "</div>";
 								echo "</div>";
 
