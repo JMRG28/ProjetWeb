@@ -1,18 +1,18 @@
 <?php
 include "Membre.php";
 include "Bien.php";
+include "Service.php";
 include 'bd.php';
 include "header.php";
-
 
 if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
 }
 
-
 $callback=false;
 $callback_B=false;
 $callback_U=false;
+$callback_S=false;
 $member=unserialize($_SESSION['member']);
 //$member->toString();
 
@@ -49,6 +49,23 @@ function updateDB_Bien($id,$v,$k){
 	$bien->$v=$k ;
 }
 
+function updateDB_Service($id,$v,$k){
+	$servername = "k1nd0ne.com";
+	$port="3307";
+	$username = "jmr";
+	$password = "BaseDonnees1234";
+	$dbname = "jmr";
+	$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query=$bd->prepare("SELECT * FROM SERVICE WHERE ID_Service='".$_SESSION["current_s"]."'");
+	$query->execute();
+	$row=$query->fetch();
+	//WARNING
+	$service=new Service(null,null,null,null,null,null,null,null,null,null);
+	$service->createFromTab($row);
+	$service->update($bd,$v,$k);
+	$service->$v=$k ;
+}
+
 //SUPPRESSION DUN BIEN
 function deleteBien($id){
 	$servername = "k1nd0ne.com";
@@ -61,9 +78,20 @@ function deleteBien($id){
 	$query->execute();
 	$query=$bd->prepare("DELETE FROM BIEN WHERE ID_Bien='".$_SESSION["current_b"]."'");
 	$query->execute();
-
 }
 
+function deleteService($id){
+	$servername = "k1nd0ne.com";
+	$port="3307";
+	$username = "jmr";
+	$password = "BaseDonnees1234";
+	$dbname = "jmr";
+	$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query=$bd->prepare("DELETE FROM CONSOMMATION WHERE ID_BS='".$_SESSION["current_s"]."'");
+	$query->execute();
+	$query=$bd->prepare("DELETE FROM SERVICE WHERE ID_Service='".$_SESSION["current_s"]."'");
+	$query->execute();
+}
 
 function updateDB_StatutUser($email,$v,$k){
 	$servername = "k1nd0ne.com";
@@ -107,6 +135,35 @@ if(isset($_POST["enregistrer_B"])){
 		$callback_B=true;
 	}
 }
+
+
+if(isset($_POST["enregistrer_S"])){
+	if($_POST["titre_S"]!=""){
+		updateDB_Service($_SESSION["current_s"],"Titre",$_POST["titre_S"]);
+		$callback_S=true;
+	}
+	if($_POST["descriptif_S"]!=""){
+		updateDB_Service($_SESSION["current_s"],"Descriptif",$_POST["descriptif_S"]);
+		//$service->upload();
+		$callback_S=true;
+	}
+	if($_POST["prix_S"]!=""){
+		updateDB_Service($_SESSION["current_s"],"PrixH",$_POST["prix_S"]);
+		$callback_S=true;
+	}
+	if($_POST["statut_S"]=="actif"){
+		updateDB_Service($_SESSION["current_s"],"Actif",1);
+	}
+	if($_POST["statut_S"]=="desactive"){
+		updateDB_Service($_SESSION["current_s"],"Actif",0);
+	}
+	if($_POST["statut_S"]=="asupprimer"){
+		//ICI
+		deleteService($_SESSION["current_s"]);
+		$callback_S=true;
+	}
+}
+
 
 
 //ICI
@@ -222,7 +279,7 @@ if(isset($_POST["enregistrer"])){
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" href="#home">Mon compte</a></li>
 				<li><a data-toggle="tab" id="bien" href="#biens">Mes biens</a></li>
-				<li><a data-toggle="tab" href="#biens">Mes services</a></li>
+				<li><a data-toggle="tab" href="#services">Mes services</a></li>
 				<li><a data-toggle="tab" href="#settings">Notifications </a></li>
 			</ul>
 
@@ -302,7 +359,7 @@ if(isset($_POST["enregistrer"])){
 					<h2></h2>
 					<hr>
 					<div class=bienModif>
-					<form method="post" > <!-- action="traitement.php"> -->
+						<form method="post" > <!-- action="traitement.php"> -->
 
 							<label for="pays">Choisissez le bien à modifier</label><br/>
 							<select name="bien" id="bien">
@@ -325,9 +382,9 @@ if(isset($_POST["enregistrer"])){
 
 							</select>
 
-						<button class="btn btn-sm btn-success" type="submit"> Sélectionner </button>
-					</form>
-				</div>
+							<button class="btn btn-sm btn-success" type="submit"> Sélectionner </button>
+						</form>
+					</div>
 					<form id="updateimgbien" action="upload2.php" method="post" enctype="multipart/form-data"></form>
 					<?php
 					try {
@@ -405,6 +462,113 @@ if(isset($_POST["enregistrer"])){
 
 				</div><!--/tab-pane-->
 
+
+				<div class="tab-pane" id="services">
+					<h2></h2>
+					<hr>
+					<div class=bienModif>
+						<form method="post" > <!-- action="traitement.php"> -->
+
+							<label for="pays">Choisissez le service  à modifier</label><br/>
+							<select name="service" id="service">
+
+								<?php
+								try {
+									echo $member->Email;
+									$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+									$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+									foreach($bd->query("SELECT * FROM SERVICE WHERE EmailProp='".$member->Email."'") as $row){
+										echo  "<option value=".$row[0].">".$row[7]."</option>";
+									}
+
+								}finally{
+									$bd=null;
+								}
+
+								?>
+
+							</select>
+
+							<button class="btn btn-sm btn-success" type="submit"> Sélectionner </button>
+						</form>
+					</div>
+					<!-- WARNING -->
+					<form id="updateimgservice" action="upload2.php" method="post" enctype="multipart/form-data"></form>
+					<?php
+					try {
+						$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
+						$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+						if(isset($_POST["service"])){
+							echo '<script type="text/javascript">',
+							'document.getElementById("service").click()',
+							'</script>';
+							// WARNING
+							$_SESSION["current_s"]=$_POST["service"];
+							echo "<form class='form' action='##'' method='post' id='serviceForm'> <div class='form-group'>";
+							foreach($bd->query("SELECT * FROM SERVICE WHERE ID_Service='".$_POST["service"]."'") as $row){
+								$service=new Service(null,null,null,null,null,null,null,null,null,null);
+								$service->createFromTab($row);
+								$_SESSION["service"]=serialize($service);
+								echo " <div class='form-group'> <div class='col-xs-6'>";
+								echo "<label for='first_name'><h4>Titre</h4></label>";
+								echo "<input type='text' class='form-control' name='titre_S' id='titre_S' placeholder=".$service->Titre.">";
+								echo "</div> </div>";
+
+								echo "<div class='form-group'> <div class='col-xs-6'>";
+								echo "<label for='mobile'><h4>Descriptif</h4></label>";
+								echo "<input type='numeric' class='form-control' name='descriptif_S' id='descriptif_S' placeholder=".$service->Descriptif.">";
+								echo "</div> </div>";
+
+								echo "<div class='form-group'> <div class='col-xs-6'>";
+								echo "<label for='mobile'><h4>Prix</h4></label>";
+								echo "<input type='numeric' class='form-control' name='prix_S' id='prix_S' placeholder=".$service->PrixH.">";
+								echo "</div> </div>";
+
+								echo "<div class='form-group'>";
+								echo "<div class='col-xs-6'>";
+								echo "<label for='statut'><h4>Statut</h4></label>";
+								echo "<br>";
+								echo "<label class='radio-container m-r-45'>Actif";
+								echo "<input type='radio' checked='checked' name='statut_S' value='actif'>";
+								echo "<span class='checkmark'></span>";
+								echo "</label>";
+								echo "<label class='radio-container'> Désactivé";
+								echo "<input type='radio' name='statut_S' value='desactive'>";
+								echo "<span class='checkmark'></span>";
+								echo "<label class='radio-container'> Je souhaite supprimer ce bien";
+								echo "<input type='radio' name='statut_S' value='asupprimer'>";
+								echo "<span class='checkmark'></span>";
+								echo "</label>";
+								echo "</div>";
+								echo "</div>";
+
+								echo "<div class='form-group'>";
+								echo "<div class='col-xs-6'>";
+
+								
+								echo "</div>";
+								echo "</div>";
+
+							}
+
+							echo "<div class='form-group'> <div class='col-xs-12'><br>";
+							echo "<button class='btn btn-lg btn-success' type='submit' name='enregistrer_S'><i class='glyphicon glyphicon-ok-sign'></i> Enregistrer</button>";
+							echo "<button class='btn btn-lg' type='reset'><i class='glyphicon glyphicon-repeat'></i> Annuler</button>";
+							echo "</div> </div>";
+							echo "</div> </form>";
+						}
+
+					}finally{
+						$bd=null;
+					}
+
+					?>
+
+				</div><!--/tab-pane-->
+
+
 				<div class="tab-pane" id="settings">
 
 					<?php
@@ -412,12 +576,12 @@ if(isset($_POST["enregistrer"])){
 
 						try {
 							$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
-								$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+							$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-								echo "<h2> Utilisateurs à surveiller</h2>";
+							echo "<h2> Utilisateurs à surveiller</h2>";
 								//MODIFIER
-								foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 1 AND Actif=1 AND Banni=0") as $row){
-									echo  $row[0];
+							foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 1 AND Actif=1 AND Banni=0") as $row){
+								echo  $row[0];
 							}
 
 						}finally{
@@ -426,39 +590,39 @@ if(isset($_POST["enregistrer"])){
 
 
 						echo "<hr>";
-							echo "<form class='form' action='##'' method='post' id='userToDeleteForm'>";
-							echo "<div class='form-group'>";
-							echo "<div class='col-xs-6'>";
-							echo "<label for='first_name'><h4>Email de l'utilisateur</h4></label>";
-							echo "<input type='text' class='form-control' name='nom_D' id='nom_D'>";
-							echo "</div>";
-							echo "</div>";
+						echo "<form class='form' action='##'' method='post' id='userToDeleteForm'>";
+						echo "<div class='form-group'>";
+						echo "<div class='col-xs-6'>";
+						echo "<label for='first_name'><h4>Email de l'utilisateur</h4></label>";
+						echo "<input type='text' class='form-control' name='nom_D' id='nom_D'>";
+						echo "</div>";
+						echo "</div>";
 
-							echo "<div class='form-group'>";
-							echo "<div class='col-xs-6'>";
-							echo "<label class='radio-container m-r-45'>Désactiver temporairement";
-							echo "<input type='radio' checked='checked' name='duree' value='temporaire'>";
-							echo "<span class='checkmark'></span>";
-							echo "</label>";
-							echo "<label class='radio-container'>Désactiver définitivement";
-							echo "<input type='radio' name='duree' value='definitif'>";
-							echo "<span class='checkmark'></span>";
-							echo "</label>";
-							echo "<label class='radio-container'>Activiter";
-							echo "<input type='radio' name='duree' value='activer'>";
-							echo "<span class='checkmark'></span>";
-							echo "</label>";
-							echo "</div>";
-							echo "</div>";
+						echo "<div class='form-group'>";
+						echo "<div class='col-xs-6'>";
+						echo "<label class='radio-container m-r-45'>Désactiver temporairement";
+						echo "<input type='radio' checked='checked' name='duree' value='temporaire'>";
+						echo "<span class='checkmark'></span>";
+						echo "</label>";
+						echo "<label class='radio-container'>Désactiver définitivement";
+						echo "<input type='radio' name='duree' value='definitif'>";
+						echo "<span class='checkmark'></span>";
+						echo "</label>";
+						echo "<label class='radio-container'>Activiter";
+						echo "<input type='radio' name='duree' value='activer'>";
+						echo "<span class='checkmark'></span>";
+						echo "</label>";
+						echo "</div>";
+						echo "</div>";
 
-							echo "<div class='form-group'>";
-							echo "<div class='col-xs-12'>";
-							echo "<br>";
-							echo "<button class='btn btn-lg btn-success pull-right' type='submit' name='enregistrer_A'><i class='glyphicon glyphicon-ok-sign'></i> Save</button>";
-							echo "<button class='btn btn-lg' type='reset'><i class='glyphicon glyphicon-repeat'></i> Reset</button>";
-							echo "</div>";
-							echo "</div>";
-							echo "</form>";
+						echo "<div class='form-group'>";
+						echo "<div class='col-xs-12'>";
+						echo "<br>";
+						echo "<button class='btn btn-lg btn-success pull-right' type='submit' name='enregistrer_A'><i class='glyphicon glyphicon-ok-sign'></i> Save</button>";
+						echo "<button class='btn btn-lg' type='reset'><i class='glyphicon glyphicon-repeat'></i> Reset</button>";
+						echo "</div>";
+						echo "</div>";
+						echo "</form>";
 					}
 					else{
 						//WARNING

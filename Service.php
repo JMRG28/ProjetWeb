@@ -123,7 +123,6 @@ class Service {
 
 	}
 	function update($bd,$key,$value){
-		echo " <br> UPDATE SERVICE SET ".$key."='".$value."' where ID_Service=".$this->ID_Service ."<br>";
 		$stmt = $bd->prepare("UPDATE SERVICE SET ".$key."='".$value."' where ID_Service='".$this->ID_Service."'");
 		$stmt->execute();
 	}
