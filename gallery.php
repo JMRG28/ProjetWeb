@@ -31,18 +31,21 @@ if(isset($_POST["cat"])){
     }
   }
 
-}else{
+}
+
+else{
   foreach($bd->query("select * from BIEN") as $row ){
     $bien=new Bien($row["ID_Bien"],$row["Descriptif"],$row["Photo"],$row["PrixNeuf"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
     //$bien->createFromTab($row);
     array_push($biens, $bien);
-    foreach($bd->query("select * from SERVICE") as $row ){
-      $service=new Service($row["ID_Service"],$row["Descriptif"],$row["PrixH"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
+  }
+  foreach($bd->query("select * from SERVICE") as $row ){
+    $service=new Service($row["ID_Service"],$row["Descriptif"],$row["PrixH"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
     //$bien->createFromTab($row);
-      array_push($services, $service);
-    }
+    array_push($services, $service);
   }
 }
+
 
 
 

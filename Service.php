@@ -29,6 +29,8 @@ class Service {
 		$this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 		$this->ID_Catego=$id_catego;
 		$this->Categorie=new Categorie(null,null,null,null);
+		$this->Categorie->getFromID($this->ID_Catego);
+
 	}
 
 	function createFromTab($tab) {
@@ -41,7 +43,7 @@ class Service {
 		$this->Titre=$tab[7];
 		$this->URL=$tab[8];
 		$this->ID_Catego=$tab[6];
-	//	$this->Categorie->getFromID($this->ID_Catego);
+		$this->Categorie->getFromID($this->ID_Catego);
 		$this->Prop->getFromEmail($this->EmailProp);
 		$this->DateFin=$tab[9];
 	}
