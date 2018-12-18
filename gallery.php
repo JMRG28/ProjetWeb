@@ -39,9 +39,8 @@ if(isset($_POST["cat"])){
   <title>Toutes les propositions</title>
   <!-- /<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'> -->
   <!--
-  <link rel='stylesheet' href='https://npmcdn.com/basscss@8.0.0/css/basscss.min.css'>
-  <link rel="stylesheet" href="css/style_gallery.css">
-  <link rel="stylesheet" href="css/menu.css"> -->
+  <link rel='stylesheet' href='https://npmcdn.com/basscss@8.0.0/css/basscss.min.css'> -->
+  <link rel="stylesheet" href="css/gallery.css"> 
   <style>
   .one {
     font-family:arial;
@@ -58,7 +57,7 @@ if(isset($_POST["cat"])){
 
     <div class="tab-pane" id="search">
       <h2></h2>
-      <hr>
+      
       <form method="post" > <!-- action="traitement.php"> -->
         <label for="categories">Choisissez la catégorie</label><br/>
         <select name="cat" id="cat">

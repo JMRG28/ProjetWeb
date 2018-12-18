@@ -3344,3 +3344,7 @@ a img.aligncenter {
     width:100%;
   }
   
+a:link
+{
+color:black;
+} 

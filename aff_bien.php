@@ -1,6 +1,5 @@
 <?php
 include "header.php";
-session_start();
 function conversion($d){
 	$nd=explode("/",$d);
 	$r=[];
@@ -17,7 +16,7 @@ if (!isset($_SESSION['member'])){
 else{
 	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null);
 	$bien->getFromURL($_GET["bid"]);
-	$bien->toString();
+	//$bien->toString();
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $bien->Prop->Email!=$member->Email){
 		if(strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)){
@@ -71,10 +70,97 @@ else{
 	<!-- Main CSS-->
 	<link rel="stylesheet" href="css/menu.css">
 	<link href="css/style_register.css" rel="stylesheet" media="all">
+<style>
+#bla
+{
+    text-align:center;
+
+}
+#bla1, #bla2
+{
+		width:40%;
+		margin:30px;
+    display: inline-block;
+}
+</style>
+<script src="js/OpenLayers-2.13.1/OpenLayers.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<style>
+#Map {
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+#Map div canvas{
+	border-radius: 10px;
+}
+#OpenLayers_Control_Attribution_7{
+	bottom:0;
+}
+#OL_Icon_22_innerImage{
+	border:2px solid #021a40;
+	border-radius: 50%;
+}
+</style>
+<script>
+
+function loadMap(){
+	var latU;
+	var lngU;
+	var latU2;
+	var lngU2;
+	$.getJSON('https://api.opencagedata.com/geocode/v1/json?q='+document.getElementById("add2").value+'&key=816e747854f64c8389a43b269e5b74d9&language=en&pretty=1',
+	function(data){
+		console.log(data)
+		latU2=data["results"][0]["geometry"]["lat"];
+		lngU2=data["results"][0]["geometry"]["lng"];
+		$.getJSON('https://api.opencagedata.com/geocode/v1/json?q='+document.getElementById("add").value+'&key=816e747854f64c8389a43b269e5b74d9&language=en&pretty=1',
+		function(a){
+			console.log(a["results"][0]["geometry"]);
+			latU=a["results"][0]["geometry"]["lat"];
+			lngU=a["results"][0]["geometry"]["lng"];
+			var lat            = latU;
+			var lon            = lngU;
+			var zoom           = 14;
+			console.log(lat);
+			console.log(lon);
+
+			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+			var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
+			var position2       = new OpenLayers.LonLat(lngU2, latU2).transform( fromProjection, toProjection);
+
+			map = new OpenLayers.Map("Map");
+			var mapnik         = new OpenLayers.Layer.OSM();
+			map.addLayer(mapnik);
+
+			var markers = new OpenLayers.Layer.Markers( "Markers" );
+			map.addLayer(markers);
+
+			var size = new OpenLayers.Size(30,30);
+			var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+			console.log(document.getElementById("pic").value);
+			var icon = new OpenLayers.Icon(document.getElementById("pic").value,size,offset);
+			markers.addMarker(new OpenLayers.Marker(position,icon));
+
+			//markers.addMarker(new OpenLayers.Marker(position));
+			var markers2 = new OpenLayers.Layer.Markers( "Markers" );
+			map.addLayer(markers2);
+			markers2.addMarker(new OpenLayers.Marker(position2));
+
+			var vector = new OpenLayers.Layer.Vector();
+			vector.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString([position, position2]))]);
+			map.addLayers([vector]);
+
+			map.setCenter(position, zoom);
+		});
+	});
+}
+</script>
 
 </head>
 
-<body>
+<body onload="loadMap()">
 
 	<div class="wrapper">
 
@@ -103,55 +189,42 @@ else{
 					<img style="height:300px;" src="<?php echo $bien->Photo;?>" alt="profile card">
 				</div>
 				<br>
+				<br>
+        <div class="profile-card-loc">
+					<?php echo $bien->Prop->Adresse;?>
+          <input type="text" value="<?php echo $member->Adresse;?>" id="add" hidden>
+					<input type="text" value="<?php echo $bien->Prop->Adresse;?>" id="add2" hidden>
+          <input type="text" value="<?php echo $member->Photo;?>" id="pic" hidden>
+          <div id="Map" style="height:350px; width:80%;"></div>
+        </div>
 
-
-				<div class="profile-card-ctr">
+				<div id="bla" class="profile-card-ctr">
 					<form action="" method="post">
-						<div class="col-2">
+						<div id="bla1" class="col-2">
 							<div class="input-group">
 								<label class="label">Date de Debut</label>
 								<div class="input-group-icon">
 									<input class="input--style-4 js-datepicker" type="text" name="date_deb">
-									<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+									<!-- <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i> -->
 								</div>
 							</div>
 						</div>
 
-						<div class="col-2">
+						<div id="bla2" class="col-2">
 							<div class="input-group">
 								<label class="label">Date de Fin</label>
 								<div class="input-group-icon">
 									<input class="input--style-4 js-datepicker" type="text" name="date_fin">
-									<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+									<!-- <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i> -->
 								</div>
 							</div>
 						</div>
 						<button name="reserver" type="submit" class="profile-card__button button--blue js-message-btn">Réserver</button>
 
-						<!-- <button class="profile-card__button button--orange">Follow</button> -->
 					</form>
 				</div>
 			</div>
 
-			<div class="profile-card-message js-message">
-				<form class="profile-card-form">
-					<div class="profile-card-form__container">
-						<textarea placeholder="Say something..."></textarea>
-					</div>
-
-					<div class="profile-card-form__bottom">
-						<button class="profile-card__button button--blue js-message-close">
-							Send
-						</button>
-
-						<button class="profile-card__button button--gray js-message-close">
-							Cancel
-						</button>
-					</div>
-				</form>
-
-				<div class="profile-card__overlay js-message-close"></div>
-			</div>
 
 		</div>
 

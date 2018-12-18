@@ -19,9 +19,10 @@ class Membre {
   public $Suspendu;
   public $URL;
   public $Admin;
+  public $Adresse;
 
   //privatiser apres
-  function __construct($email,$mdp,$nom,$prenom,$codep,$num,$photo,$desc,$rendu,$recu,$sexe,$statut,$dateN,$dateI,$actif,$suspendu,$url) {
+  function __construct($email,$mdp,$nom,$prenom,$codep,$num,$photo,$desc,$rendu,$recu,$sexe,$statut,$dateN,$dateI,$actif,$suspendu,$url,$adresse) {
     $this->Email= $email;
     $this->MdpHash=$mdp;
     $this->Nom=$nom;
@@ -40,6 +41,7 @@ class Membre {
     $this->Suspendu=$suspendu;
     $this->URL=$url;
     $this->Admin=0;
+    $this->Adresse=$adresse;
   }
 
   function createFromTab($tab) {
@@ -61,6 +63,7 @@ class Membre {
     $this->Suspendu=$tab[15];
     $this->URL=$tab[16];
     $this->Admin=$tab[17];
+    $this->Adresse=$tab[18];
   }
 
   function  toString(){
@@ -85,7 +88,7 @@ class Membre {
   }
 
   function insert($bd){
-    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss,URL, Admin)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance,:url,:admin)");
+    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss,URL, Admin,Adresse)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance,:url,:admin,:adresse)");
     $stmt->bindValue(":email", $this->Email);
     $stmt->bindValue(":mdp_hash", $this->MdpHash);
     $stmt->bindValue(":nom",$this->Nom);
@@ -97,6 +100,7 @@ class Membre {
     $stmt->bindValue(":date_naissance", $this->DateNaiss);
     $stmt->bindValue(":url", $this->URL);
     $stmt->bindValue(":admin", $this->Admin);
+    $stmt->bindValue(":adresse", $this->Adresse);
     $stmt->execute();
   }
 

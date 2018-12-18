@@ -18,7 +18,7 @@ include 'header.php';
 </head>
 
 <body>
-  
+
  <div class="wrapper">
   <div class="profile-card js-profile-card">
     <div class="profile-card__img">
@@ -36,7 +36,7 @@ include 'header.php';
         </span>
 
         <span class="profile-card-loc__txt">
-          <?php echo $member->CodePostal; ?>
+          <?php echo $member->Adresse; ?>
         </span>
 
       </div>
