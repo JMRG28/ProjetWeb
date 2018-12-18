@@ -1,6 +1,6 @@
 .menu{
 	text-align:right;
-	vertical-align:middle;
+	vertical-align:top;
 	float:right;
 	font-family: 'Quicksand', sans-serif;
 }
@@ -9,6 +9,11 @@ li {
     display: inline;
 
 }
+
+a:link
+{
+text-decoration:none;
+} 
 
 
 

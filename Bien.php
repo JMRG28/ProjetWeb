@@ -85,6 +85,12 @@ class Bien {
 		}
 	}
 
+	function affiche2(){
+		
+
+		
+	}
+
 	function insert($bd){
 		$stmt = $bd->prepare("INSERT INTO BIEN (ID_Bien, Descriptif, Photo, PrixNeuf, Actif,DateDebut,EmailProp,Titre,URL,Categorie,DateFin)VALUES (:id_bien, :descriptif, :photo, :prixNeuf, :actif, :dateDeb, :emailProp, :titre, :url, :id_catego,:dateFin)");
 		$stmt->bindValue(":id_bien", $this->ID_Bien);

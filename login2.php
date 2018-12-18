@@ -55,7 +55,7 @@ if(isset($_POST['email'])){
 	<meta name="keywords" content="Colorlib Templates">
 
 	<!-- Title Page-->
-	<title>Le Bon Voisin</title>
+	<title>Connexion</title>
 
 	<!-- Icons font CSS-->
 	<link href="js/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
