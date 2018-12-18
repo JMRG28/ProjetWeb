@@ -14,7 +14,7 @@ $callback=false;
 $callback_B=false;
 $callback_U=false;
 $member=unserialize($_SESSION['member']);
-$member->toString();
+//$member->toString();
 
 //Améliorer les fonctions
 function updateDB($v,$k){
@@ -26,7 +26,6 @@ function updateDB($v,$k){
 	echo $dbname;
 	$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$member=unserialize($_SESSION['member']);
-	//$member->toString();
 	$member->update($bd,$v,$k);
 	$member->$v=$k ;
 	$_SESSION['member']=serialize($member);
@@ -182,8 +181,12 @@ if(isset($_POST["enregistrer"])){
 	<hr>
 
 	<div class="container bootstrap snippet">
+		<h1><?php echo $member->Prenom." ".$member->Nom; ?></h1>
 		<div class="row">
-			<div class="col-sm-10" title="profile image" class="img-circle img-responsive"><h1><?php echo $member->Prenom." ".$member->Nom; ?></h1></div>
+
+			<div class="col-sm-10" title="profile image" class="img-circle img-responsive">
+				
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-3"><!--left col-->
@@ -204,17 +207,12 @@ if(isset($_POST["enregistrer"])){
 			</div> -->
 
 			<ul class="list-group">
-				<li class="list-group-item text-muted">Statistiques <i class="fa fa-dashboard fa-1x"></i></li>
-				<li class="list-group-item text-right"><span class="pull-left"><strong>Demandes totale</strong></span> <?php echo $member->Recu; ?></li>
-				<li class="list-group-item text-right"><span class="pull-left"><strong>Biens ou services rendus</strong></span> <?php echo $member->Rendu ;?></li>
+				<li class="list-group-item text-muted">Statistiques </li>
+				<li class="list-group-item text-right"><span class="pull-left"><strong>Propositions</strong></span> <?php echo $member->Recu; ?></li>
+				<li class="list-group-item text-right"><span class="pull-left"><strong>Biens ou services reçus</strong></span> <?php echo $member->Rendu ;?></li>
 			</ul>
 
-			<div class="panel panel-default">
-				<div class="panel-heading">Social Media</div>
-				<div class="panel-body">
-					<i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
-				</div>
-			</div>
+			
 		</div> <!--/col-3-->
 		<div class="col-sm-9">
 			<ul class="nav nav-tabs">
@@ -292,8 +290,9 @@ if(isset($_POST["enregistrer"])){
 				<div class="tab-pane" id="biens">
 					<h2></h2>
 					<hr>
+					<div class=bienModif>
 					<form method="post" > <!-- action="traitement.php"> -->
-						<p>
+						
 							<label for="pays">Choisissez le bien à modifier</label><br/>
 							<select name="bien" id="bien">
 
@@ -314,10 +313,10 @@ if(isset($_POST["enregistrer"])){
 								?>
 
 							</select>
-						</p>
-						<button > Sélectionner</button>
-
+						
+						<button class="btn btn-sm btn-success" type="submit"> Sélectionner </button>
 					</form>
+				</div>
 					<form id="updateimgbien" action="upload2.php" method="post" enctype="multipart/form-data"></form>
 					<?php
 					try {
@@ -351,7 +350,8 @@ if(isset($_POST["enregistrer"])){
 
 								echo "<div class='form-group'>";
 								echo "<div class='col-xs-6'>";
-								echo "Statut:";
+								echo "<label for='statut'><h4>Statut</h4></label>";
+								echo "<br>";
 								echo "<label class='radio-container m-r-45'>Actif";
 								echo "<input type='radio' checked='checked' name='statut_B' value='actif'>";
 								echo "<span class='checkmark'></span>";
@@ -368,12 +368,11 @@ if(isset($_POST["enregistrer"])){
 
 								echo "<div class='form-group'>";
 								echo "<div class='col-xs-6'>";
-								echo "<label for='mobile'><h4>Photo</h4></label>";
+								
 								echo "<img style='width:300px;' src=".$bien->Photo.">";
 								echo "</div>";
 								echo "</div>";
-								echo '
-								Select image to upload:
+								echo ' <h4>Image</h4>
 								<input form="updateimgbien" type="file" name="fileToUpload" id="fileToUpload">
 								<button form="updateimgbien" class="btn btn-sm btn-success" type="submit" name="submit2">Submit</button>
 								</form>';
