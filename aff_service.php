@@ -8,33 +8,32 @@ function conversion($d){
 	return $res;
 }
 
-include "Bien.php";
+include "Service.php";
 ini_set("display_errors",1);error_reporting(E_ALL);
 if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
 }
 else{
-	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null);
-	$bien->getFromURL($_GET["bid"]);
+	$service=new Service(null,null,null,null,null,null,null,null,null,null);
+	$service->getFromURL($_GET["sid"]);
 	//$bien->toString();
 	$member=unserialize($_SESSION['member']);
-	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $bien->Prop->Email!=$member->Email){
-		if(strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)){
-			//echo "caca: ".strtotime($bien->DateDebut);
+	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $service->Prop->Email!=$member->Email){
+		if(strtotime(conversion($_POST["date_deb"]))>=strtotime($service->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($service->DateFin)){
 			$servername = "k1nd0ne.com";
 			$port="3307"; $username = "jmr";
 			$password = "BaseDonnees1234";
 			$dbname = "jmr";
 			$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$stmt = $bd->prepare("INSERT INTO CONSOMMATION (EmailProp, EmailConso, ID_BS, DateDeb,DateFin,Type)VALUES (:EmailProp, :EmailConso, :ID_BS, :DateDeb,:DateFin,:Type)");
-			$stmt->bindValue(":EmailProp", $bien->Prop->Email);
+			$stmt->bindValue(":EmailProp", $service->Prop->Email);
 			$stmt->bindValue(":EmailConso", $member->Email);
-			$stmt->bindValue(":ID_BS",$bien->ID_Bien);
+			$stmt->bindValue(":ID_BS",$service->ID_Service);
 			$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
 			$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
 			$stmt->bindValue(":Type", "b");
 			$stmt->execute();
-			$bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
+			$service->Prop->update($bd,"Rendu",$service->Prop->Rendu+1);
 			$member->update($bd,"Recu",$member->Recu+1);
 			//$bien->update($bd,"EstDispo",0);
 		}else{
@@ -166,34 +165,32 @@ function loadMap(){
 
 		<div class="profile-card js-profile-card">
 			<div class="profile-card__img">
-				<img src="<?php echo $bien->Prop->Photo;?>" alt="profile card">
+				<img src="<?php echo $service->Prop->Photo;?>" alt="profile card">
 			</div>
 
 			<div class="profile-card__cnt js-profile-cnt">
-				<div class="profile-card__txt"><?php echo $bien->Prop->Prenom." ".$bien->Prop->Nom; ?> </div>
+				<div class="profile-card__txt"><?php echo $service->Prop->Prenom." ".$service->Prop->Nom; ?> </div>
 
-				<div class="profile-card__name"><?php echo $bien->Titre." ".$bien->PrixNeuf; ?> </div>
-				<div class="profile-card__txt"><strong>"</strong><?php echo $bien->Descriptif;?><strong>"</strong></div>
+				<div class="profile-card__name"><?php echo $service->Titre." ".$service->PrixH."€/h"; ?> </div>
+				<div class="profile-card__txt"><strong>"</strong><?php echo $service->Descriptif;?><strong>"</strong></div>
 				<div class="profile-card-loc">
 					<span class="profile-card-loc__icon">
 						<svg class="icon"><use xlink:href="#icon-location"></use></svg>
 					</span>
 
 					<span class="profile-card-loc__txt">
-						<?php echo $bien->Prop->CodePostal;?>
+						<?php echo $service->Prop->CodePostal;?>
 					</span>
 
 				</div>
 				<br>
-				<div class="">
-					<img style="height:300px;" src="<?php echo $bien->Photo;?>" alt="profile card">
-				</div>
+				
 				<br>
 				<br>
         <div class="profile-card-loc">
-					<?php echo $bien->Prop->Adresse;?>
+					<?php echo $service->Prop->Adresse;?>
           <input type="text" value="<?php echo $member->Adresse;?>" id="add" hidden>
-					<input type="text" value="<?php echo $bien->Prop->Adresse;?>" id="add2" hidden>
+					<input type="text" value="<?php echo $service->Prop->Adresse;?>" id="add2" hidden>
           <input type="text" value="<?php echo $member->Photo;?>" id="pic" hidden>
           <div id="Map" style="height:350px; width:80%;"></div>
         </div>
