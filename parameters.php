@@ -61,7 +61,7 @@ function deleteBien($id){
 	$query->execute();
 	$query=$bd->prepare("DELETE FROM BIEN WHERE ID_Bien='".$_SESSION["current_b"]."'");
 	$query->execute();
-	
+
 }
 
 
@@ -78,7 +78,7 @@ function updateDB_StatutUser($email,$v,$k){
 	$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 	$member->createFromTab($row);
 	$member->update($bd,$v,$k);
-	$member->$v=$k ;	
+	$member->$v=$k ;
 }
 
 if(isset($_POST["enregistrer_B"])){
@@ -110,7 +110,7 @@ if(isset($_POST["enregistrer_B"])){
 
 
 //ICI
-//VERIFICATION SI EST 
+//VERIFICATION SI EST
 if(isset($_POST["enregistrer_A"])){
 	if($_POST["nom_D"]!=""){
 		if($_POST["duree"]=="definitif"){
@@ -138,6 +138,10 @@ if(isset($_POST["enregistrer"])){
 	}
 	if($_POST["last_name"]!=""){
 		updateDB("Nom",$_POST["last_name"]);
+		$callback=true;
+	}
+	if($_POST["adresse"]!=""){
+		updateDB("Adresse",$_POST["adresse"]);
 		$callback=true;
 	}
 	if($_POST["mobile"]!=""){
@@ -185,7 +189,7 @@ if(isset($_POST["enregistrer"])){
 		<div class="row">
 
 			<div class="col-sm-10" title="profile image" class="img-circle img-responsive">
-				
+
 			</div>
 		</div>
 		<div class="row">
@@ -212,7 +216,7 @@ if(isset($_POST["enregistrer"])){
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Biens ou services reçus</strong></span> <?php echo $member->Rendu ;?></li>
 			</ul>
 
-			
+
 		</div> <!--/col-3-->
 		<div class="col-sm-9">
 			<ul class="nav nav-tabs">
@@ -252,14 +256,21 @@ if(isset($_POST["enregistrer"])){
 						<div class="form-group">
 							<div class="col-xs-6">
 								<label for="codePostal"><h4>Code Postal</h4></label>
-								<input type="codePostal" class="form-control" id="location" placeholder=<?php echo $member->CodePostal; ?> title="enter a location">
+								<input type="text" name="codePostal" class="form-control" id="location" placeholder=<?php echo $member->CodePostal; ?> title="enter a location">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-xs-6">
+								<label for="adresse"><h4>Adresse</h4></label>
+								<input type="text" name="adresse" class="form-control" id="adresse" placeholder="<?php echo $member->Adresse; ?>" title="enter a location">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-xs-6">
 								<label for="description"><h4>Description</h4></label>
-								<input type="text" class="form-control" name="description" id="last_name" placeholder=<?php echo $member->Description; ?> title="enter your last name if any.">
+								<input type="text" class="form-control" name="description" id="last_name" placeholder="<?php echo $member->Description; ?>" title="enter your last name if any.">
 							</div>
 						</div>
 
@@ -292,7 +303,7 @@ if(isset($_POST["enregistrer"])){
 					<hr>
 					<div class=bienModif>
 					<form method="post" > <!-- action="traitement.php"> -->
-						
+
 							<label for="pays">Choisissez le bien à modifier</label><br/>
 							<select name="bien" id="bien">
 
@@ -313,7 +324,7 @@ if(isset($_POST["enregistrer"])){
 								?>
 
 							</select>
-						
+
 						<button class="btn btn-sm btn-success" type="submit"> Sélectionner </button>
 					</form>
 				</div>
@@ -368,7 +379,7 @@ if(isset($_POST["enregistrer"])){
 
 								echo "<div class='form-group'>";
 								echo "<div class='col-xs-6'>";
-								
+
 								echo "<img style='width:300px;' src=".$bien->Photo.">";
 								echo "</div>";
 								echo "</div>";
@@ -405,8 +416,8 @@ if(isset($_POST["enregistrer"])){
 
 								echo "<h2> Utilisateurs à surveiller</h2>";
 								//MODIFIER
-								foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 1 AND Actif=1 AND Suspendu=0") as $row){
-									echo  $row[0]; 
+								foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 1 AND Actif=1 AND Banni=0") as $row){
+									echo  $row[0];
 							}
 
 						}finally{
