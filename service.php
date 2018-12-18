@@ -21,11 +21,11 @@ if(isset($_POST['titre'])){
     $query=$bd->prepare('SELECT MAX(ID_SERVICE)  FROM SERVICE');
     $query->execute();
     $result=$query->fetch();
-    $id=$result[0]+2;
+    $id=$result[0]+1;
 
-    $service=new Service($id, $_POST['descriptif'], $_POST['prixH'], 1,conversion($_POST['date_deb']),$member->Email,  $_POST['titre'],md5($id),$_POST['categorie'],conversion($_POST['date_fin']));
+    $service=new Service($id, $_POST['descriptif'], $_POST['prixH'], 1,$member->Email,  $_POST['titre'],md5($id),$_POST['categorie']);
     $service->insert($bd);
-    
+
     echo "Successfully added the new service " . $id;
 } catch (PDOException $e) {
     echo "DataBase Error: The service could not be added.<br>".$e->getMessage();
@@ -94,26 +94,6 @@ if(isset($_POST['titre'])){
                                 <input class="input--style-4" type="numeric" name="prixH">
                             </div>
                         </div>
-                        <div class="col-2">
-                          <div class="input-group">
-                            <label class="label">Date de Debut</label>
-                            <div class="input-group-icon">
-                              <input class="input--style-4 js-datepicker" type="text" name="date_deb">
-                              <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-2">
-                          <div class="input-group">
-                            <label class="label">Date de Fin</label>
-                            <div class="input-group-icon">
-                              <input class="input--style-4 js-datepicker" type="text" name="date_fin">
-                              <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                            </div>
-                          </div>
-                        </div>
-
 
                         <div class="input-group">
 

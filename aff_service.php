@@ -14,23 +14,22 @@ if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
 }
 else{
-	$service=new Service(null,null,null,null,null,null,null,null,null,null);
+	$service=new Service(null,null,null,null,null,null,null,null);
 	$service->getFromURL($_GET["sid"]);
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $service->Prop->Email!=$member->Email){
-		if(strtotime(conversion($_POST["date_deb"]))>=strtotime($service->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($service->DateFin)){
+		//strtotime(conversion($_POST["date_deb"]))>=strtotime($service->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($service->DateFin)
+		if(true){
 			$servername = "k1nd0ne.com";
 			$port="3307"; $username = "jmr";
 			$password = "BaseDonnees1234";
 			$dbname = "jmr";
 			$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$stmt = $bd->prepare("INSERT INTO CONSOMMATION (EmailProp, EmailConso, ID_BS, DateDeb,DateFin,Type)VALUES (:EmailProp, :EmailConso, :ID_BS, :DateDeb,:DateFin,:Type)");
-			$stmt->bindValue(":EmailProp", $service->Prop->Email);
+			$stmt = $bd->prepare("INSERT INTO CONSOMMATION_S (EmailConso, ID_Service, DateDeb,DateFin)VALUES (:EmailConso, :ID_Service, :DateDeb,:DateFin)");
 			$stmt->bindValue(":EmailConso", $member->Email);
 			$stmt->bindValue(":ID_BS",$service->ID_Service);
 			$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
 			$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
-			$stmt->bindValue(":Type", "b");
 			$stmt->execute();
 			$service->Prop->update($bd,"Rendu",$service->Prop->Rendu+1);
 			$member->update($bd,"Recu",$member->Recu+1);
@@ -186,7 +185,7 @@ function loadMap(){
 
 				</div>
 				<br>
-				
+
 				<br>
 				<br>
         <div class="profile-card-loc">

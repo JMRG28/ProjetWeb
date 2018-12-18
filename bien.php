@@ -24,9 +24,9 @@ if(isset($_POST['titre'])){
     $query=$bd->prepare('SELECT MAX(ID_BIEN)  FROM BIEN');
     $query->execute();
     $result=$query->fetch();
-    $id=$result[0]+2;
+    $id=$result[0]+1;
 
-    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1,conversion($_POST['date_deb']),$member->Email,  $_POST['titre'],md5($id),$_POST['categorie'],conversion($_POST['date_fin']));
+    $bien=new Bien($id, $_POST['descriptif'],null, $_POST['prixNeuf'], 1,$member->Email,  $_POST['titre'],md5($id),$_POST['categorie']);
     $bien->insert($bd);
     $bien->upload();
     echo "Successfully added the new good " . $id;
@@ -96,25 +96,6 @@ if(isset($_POST['titre'])){
                                 <label class="label">Prix Neuf</label>
                                 <input class="input--style-4" type="numeric" name="prixNeuf">
                             </div>
-                        </div>
-                        <div class="col-2">
-                          <div class="input-group">
-                            <label class="label">Date de Debut</label>
-                            <div class="input-group-icon">
-                              <input class="input--style-4 js-datepicker" type="text" name="date_deb">
-                              <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-2">
-                          <div class="input-group">
-                            <label class="label">Date de Fin</label>
-                            <div class="input-group-icon">
-                              <input class="input--style-4 js-datepicker" type="text" name="date_fin">
-                              <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                            </div>
-                          </div>
                         </div>
 
                         <div class="col-2">

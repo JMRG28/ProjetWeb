@@ -43,7 +43,7 @@ function updateDB_Bien($id,$v,$k){
 	$query->execute();
 	$row=$query->fetch();
 	//WARNING
-	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null);
+	$bien=new Bien(null,null,null,null,null,null,null,null,null);
 	$bien->createFromTab($row);
 	$bien->update($bd,$v,$k);
 	$bien->$v=$k ;
@@ -60,7 +60,7 @@ function updateDB_Service($id,$v,$k){
 	$query->execute();
 	$row=$query->fetch();
 	//WARNING
-	$service=new Service(null,null,null,null,null,null,null,null,null,null);
+	$service=new Service(null,null,null,null,null,null,null,null);
 	$service->createFromTab($row);
 	$service->update($bd,$v,$k);
 	$service->$v=$k ;
@@ -74,7 +74,7 @@ function deleteBien($id){
 	$password = "BaseDonnees1234";
 	$dbname = "jmr";
 	$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$query=$bd->prepare("DELETE FROM CONSOMMATION WHERE ID_BS='".$_SESSION["current_b"]."'");
+	$query=$bd->prepare("DELETE FROM CONSOMMATION_B WHERE ID_Bien='".$_SESSION["current_b"]."'");
 	$query->execute();
 	$query=$bd->prepare("DELETE FROM BIEN WHERE ID_Bien='".$_SESSION["current_b"]."'");
 	$query->execute();
@@ -371,7 +371,7 @@ if(isset($_POST["enregistrer"])){
 									$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 									foreach($bd->query("SELECT * FROM BIEN WHERE EmailProp='".$member->Email."'") as $row){
-										echo  "<option value=".$row[0].">".$row[7]."</option>";
+										echo  "<option value=".$row[0].">".$row[6]."</option>";
 									}
 
 								}finally{
@@ -398,7 +398,7 @@ if(isset($_POST["enregistrer"])){
 							$_SESSION["current_b"]=$_POST["bien"];
 							echo "<form class='form' action='##'' method='post' id='bienForm'> <div class='form-group'>";
 							foreach($bd->query("SELECT * FROM BIEN WHERE ID_Bien='".$_POST["bien"]."'") as $row){
-								$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null);
+								$bien=new Bien(null,null,null,null,null,null,null,null,null);
 								$bien->createFromTab($row);
 								$_SESSION["bien"]=serialize($bien);
 								echo " <div class='form-group'> <div class='col-xs-6'>";
@@ -479,7 +479,7 @@ if(isset($_POST["enregistrer"])){
 									$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 									foreach($bd->query("SELECT * FROM SERVICE WHERE EmailProp='".$member->Email."'") as $row){
-										echo  "<option value=".$row[0].">".$row[7]."</option>";
+										echo  "<option value=".$row[0].">".$row[6]."</option>";
 									}
 
 								}finally{
@@ -508,7 +508,7 @@ if(isset($_POST["enregistrer"])){
 							$_SESSION["current_s"]=$_POST["service"];
 							echo "<form class='form' action='##'' method='post' id='serviceForm'> <div class='form-group'>";
 							foreach($bd->query("SELECT * FROM SERVICE WHERE ID_Service='".$_POST["service"]."'") as $row){
-								$service=new Service(null,null,null,null,null,null,null,null,null,null);
+								$service=new Service(null,null,null,null,null,null,null,null);
 								$service->createFromTab($row);
 								$_SESSION["service"]=serialize($service);
 								echo " <div class='form-group'> <div class='col-xs-6'>";

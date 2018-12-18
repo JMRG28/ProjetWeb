@@ -14,25 +14,23 @@ if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
 }
 else{
-	$bien=new Bien(null,null,null,null,null,null,null,null,null,null,null);
+	$bien=new Bien(null,null,null,null,null,null,null,null,null);
 	$bien->getFromURL($_GET["bid"]);
 	//$bien->toString();
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $bien->Prop->Email!=$member->Email){
-		if(strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)){
-			//echo "caca: ".strtotime($bien->DateDebut);
+//strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)
+		if(true){
 			$servername = "k1nd0ne.com";
 			$port="3307"; $username = "jmr";
 			$password = "BaseDonnees1234";
 			$dbname = "jmr";
 			$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$stmt = $bd->prepare("INSERT INTO CONSOMMATION (EmailProp, EmailConso, ID_BS, DateDeb,DateFin,Type)VALUES (:EmailProp, :EmailConso, :ID_BS, :DateDeb,:DateFin,:Type)");
-			$stmt->bindValue(":EmailProp", $bien->Prop->Email);
+			$stmt = $bd->prepare("INSERT INTO CONSOMMATION_B (EmailConso, ID_Bien, DateDeb,DateFin)VALUES (:EmailConso, :ID_Bien, :DateDeb,:DateFin)");
 			$stmt->bindValue(":EmailConso", $member->Email);
-			$stmt->bindValue(":ID_BS",$bien->ID_Bien);
+			$stmt->bindValue(":ID_Bien",$bien->ID_Bien);
 			$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
 			$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
-			$stmt->bindValue(":Type", "b");
 			$stmt->execute();
 			$bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
 			$member->update($bd,"Recu",$member->Recu+1);

@@ -6,8 +6,6 @@ class Service {
 	public $Descriptif;
 	public $PrixH;
 	public $Actif;
-	public $DateDebut;
-	public $DateFin;
 	public $EmailProp;
 	public $Titre;
 	public $URL;
@@ -16,13 +14,11 @@ class Service {
 	public $Categorie;
 
 //privatiser apres
-	function __construct($id_service, $descriptif, $prixH, $actif, $dateDeb,  $emailProp, $titre,$url,$id_catego,$dateFin) {
+	function __construct($id_service, $descriptif, $prixH, $actif, $emailProp, $titre,$url,$id_catego) {
 		$this->ID_Service=$id_service;
 		$this->Descriptif=$descriptif;
 		$this->PrixH=$prixH;
 		$this->Actif=$actif;
-		$this->DateDebut=$dateDeb;
-		$this->DateFin=$dateFin;
 		$this->EmailProp=$emailProp;
 		$this->Titre=$titre;
 		$this->URL=$url;
@@ -39,16 +35,13 @@ class Service {
 		$this->Descriptif=$tab[1];
 		$this->PrixH=$tab[2];
 		$this->Actif=$tab[3];
-		$this->DateDebut=$tab[4];
-		$this->EmailProp=$tab[5];
-		$this->Titre=$tab[7];
-		$this->URL=$tab[8];
-		$this->ID_Catego=$tab[6];
+		$this->EmailProp=$tab[4];
+		$this->Titre=$tab[6];
+		$this->URL=$tab[7];
+		$this->ID_Catego=$tab[5];
 		$this->Categorie->getFromID($this->ID_Catego);
 		$this->Prop->getFromEmail($this->EmailProp);
-		$this->DateFin=$tab[9];
-	
-		//echo $this->ID_Catego;
+
 	}
 
 	function  toString(){
@@ -56,8 +49,6 @@ class Service {
 		echo $this->Descriptif;
 		echo $this->PrixH;
 		echo $this->Actif;
-		echo $this->DateDebut;
-		echo $this->DateFin;
 		echo $this->EmailProp;
 		echo $this->Titre;
 		echo $this->ID_Catego;
@@ -87,20 +78,18 @@ class Service {
 		}
 	}
 
-	
+
 
 	function insert($bd){
-		$stmt = $bd->prepare("INSERT INTO SERVICE (ID_Service, Descriptif, PrixH, Actif,DateDebut,EmailProp,Categorie, Titre,URL,DateFin)VALUES (:id_service, :descriptif, :prixH, :actif, :dateDeb, :emailProp,:id_catego, :titre, :url, :dateFin)");
+		$stmt = $bd->prepare("INSERT INTO SERVICE (ID_Service, Descriptif, PrixH, Actif,EmailProp,Categorie, Titre,URL)VALUES (:id_service, :descriptif, :prixH, :actif, :emailProp,:id_catego, :titre, :url)");
 		$stmt->bindValue(":id_service", $this->ID_Service);
 		$stmt->bindValue(":descriptif", $this->Descriptif);
 		$stmt->bindValue(":prixH", $this->PrixH);
 		$stmt->bindValue(":actif", $this->Actif);
-    	$stmt->bindValue(":dateDeb", $this->DateDebut);
 		$stmt->bindValue(":emailProp", $this->EmailProp);
 		$stmt->bindValue(":id_catego", $this->ID_Catego);
 		$stmt->bindValue(":titre", $this->Titre);
 		$stmt->bindValue(":url", $this->URL);
-		$stmt->bindValue(":dateFin", $this->DateFin);
 		$stmt->execute();
 	}
 
@@ -134,7 +123,7 @@ class Service {
 		$stmt->execute();
 	}
 */
-	
+
 }
 
 ?>

@@ -21,11 +21,11 @@ $services=[];
 if(isset($_POST["cat"])){
   //WARNING
   foreach($bd->query("select * from BIEN,CATEGORIE where Categorie=ID_Categorie and (ID_Categorie='".$_POST['cat']."' or SuperCategorie='".$_POST['cat']."')") as $row ){
-    $bien=new Bien($row["ID_Bien"],$row["Descriptif"],$row["Photo"],$row["PrixNeuf"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
+    $bien=new Bien($row["ID_Bien"],$row["Descriptif"],$row["Photo"],$row["PrixNeuf"],$row["Actif"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"]);
     //  $bien->createFromTab($row);
     array_push($biens, $bien);
     foreach($bd->query("select * from SERVICE,CATEGORIE where Categorie=ID_Categorie and (ID_Categorie='".$_POST['cat']."' or SuperCategorie='".$_POST['cat']."')") as $row ){
-      $service=new Service($row["ID_Service"],$row["Descriptif"],$row["PrixH"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
+      $service=new Service($row["ID_Service"],$row["Descriptif"],$row["PrixH"],$row["Actif"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"]);
     //  $bien->createFromTab($row);
       array_push($services, $service);
     }
@@ -35,12 +35,12 @@ if(isset($_POST["cat"])){
 
 else{
   foreach($bd->query("select * from BIEN") as $row ){
-    $bien=new Bien($row["ID_Bien"],$row["Descriptif"],$row["Photo"],$row["PrixNeuf"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
+    $bien=new Bien($row["ID_Bien"],$row["Descriptif"],$row["Photo"],$row["PrixNeuf"],$row["Actif"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"]);
     //$bien->createFromTab($row);
     array_push($biens, $bien);
   }
   foreach($bd->query("select * from SERVICE") as $row ){
-    $service=new Service($row["ID_Service"],$row["Descriptif"],$row["PrixH"],$row["Actif"],$row["DateDebut"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"],$row["DateFin"]);
+    $service=new Service($row["ID_Service"],$row["Descriptif"],$row["PrixH"],$row["Actif"],$row["EmailProp"],$row["Titre"],$row["URL"],$row["Categorie"]);
     //$bien->createFromTab($row);
     array_push($services, $service);
   }
@@ -60,7 +60,7 @@ else{
   <!-- /<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'> -->
   <!--
     <link rel='stylesheet' href='https://npmcdn.com/basscss@8.0.0/css/basscss.min.css'> -->
-    <link rel="stylesheet" href="css/gallery.css"> 
+    <link rel="stylesheet" href="css/gallery.css">
     <style>
     .one {
       font-family:arial;
@@ -78,7 +78,7 @@ else{
 
     <div class="tab-pane" id="search">
       <h2></h2>
-      
+
       <form method="post" > <!-- action="traitement.php"> -->
         <label for="categories">Choisissez la catégorie</label><br/>
         <select name="cat" id="cat">
