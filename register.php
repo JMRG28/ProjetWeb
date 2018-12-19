@@ -13,16 +13,10 @@ function conversion($d){
 
 ini_set("display_errors",1);error_reporting(E_ALL);
 if(isset($_POST['email'])){
-	$servername = "86.210.13.52";
-	$port="3307";
-	$username = "jmr";
-	$password = "BaseDonnees1234";
-	$dbname = "jmr";
-
 	try {
 		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
 		$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null,md5($_POST['email']),$_POST['adresse']);
+		$membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null,md5($_POST['email']),"6 rue de l'aiguillerie Montpellier");
 		$membre->insert($bd);
         header('Location: profile.php');
 		echo "Successfully added the new user " . $_POST['nom'];
