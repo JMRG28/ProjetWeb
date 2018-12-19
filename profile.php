@@ -48,12 +48,12 @@ include 'header.php';
         </div>
 
         <div class="profile-card-inf__item">
-          <div class="profile-card-inf__title"><?php echo $member->Recu; ?></div>
+          <div class="profile-card-inf__title"><?php echo $member->Rendu; ?></div>
           <div class="profile-card-inf__txt">propositions</div>
         </div>
       </div>
 
-      
+
     </div>
 
     <div class="profile-card-message js-message">

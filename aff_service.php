@@ -42,6 +42,8 @@ else{
 					$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
 					$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
 					$stmt->execute();
+					$member->Recu+=1;
+					$_SESSION["member"]=serialize($member);
 				}else{
 					echo "<h1> Erreur: Vous ne pouvez pas réserver ce service</h1>";
 				}
