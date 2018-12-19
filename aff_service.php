@@ -204,8 +204,8 @@ else{
 
 		<div class="profile-card js-profile-card">
 			<div class="profile-card__img">
-				<a href="<?php echo 'profile2.php?uid='.$bien->Prop->URL;?>">
-				<img src="<?php echo $bien->Prop->Photo;?>"  alt="profile card">
+				<a href="<?php echo 'profile2.php?uid='.$service->Prop->URL;?>">
+				<img src="<?php echo $service->Prop->Photo;?>"  alt="profile card">
 			</a>
 			</div>
 

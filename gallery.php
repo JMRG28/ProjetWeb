@@ -60,6 +60,7 @@ else{
   <!-- /<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'> -->
   <!--
     <link rel='stylesheet' href='https://npmcdn.com/basscss@8.0.0/css/basscss.min.css'> -->
+    <link rel="stylesheet" href="css/style_gallery.css">
     <link rel="stylesheet" href="css/gallery.css">
     <style>
     .one {
