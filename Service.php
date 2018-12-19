@@ -115,14 +115,7 @@ class Service {
 		$stmt = $bd->prepare("UPDATE SERVICE SET ".$key."='".$value."' where ID_Service='".$this->ID_Service."'");
 		$stmt->execute();
 	}
-	/*
 
-	function delete($bd){
-		echo " <br> DELETE FROM BIEN WHERE  ID_Bien=".$this->ID_Bien ."<br>";
-		$stmt = $bd->prepare("DELETE FROM BIEN WHERE ID_Bien='".$this->ID_Bien."'");
-		$stmt->execute();
-	}
-*/
 
 }
 

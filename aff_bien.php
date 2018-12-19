@@ -43,8 +43,6 @@ else{
 					$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
 					$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
 					$stmt->execute();
-					// $bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
-					// $member->update($bd,"Recu",$member->Recu+1);
 				}else{
 					echo "<h1> Erreur: Vous ne pouvez pas réserver ce bien</h1>";
 				}

@@ -55,10 +55,6 @@ $member->getFromURL($_GET["uid"]);
 					</div>
 				</div>
 
-<<<<<<< HEAD
-=======
-				
->>>>>>> ea6b423ec1a72f2edd0ec2c0b1ca5f6a64eedb01
 			</div>
 
 		</div>

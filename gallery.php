@@ -86,7 +86,7 @@ else{
 
           <?php
           foreach($bd->query('SELECT * FROM CATEGORIE where SuperCategorie IS NULL') as $row ){
-            echo  "<option class='one' value=".$row["ID_Categorie"].">".$row["Nom"]."</option>";
+            echo  "<option class='one' value=".$row["ID_Categorie"].">>".$row["Nom"]."<</option>";
             foreach($bd->query('SELECT * FROM CATEGORIE where SuperCategorie="'.$row["ID_Categorie"].'"') as $row2){
               echo  "<option value=".$row2["ID_Categorie"].">".$row2["Nom"]."</option>";
             }

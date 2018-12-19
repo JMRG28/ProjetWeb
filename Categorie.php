@@ -34,7 +34,6 @@ class Categorie {
 
 
   function insert($bd){
-    //  echo "<h1>".$this->Email." coucou <h1>";
     $stmt = $bd->prepare("INSERT INTO Categorie (ID_Categorie,Nom,PhotoDefaut,SuperCategorie)VALUES (:idc,:nom,:photo,:super)");
     $stmt->bindValue(":idc", $this->ID_Categorie);
     $stmt->bindValue(":nom",$this->Nom);
