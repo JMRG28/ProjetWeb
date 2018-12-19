@@ -13,7 +13,7 @@ class Service {
 	public $ID_Catego;
 	public $Categorie;
 
-//privatiser apres
+
 	function __construct($id_service, $descriptif, $prixH, $actif, $emailProp, $titre,$url,$id_catego) {
 		$this->ID_Service=$id_service;
 		$this->Descriptif=$descriptif;
@@ -26,7 +26,7 @@ class Service {
 		$this->ID_Catego=$id_catego;
 		$this->Categorie=new Categorie(null,null,null,null);
 		if($this->ID_Catego != null)
-		 $this->Categorie->getFromID($this->ID_Catego);
+			$this->Categorie->getFromID($this->ID_Catego);
 
 	}
 

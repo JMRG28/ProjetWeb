@@ -39,7 +39,6 @@ class Bien {
 		$this->Titre=$tab[6];
 		$this->URL=$tab[7];
 		$this->ID_Catego=$tab[8];
-	//	$this->Categorie->getFromID($this->ID_Catego);
 		$this->Prop->getFromEmail($this->EmailProp);
 	}
 
