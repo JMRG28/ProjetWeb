@@ -30,7 +30,7 @@ if(isset($_POST['email'])){
 			header('Location: profile.php');
 			$member->toString();
 		}else{
-			echo "<br>ERREUR WESH<br>";
+			echo "<br>ERREUR<br>";
 		}
 		unset($_POST['email']);
 	} catch (PDOException $e) {
