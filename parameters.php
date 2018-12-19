@@ -103,7 +103,7 @@ function updateDB_StatutUser($email,$v,$k){
 	$query=$bd->prepare("SELECT * FROM MEMBRE WHERE Email='".$email."'");
 	$query->execute();
 	$row=$query->fetch();
-	$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+	$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 	$member->createFromTab($row);
 	$member->update($bd,$v,$k);
 	$member->$v=$k ;
@@ -205,10 +205,7 @@ if(isset($_POST["enregistrer"])){
 		updateDB("NumeroTel",$_POST["mobile"]);
 		$callback=true;
 	}
-	if($_POST["codeP"]!=""){
-		updateDB("CodePostal",$_POST["codeP"]);
-		$callback=true;
-	}
+	
 	if($_POST["description"]!=""){
 		updateDB("Description",$_POST["description"]);
 		$callback=true; }
@@ -306,14 +303,6 @@ if(isset($_POST["enregistrer"])){
 							<div class="col-xs-6">
 								<label for="mobile"><h4>Numéro de téléphone</h4></label>
 								<input type="text" class="form-control" name="mobile" id="mobile" placeholder=<?php echo $member->NumeroTel; ?> title="enter your mobile number if any.">
-							</div>
-						</div>
-
-
-						<div class="form-group">
-							<div class="col-xs-6">
-								<label for="codePostal"><h4>Code Postal</h4></label>
-								<input type="text" name="codePostal" class="form-control" id="location" placeholder=<?php echo $member->CodePostal; ?> title="enter a location">
 							</div>
 						</div>
 

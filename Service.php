@@ -22,7 +22,7 @@ class Service {
 		$this->EmailProp=$emailProp;
 		$this->Titre=$titre;
 		$this->URL=$url;
-		$this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+		$this->Prop=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 		$this->ID_Catego=$id_catego;
 		$this->Categorie=new Categorie(null,null,null,null);
 		if($this->ID_Catego != null)

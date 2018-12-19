@@ -5,7 +5,6 @@ class Membre {
   public $MdpHash;
   public $Nom;
   public $Prenom;
-  public $CodePostal;
   public $NumeroTel;
   public $Photo;
   public $Description;
@@ -22,12 +21,11 @@ class Membre {
   public $Adresse;
 
   //privatiser apres
-  function __construct($email,$mdp,$nom,$prenom,$codep,$num,$photo,$desc,$rendu,$recu,$sexe,$statut,$dateN,$dateI,$actif,$suspendu,$url,$adresse) {
+  function __construct($email,$mdp,$nom,$prenom,$num,$photo,$desc,$rendu,$recu,$sexe,$statut,$dateN,$dateI,$actif,$suspendu,$url,$adresse) {
     $this->Email= $email;
     $this->MdpHash=$mdp;
     $this->Nom=$nom;
     $this->Prenom=$prenom;
-    $this->CodePostal=$codep;
     $this->NumeroTel=$num;
     $this->Photo=$photo;
     $this->Description=$desc;
@@ -49,7 +47,6 @@ class Membre {
     $this->MdpHash=$tab[1];
     $this->Nom=$tab[2];
     $this->Prenom=$tab[3];
-    $this->CodePostal=$tab[4];
     $this->NumeroTel=$tab[5];
     $this->Photo=$tab[6];
     $this->Description=$tab[7];
@@ -71,7 +68,6 @@ class Membre {
     echo $this->MdpHash;
     echo $this->Nom;
     echo $this->Prenom;
-    echo $this->CodePostal;
     echo $this->NumeroTel;
     echo $this->Photo;
     echo $this->Description;
@@ -88,13 +84,12 @@ class Membre {
   }
 
   function insert($bd){
-    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom, CodePostal,NumeroTel,Sexe,Statut,DateNaiss,URL, Admin,Adresse)VALUES (:email, :mdp_hash, :nom, :prenom, :code_postal, :numero_telephone, :sexe, :statut, :date_naissance,:url,:admin,:adresse)");
+    $stmt = $bd->prepare("INSERT INTO MEMBRE (Email, MdpHash, Nom, Prenom,NumeroTel,Sexe,Statut,DateNaiss,URL, Admin,Adresse)VALUES (:email, :mdp_hash, :nom, :prenom, :numero_telephone, :sexe, :statut, :date_naissance,:url,:admin,:adresse)");
     $stmt->bindValue(":email", $this->Email);
     $stmt->bindValue(":mdp_hash", $this->MdpHash);
     $stmt->bindValue(":nom",$this->Nom);
     $stmt->bindValue(":prenom", $this->Prenom);
     $stmt->bindValue(":numero_telephone", $this->NumeroTel);
-    $stmt->bindValue(":code_postal", $this->CodePostal);
     $stmt->bindValue(":sexe", $this->Sexe);
     $stmt->bindValue(":statut", $this->Statut);
     $stmt->bindValue(":date_naissance", $this->DateNaiss);

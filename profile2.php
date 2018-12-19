@@ -2,7 +2,7 @@
 include "Membre.php";
 include 'header.php';
 ini_set("display_errors",1);error_reporting(E_ALL);
-$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+$member=new Membre(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 $member->getFromURL($_GET["uid"]);
 ?>
 
@@ -38,7 +38,7 @@ $member->getFromURL($_GET["uid"]);
 					</span>
 
 					<span class="profile-card-loc__txt">
-						<?php echo $member->CodePostal; ?>
+						<?php echo $member->Adresse; ?>
 					</span>
 
 				</div>

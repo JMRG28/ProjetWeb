@@ -22,7 +22,7 @@ if(isset($_POST['email'])){
 	try {
 		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
 		$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['code_p'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null,md5($_POST['email']));
+		$membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null,md5($_POST['email']),$_POST['adresse']);
 		$membre->insert($bd);
         header('Location: profile.php');
 		echo "Successfully added the new user " . $_POST['nom'];
@@ -103,12 +103,7 @@ if(isset($_POST['email'])){
                                     <input class="input--style-4" type="password" name="email">
                                 </div>
                             </div> -->
-                            <div class="col-2">
-                            	<div class="input-group">
-                            		<label class="label">Code postal</label>
-                            		<input class="input--style-4" type="text" pattern="[0-9]{5}" name="code_p">
-                            	</div>
-                            </div>
+                
                         </div>
                         <div class="row row-space">
                         	<div class="col-2">
@@ -144,12 +139,11 @@ if(isset($_POST['email'])){
                         			<input class="input--style-4" type="text" name="num_tel">
                         		</div>
                         	</div>
-                        </div>
-                        <div class="input-group">
-                        	<label class="label">Statut</label>
-                        	<div class="rs-select2 js-select-simple select--no-search">
-                        		<select name="statut">
 
+                        	<div class="col-2"><div class="input-group">
+                        	<label class="label">Statut</label>
+                        	<div class="rs-select2  select--">
+                        		<select name="statut">
                         			<option selected="selected">Particulier</option>
                         			<option>Auto-entrepreneur Independant</option>
                         			<option>Artisan Commerçant</option>
@@ -158,6 +152,14 @@ if(isset($_POST['email'])){
                         		<div class="select-dropdown"></div>
                         	</div>
                         </div>
+                    </div>
+                        		<div class="input-group">
+                        			<label class="label">Adresse</label>
+                        			<input class="input--style-4" type="text" name="adresse" placeholder="4 rue Neuve 34000 Montpellier">
+                        		</div>
+                        	</div>
+                        
+                        
                         <div class="p-t-15">
                         	<button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
                         </div>

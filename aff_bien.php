@@ -209,7 +209,7 @@ function loadMap(){
 					</span>
 
 					<span class="profile-card-loc__txt">
-						<?php echo $bien->Prop->CodePostal;?>
+						<?php echo $bien->Prop->Adresse;?>
 					</span>
 
 				</div>
