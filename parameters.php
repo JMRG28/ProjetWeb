@@ -205,7 +205,15 @@ if(isset($_POST["enregistrer"])){
 		updateDB("NumeroTel",$_POST["mobile"]);
 		$callback=true;
 	}
-	
+	if($_POST["password"]!="" && $_POST["password2"]!=""){
+		if($_POST["password"]==$_POST["password2"]){
+			updateDB("MdpHash",md5($_POST["password"]));
+			$callback=true;
+		}else{
+			echo "erreur";
+		}
+	}
+
 	if($_POST["description"]!=""){
 		updateDB("Description",$_POST["description"]);
 		$callback=true; }
@@ -568,7 +576,7 @@ if(isset($_POST["enregistrer"])){
 							$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 							echo "<h2> Utilisateurs à surveiller</h2>";
-								//MODIFIER
+							//MODIFIER
 							foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 1 AND Actif=1 AND Banni=0") as $row){
 								echo  $row[0];
 							}
