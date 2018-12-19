@@ -19,13 +19,20 @@ else{
 	//$bien->toString();
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $bien->Prop->Email!=$member->Email){
-//strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)
-		if(true){
-			$servername = "k1nd0ne.com";
-			$port="3307"; $username = "jmr";
-			$password = "BaseDonnees1234";
-			$dbname = "jmr";
-			$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		//strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)
+		$servername = "k1nd0ne.com";
+		$port="3307"; $username = "jmr";
+		$password = "BaseDonnees1234";
+		$dbname = "jmr";
+		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$peutReserver=true;
+		foreach($bd->query('SELECT * FROM CONSOMMATION_B where ID_Bien="'.$bien->ID_Bien.'"') as $row){
+			if((strtotime(conversion($_POST["date_deb"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_deb"]))<=strtotime($row["DateFin"]))
+		|| (strtotime(conversion($_POST["date_fin"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_fin"]))<=strtotime($row["DateFin"]))){
+				$peutReserver=false;
+			}
+		}
+		if($peutReserver){
 			$stmt = $bd->prepare("INSERT INTO CONSOMMATION_B (EmailConso, ID_Bien, DateDeb,DateFin)VALUES (:EmailConso, :ID_Bien, :DateDeb,:DateFin)");
 			$stmt->bindValue(":EmailConso", $member->Email);
 			$stmt->bindValue(":ID_Bien",$bien->ID_Bien);
