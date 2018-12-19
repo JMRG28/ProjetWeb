@@ -42,7 +42,7 @@ class Categorie {
     $stmt->execute();
   }
   function getFromID($cid){
-    $servername = "k1nd0ne.com";
+    $servername = "192.168.1.19";
     $port="3307";
     $username = "jmr";
     $password = "BaseDonnees1234";
