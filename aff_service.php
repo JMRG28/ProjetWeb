@@ -230,6 +230,20 @@ else{
 				</div>
 				<br>
 				<h5 id="dst" ></h5>
+				<div id="Dispo">
+					<h6>Bien réservé :</h6>
+					<ul>
+						<?php
+						$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+						foreach ($bd->query("SELECT * FROM CONSOMMATION_S WHERE ID_Service='".$service->ID_Service."'") as $row){
+							if(strtotime($row["DateFin"])>=strtotime(date("Y-m-d"))){
+								echo "<li>".conversion2($row["DateDeb"])." - ".conversion2($row["DateFin"])."<li></br>";
+							}
+						}
+						?>
+
+					</ul>
+				</div>
 				<div id="bla" class="profile-card-ctr">
 					<form action="" method="post">
 						<div id="bla1" class="col-2">
@@ -278,7 +292,7 @@ else{
 				<path d="M19 6h5v-6h-5c-3.86 0-7 3.14-7 7v3h-4v6h4v16h6v-16h5l1-6h-6v-3c0-0.542 0.458-1 1-1z"></path>
 			</symbol>
 
-	
+
 
 			<symbol id="icon-behance" viewBox="0 0 32 32">
 				<title>behance</title>
