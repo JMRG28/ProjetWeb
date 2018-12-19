@@ -577,7 +577,7 @@ if(isset($_POST["enregistrer"])){
 
 							echo "<h2> Utilisateurs à surveiller</h2>";
 							//MODIFIER
-							foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 1 AND Actif=1 AND Banni=0") as $row){
+							foreach($bd->query("SELECT * FROM MEMBRE WHERE (RECU - RENDU) >= 10 AND Actif=1 AND Banni=0") as $row){
 								echo  $row[0];
 							}
 
@@ -605,7 +605,7 @@ if(isset($_POST["enregistrer"])){
 						echo "<input type='radio' name='duree' value='definitif'>";
 						echo "<span class='checkmark'></span>";
 						echo "</label>";
-						echo "<label class='radio-container'>Activiter";
+						echo "<label class='radio-container'>Activer";
 						echo "<input type='radio' name='duree' value='activer'>";
 						echo "<span class='checkmark'></span>";
 						echo "</label>";
