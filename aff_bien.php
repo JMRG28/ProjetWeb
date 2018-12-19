@@ -1,11 +1,17 @@
 <?php
 include "header.php";
+include "bd.php";
 function conversion($d){
 	$nd=explode("/",$d);
 	$r=[];
 	array_push($r, $nd[2], $nd[1],$nd[0]);
 	$res=implode("-",$r);
 	return $res;
+}
+
+function conversion2($d){
+	$nd=explode(" ",$d);
+	return $nd[0];
 }
 
 include "Bien.php";
@@ -20,30 +26,34 @@ else{
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $bien->Prop->Email!=$member->Email){
 		//strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)
-		$servername = "k1nd0ne.com";
-		$port="3307"; $username = "jmr";
-		$password = "BaseDonnees1234";
-		$dbname = "jmr";
-		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$peutReserver=true;
-		foreach($bd->query('SELECT * FROM CONSOMMATION_B where ID_Bien="'.$bien->ID_Bien.'"') as $row){
-			if((strtotime(conversion($_POST["date_deb"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_deb"]))<=strtotime($row["DateFin"]))
-		|| (strtotime(conversion($_POST["date_fin"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_fin"]))<=strtotime($row["DateFin"]))){
-				$peutReserver=false;
+		if(strtotime(conversion($_POST["date_deb"]))<strtotime(conversion($_POST["date_fin"]))){
+			if(strtotime(conversion($_POST["date_deb"]))>strtotime(date("Y-m-d"))){
+				$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$peutReserver=true;
+				foreach($bd->query('SELECT * FROM CONSOMMATION_B where ID_Bien="'.$bien->ID_Bien.'"') as $row){
+					if((strtotime(conversion($_POST["date_deb"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_deb"]))<=strtotime($row["DateFin"]))
+					|| (strtotime(conversion($_POST["date_fin"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_fin"]))<=strtotime($row["DateFin"]))){
+						$peutReserver=false;
+					}
+				}
+				if($peutReserver){
+					$stmt = $bd->prepare("INSERT INTO CONSOMMATION_B (EmailConso, ID_Bien, DateDeb,DateFin)VALUES (:EmailConso, :ID_Bien, :DateDeb,:DateFin)");
+					$stmt->bindValue(":EmailConso", $member->Email);
+					$stmt->bindValue(":ID_Bien",$bien->ID_Bien);
+					$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
+					$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
+					$stmt->execute();
+					$bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
+					$member->update($bd,"Recu",$member->Recu+1);
+					//$bien->update($bd,"EstDispo",0);
+				}else{
+					echo "<h1> Erreur: Vous ne pouvez pas réserver ce bien</h1>";
+				}
+			}else{
+				echo "<h1> Erreur: La date de début est dans le passé! </h1>";
 			}
-		}
-		if($peutReserver){
-			$stmt = $bd->prepare("INSERT INTO CONSOMMATION_B (EmailConso, ID_Bien, DateDeb,DateFin)VALUES (:EmailConso, :ID_Bien, :DateDeb,:DateFin)");
-			$stmt->bindValue(":EmailConso", $member->Email);
-			$stmt->bindValue(":ID_Bien",$bien->ID_Bien);
-			$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
-			$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
-			$stmt->execute();
-			$bien->Prop->update($bd,"Rendu",$bien->Prop->Rendu+1);
-			$member->update($bd,"Recu",$member->Recu+1);
-			//$bien->update($bd,"EstDispo",0);
 		}else{
-			echo "<h1> IMPOSSIBLE DE RESERVER</h1>";
+			echo "<h1> Erreur: La date de début est après la date de fin! </h1>";
 		}
 	}
 }
@@ -87,25 +97,25 @@ else{
 		margin:30px;
 		display: inline-block;
 	}
-</style>
-<script src="js/OpenLayers-2.13.1/OpenLayers.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<style>
-#Map {
-	border-radius: 10px;
-	overflow: hidden;
-}
+	</style>
+	<script src="js/OpenLayers-2.13.1/OpenLayers.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<style>
+	#Map {
+		border-radius: 10px;
+		overflow: hidden;
+	}
 
-#Map div canvas{
-	border-radius: 10px;
-}
-#OpenLayers_Control_Attribution_7{
-	bottom:0;
-}
-#OL_Icon_22_innerImage{
-	border:2px solid #021a40;
-	border-radius: 50%;
-}
+	#Map div canvas{
+		border-radius: 10px;
+	}
+	#OpenLayers_Control_Attribution_7{
+		bottom:0;
+	}
+	#OL_Icon_22_innerImage{
+		border:2px solid #021a40;
+		border-radius: 50%;
+	}
 </style>
 <script>
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
@@ -227,13 +237,28 @@ function loadMap(){
 				</div>
 				<br>
 				<h5 id="dst" ></h5>
+
+				<div id="Dispo">
+					<h6>Bien réservé :</h6>
+					<ul>
+						<?php
+						$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+						foreach ($bd->query("SELECT * FROM CONSOMMATION_B WHERE ID_Bien='".$bien->ID_Bien."'") as $row){
+							if(strtotime($row["DateFin"])>=strtotime(date("Y-m-d"))){
+								echo "<li>".conversion2($row["DateDeb"])." - ".conversion2($row["DateFin"])."<li></br>";
+							}
+						}
+						?>
+
+					</ul>
+				</div>
 				<div id="bla" class="profile-card-ctr">
 					<form action="" method="post">
 						<div id="bla1" class="col-2">
 							<div class="input-group">
 								<label class="label">Date de Debut</label>
 								<div class="input-group-icon">
-									<input class="input--style-4 js-datepicker" type="text" name="date_deb">
+									<input class="input--style-4 js-datepicker" type="text" name="date_deb" autocomplete="off">
 									<!-- <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i> -->
 								</div>
 							</div>
@@ -243,7 +268,7 @@ function loadMap(){
 							<div class="input-group">
 								<label class="label">Date de Fin</label>
 								<div class="input-group-icon">
-									<input class="input--style-4 js-datepicker" type="text" name="date_fin">
+									<input class="input--style-4 js-datepicker" type="text" name="date_fin" autocomplete="off">
 									<!-- <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i> -->
 								</div>
 							</div>
