@@ -47,20 +47,20 @@ class Membre {
     $this->MdpHash=$tab[1];
     $this->Nom=$tab[2];
     $this->Prenom=$tab[3];
-    $this->NumeroTel=$tab[5];
-    $this->Photo=$tab[6];
-    $this->Description=$tab[7];
-    $this->Rendu=$tab[8];
-    $this->Recu=$tab[9];
-    $this->Sexe=$tab[10];
-    $this->Statut=$tab[11];
-    $this->DateNaiss=$tab[12];
-    $this->DateIns=$tab[13];
-    $this->Actif=$tab[14];
-    $this->Suspendu=$tab[15];
-    $this->URL=$tab[16];
-    $this->Admin=$tab[17];
-    $this->Adresse=$tab[18];
+    $this->NumeroTel=$tab[4];
+    $this->Photo=$tab[5];
+    $this->Description=$tab[6];
+    $this->Rendu=$tab[7];
+    $this->Recu=$tab[8];
+    $this->Sexe=$tab[9];
+    $this->Statut=$tab[10];
+    $this->DateNaiss=$tab[11];
+    $this->DateIns=$tab[12];
+    $this->Actif=$tab[13];
+    $this->Suspendu=$tab[14];
+    $this->URL=$tab[15];
+    $this->Admin=$tab[16];
+    $this->Adresse=$tab[19];
   }
 
   function  toString(){
