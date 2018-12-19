@@ -4,8 +4,6 @@ include 'bd.php';
 include 'header.php';
 
 
-$member=unserialize($_SESSION['member']);
-$member->toString();
 
 function conversion($d){
   $nd=explode("/",$d);
@@ -138,19 +136,7 @@ if(isset($_POST['titre'])){
 
 
 
-                    <div class="input-group">
-                        <label class="label">Statut</label>
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="statut">
-
-                                <option selected="selected">Particulier</option>
-                                <option>Auto-entrepreneur Independant</option>
-                                <option>Artisan Commerçant</option>
-                                <option>Association à but non lucratif</option>
-                            </select>
-                            <div class="select-dropdown"></div>
-                        </div>
-                    </div>
+                    
                     <div class="p-t-15">
                         <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
                     </div>

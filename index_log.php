@@ -1,4 +1,9 @@
+<?php
+include_once( "Membre.php");
+session_start();
+$member=unserialize($_SESSION['member']);
 
+?>
 
 <!doctype html>
 <html class="no-js" lang="">
@@ -60,7 +65,7 @@
     <!-- Preloader -->
     <div class="cover"></div>
 
- <div class="header">
+    <div class="header">
   <div class="logo">
     <a href="index.php">
       <img src="img/shared/logo.jpg" alt="Logo">
@@ -68,11 +73,21 @@
   </div>
 
   <div class="menu">
-    <ul >
-      <li> <a a href="index.php">Accueil</a></li>
-      <li> <a href="register.php">S'inscrire</a></li>
-      <li><a href="login2.php">Se connecter</a></li>
+    <ul style="margin-top: 10px;">
+      <li> <a a href="index_log.php">Accueil</a></li>
+      <li> <a href="choice.php">Poster une proposition</a></li>
+      <li><a href="gallery.php">Toutes les propositions</a></li>
+      <li> <a a href="parameters.php">Paramètres</a></li>
+      <li> <a href="deconnexion.php">Déconnexion</a></li>
+      <li><a href="profile.php" >
+        <img src=<?php echo $member->Photo;?> alt="Logo" class="monIcon">
+      </a></li>
     </ul>
+
+    <script src='https://unpkg.com/vue'></script>
+    <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+    <script src='https://use.fontawesome.com/releases/v5.0.4/js/all.js'></script>
+
   </div>
 </div>
     

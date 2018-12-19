@@ -6,7 +6,7 @@
   </div>
 
   <div class="menu">
-    <ul>
+    <ul style="margin-top: 12px;">
       <li> <a a href="index.php">Accueil</a></li>
       <li> <a href="register.php">S'inscrire</a></li>
       <li><a href="login2.php">Se connecter</a></li>
