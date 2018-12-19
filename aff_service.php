@@ -27,7 +27,7 @@ else{
 		$peutReserver=true;
 		foreach($bd->query('SELECT * FROM CONSOMMATION_S where ID_Service="'.$service->ID_Service.'"') as $row){
 			if((strtotime(conversion($_POST["date_deb"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_deb"]))<=strtotime($row["DateFin"]))
-		|| (strtotime(conversion($_POST["date_fin"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_fin"]))<=strtotime($row["DateFin"]))){
+			|| (strtotime(conversion($_POST["date_fin"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_fin"]))<=strtotime($row["DateFin"]))){
 				$peutReserver=false;
 			}
 		}
@@ -82,18 +82,18 @@ else{
 	<!-- Main CSS-->
 	<link rel="stylesheet" href="css/menu.css">
 	<link href="css/style_register.css" rel="stylesheet" media="all">
-<style>
-#bla
-{
-    text-align:center;
+	<style>
+	#bla
+	{
+		text-align:center;
 
-}
-#bla1, #bla2
-{
+	}
+	#bla1, #bla2
+	{
 		width:40%;
 		margin:30px;
-    display: inline-block;
-}
+		display: inline-block;
+	}
 </style>
 <script src="js/OpenLayers-2.13.1/OpenLayers.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -115,7 +115,23 @@ else{
 }
 </style>
 <script>
+function getDistance(lat1,lon1,lat2,lon2) {
+	var R = 6371;
+	var dLat = deg2rad(lat2-lat1);
+	var dLon = deg2rad(lon2-lon1);
+	var a =
+	Math.sin(dLat/2) * Math.sin(dLat/2) +
+	Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+	Math.sin(dLon/2) * Math.sin(dLon/2)
+	;
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	var d = R * c;
+	return d;
+}
 
+function deg2rad(deg) {
+	return deg * (Math.PI/180)
+}
 function loadMap(){
 	var latU;
 	var lngU;
@@ -136,11 +152,13 @@ function loadMap(){
 			var zoom           = 14;
 			console.log(lat);
 			console.log(lon);
-
+			var newBound = new OpenLayers.Bounds();
 			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
 			var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
+			newBound.extend(position);
 			var position2       = new OpenLayers.LonLat(lngU2, latU2).transform( fromProjection, toProjection);
+			newBound.extend(position2);
 
 			map = new OpenLayers.Map("Map");
 			var mapnik         = new OpenLayers.Layer.OSM();
@@ -163,8 +181,14 @@ function loadMap(){
 			var vector = new OpenLayers.Layer.Vector();
 			vector.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString([position, position2]))]);
 			map.addLayers([vector]);
+			map.zoomToExtent(newBound);
+			//map.setCenter(position, zoom);
 
-			map.setCenter(position, zoom);
+			var dst = getDistance(lon, lat,lngU2, latU2)
+			console.log(dst);
+			document.getElementById("dst").innerHTML="Distance: "+dst.toFixed(2)+" km";
+
+
 		});
 	});
 }
@@ -191,23 +215,19 @@ function loadMap(){
 						<svg class="icon"><use xlink:href="#icon-location"></use></svg>
 					</span>
 
-					<span class="profile-card-loc__txt">
-						<?php echo $service->Prop->CodePostal;?>
-					</span>
-
 				</div>
 				<br>
 
 				<br>
 				<br>
-        <div class="profile-card-loc">
-					<?php echo $service->Prop->Adresse;?>
-          <input type="text" value="<?php echo $member->Adresse;?>" id="add" hidden>
+				<div class="profile-card-loc">
+					<input type="text" value="<?php echo $member->Adresse;?>" id="add" hidden>
 					<input type="text" value="<?php echo $service->Prop->Adresse;?>" id="add2" hidden>
-          <input type="text" value="<?php echo $member->Photo;?>" id="pic" hidden>
-          <div id="Map" style="height:350px; width:80%;"></div>
-        </div>
-
+					<input type="text" value="<?php echo $member->Photo;?>" id="pic" hidden>
+					<div id="Map" style="height:350px; width:80%;"></div>
+				</div>
+				<br>
+				<h5 id="dst" ></h5>
 				<div id="bla" class="profile-card-ctr">
 					<form action="" method="post">
 						<div id="bla1" class="col-2">
