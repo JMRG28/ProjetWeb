@@ -16,9 +16,9 @@ if(isset($_POST['email'])){
 	try {
 		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password);
 		$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null,md5($_POST['email']),"6 rue de l'aiguillerie Montpellier");
+		$membre=new Membre($_POST['email'],md5($_POST['mdp']),$_POST['nom'],$_POST['prenom'],$_POST['num_tel'],null,null,null,null,$_POST['sexe'], $_POST['statut'],conversion($_POST['date_n']),null,null,null,md5($_POST['email']),$_POST['adresse']);
 		$membre->insert($bd);
-        header('Location: profile.php');
+        header('Location: login2.php');
 		echo "Successfully added the new user " . $_POST['nom'];
 	} catch (PDOException $e) {
 		echo "DataBase Error: The user could not be added.<br>".$e->getMessage();
@@ -97,7 +97,7 @@ if(isset($_POST['email'])){
                                     <input class="input--style-4" type="password" name="email">
                                 </div>
                             </div> -->
-                
+
                         </div>
                         <div class="row row-space">
                         	<div class="col-2">
@@ -152,8 +152,8 @@ if(isset($_POST['email'])){
                         			<input class="input--style-4" type="text" name="adresse" placeholder="4 rue Neuve 34000 Montpellier">
                         		</div>
                         	</div>
-                        
-                        
+
+
                         <div class="p-t-15">
                         	<button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
                         </div>
