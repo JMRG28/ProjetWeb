@@ -141,7 +141,7 @@ class Membre {
 
   function update($bd,$key,$value){
     if($value!="" || $value==0){
-      echo " <br> UPDATE MEMBRE SET ".$key."='".$value."' where Email=".$this->Email ."<br>";
+      //echo " <br> UPDATE MEMBRE SET ".$key."='".$value."' where Email=".$this->Email ."<br>";
       $stmt = $bd->prepare("UPDATE MEMBRE SET ".$key."='".$value."' where Email='".$this->Email."'");
       $stmt->execute();
     }

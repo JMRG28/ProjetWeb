@@ -1,5 +1,6 @@
 <?php
 include "header.php";
+include "bd.php";
 function conversion($d){
 	$nd=explode("/",$d);
 	$r=[];
@@ -7,9 +8,13 @@ function conversion($d){
 	$res=implode("-",$r);
 	return $res;
 }
-
+function conversion2($d){
+	$nd=explode(" ",$d);
+	return $nd[0];
+}
 include "Service.php";
 ini_set("display_errors",1);error_reporting(E_ALL);
+
 if (!isset($_SESSION['member'])){
 	header('Location: login2.php');
 }
@@ -18,180 +23,177 @@ else{
 	$service->getFromURL($_GET["sid"]);
 	$member=unserialize($_SESSION['member']);
 	if(isset($_POST["reserver"]) && isset($_POST["date_deb"]) && isset($_POST["date_fin"]) && $service->Prop->Email!=$member->Email){
-		//strtotime(conversion($_POST["date_deb"]))>=strtotime($service->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($service->DateFin)
-		$servername = "k1nd0ne.com";
-		$port="3307"; $username = "jmr";
-		$password = "BaseDonnees1234";
-		$dbname = "jmr";
-		$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$peutReserver=true;
-		foreach($bd->query('SELECT * FROM CONSOMMATION_S where ID_Service="'.$service->ID_Service.'"') as $row){
-			if((strtotime(conversion($_POST["date_deb"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_deb"]))<=strtotime($row["DateFin"]))
-			|| (strtotime(conversion($_POST["date_fin"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_fin"]))<=strtotime($row["DateFin"]))){
-				$peutReserver=false;
+		//strtotime(conversion($_POST["date_deb"]))>=strtotime($bien->DateDebut) && strtotime(conversion($_POST["date_fin"]))<=strtotime($bien->DateFin)
+		if(strtotime(conversion($_POST["date_deb"]))<strtotime(conversion($_POST["date_fin"]))){
+			if(strtotime(conversion($_POST["date_deb"]))>strtotime(date("Y-m-d"))){
+				$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$peutReserver=true;
+				foreach($bd->query('SELECT * FROM CONSOMMATION_S where ID_Service="'.$service->ID_Service.'"') as $row){
+					if((strtotime(conversion($_POST["date_deb"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_deb"]))<=strtotime($row["DateFin"]))
+					|| (strtotime(conversion($_POST["date_fin"]))>=strtotime($row["DateDeb"]) && strtotime(conversion($_POST["date_fin"]))<=strtotime($row["DateFin"]))){
+						$peutReserver=false;
+					}
+				}
+				if($peutReserver){
+					$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+					$stmt = $bd->prepare("INSERT INTO CONSOMMATION_S (EmailConso, ID_Service, DateDeb,DateFin)VALUES (:EmailConso, :ID_Service, :DateDeb,:DateFin)");
+					$stmt->bindValue(":EmailConso", $member->Email);
+					$stmt->bindValue(":ID_Service",$service->ID_Service);
+					$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
+					$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
+					$stmt->execute();
+					$service->Prop->update($bd,"Rendu",$service->Prop->Rendu+1);
+					$member->update($bd,"Recu",$member->Recu+1);
+					//$bien->update($bd,"EstDispo",0);
+				}else{
+					echo "<h1> Erreur: Vous ne pouvez pas réserver ce service</h1>";
+				}
+			}else{
+				echo "<h1> Erreur: La date de début est dans le passé! </h1>";
 			}
-		}
-		if($peutReserver){
-			$servername = "k1nd0ne.com";
-			$port="3307"; $username = "jmr";
-			$password = "BaseDonnees1234";
-			$dbname = "jmr";
-			$bd = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=UTF8", $username, $password); $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$stmt = $bd->prepare("INSERT INTO CONSOMMATION_S (EmailConso, ID_Service, DateDeb,DateFin)VALUES (:EmailConso, :ID_Service, :DateDeb,:DateFin)");
-			$stmt->bindValue(":EmailConso", $member->Email);
-			$stmt->bindValue(":ID_Service",$service->ID_Service);
-			$stmt->bindValue(":DateDeb", conversion($_POST["date_deb"]));
-			$stmt->bindValue(":DateFin", conversion($_POST["date_fin"]));
-			$stmt->execute();
-			$service->Prop->update($bd,"Rendu",$service->Prop->Rendu+1);
-			$member->update($bd,"Recu",$member->Recu+1);
-			//$bien->update($bd,"EstDispo",0);
 		}else{
-			echo "<h1> IMPOSSIBLE DE RESERVER</h1>";
+			echo "<h1> Erreur: La date de début est après la date de fin! </h1>";
 		}
 	}
-
 }
+		?>
 
+		<!DOCTYPE html>
+		<html lang="en" >
 
-?>
+		<head>
+			<meta charset="UTF-8">
+			<title></title>
+			<meta name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-<!DOCTYPE html>
-<html lang="en" >
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+			<link rel="stylesheet" href="css/style_profile.css">
+			<link rel="stylesheet" href="css/main.css">
 
-<head>
-	<meta charset="UTF-8">
-	<title></title>
-	<meta name="viewport"
-	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+			<!-- Icons font CSS-->
+			<link href="js/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+			<link href="js/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+			<!-- Font special for pages-->
+			<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-	<link rel="stylesheet" href="css/style_profile.css">
-	<link rel="stylesheet" href="css/main.css">
+			<!-- Vendor CSS-->
+			<link href="js/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+			<link href="js/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
-	<!-- Icons font CSS-->
-	<link href="js/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-	<link href="js/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-	<!-- Font special for pages-->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+			<!-- Main CSS-->
+			<link rel="stylesheet" href="css/menu.css">
+			<link href="css/style_register.css" rel="stylesheet" media="all">
+			<style>
+			#bla
+			{
+				text-align:center;
 
-	<!-- Vendor CSS-->
-	<link href="js/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-	<link href="js/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+			}
+			#bla1, #bla2
+			{
+				width:40%;
+				margin:30px;
+				display: inline-block;
+			}
+		</style>
+		<script src="js/OpenLayers-2.13.1/OpenLayers.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<style>
+		#Map {
+			border-radius: 10px;
+			overflow: hidden;
+		}
 
-	<!-- Main CSS-->
-	<link rel="stylesheet" href="css/menu.css">
-	<link href="css/style_register.css" rel="stylesheet" media="all">
-	<style>
-	#bla
-	{
-		text-align:center;
-
+		#Map div canvas{
+			border-radius: 10px;
+		}
+		#OpenLayers_Control_Attribution_7{
+			bottom:0;
+		}
+		#OL_Icon_22_innerImage{
+			border:2px solid #021a40;
+			border-radius: 50%;
+		}
+	</style>
+	<script>
+	function getDistance(lat1,lon1,lat2,lon2) {
+		var R = 6371;
+		var dLat = deg2rad(lat2-lat1);
+		var dLon = deg2rad(lon2-lon1);
+		var a =
+		Math.sin(dLat/2) * Math.sin(dLat/2) +
+		Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+		Math.sin(dLon/2) * Math.sin(dLon/2)
+		;
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		var d = R * c;
+		return d;
 	}
-	#bla1, #bla2
-	{
-		width:40%;
-		margin:30px;
-		display: inline-block;
+
+	function deg2rad(deg) {
+		return deg * (Math.PI/180)
 	}
-</style>
-<script src="js/OpenLayers-2.13.1/OpenLayers.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<style>
-#Map {
-	border-radius: 10px;
-	overflow: hidden;
-}
+	function loadMap(){
+		var latU;
+		var lngU;
+		var latU2;
+		var lngU2;
+		$.getJSON('https://api.opencagedata.com/geocode/v1/json?q='+document.getElementById("add2").value+'&key=816e747854f64c8389a43b269e5b74d9&language=en&pretty=1',
+		function(data){
+			console.log(data)
+			latU2=data["results"][0]["geometry"]["lat"];
+			lngU2=data["results"][0]["geometry"]["lng"];
+			$.getJSON('https://api.opencagedata.com/geocode/v1/json?q='+document.getElementById("add").value+'&key=816e747854f64c8389a43b269e5b74d9&language=en&pretty=1',
+			function(a){
+				console.log(a["results"][0]["geometry"]);
+				latU=a["results"][0]["geometry"]["lat"];
+				lngU=a["results"][0]["geometry"]["lng"];
+				var lat            = latU;
+				var lon            = lngU;
+				var zoom           = 14;
+				console.log(lat);
+				console.log(lon);
+				var newBound = new OpenLayers.Bounds();
+				var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+				var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+				var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
+				newBound.extend(position);
+				var position2       = new OpenLayers.LonLat(lngU2, latU2).transform( fromProjection, toProjection);
+				newBound.extend(position2);
 
-#Map div canvas{
-	border-radius: 10px;
-}
-#OpenLayers_Control_Attribution_7{
-	bottom:0;
-}
-#OL_Icon_22_innerImage{
-	border:2px solid #021a40;
-	border-radius: 50%;
-}
-</style>
-<script>
-function getDistance(lat1,lon1,lat2,lon2) {
-	var R = 6371;
-	var dLat = deg2rad(lat2-lat1);
-	var dLon = deg2rad(lon2-lon1);
-	var a =
-	Math.sin(dLat/2) * Math.sin(dLat/2) +
-	Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-	Math.sin(dLon/2) * Math.sin(dLon/2)
-	;
-	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-	var d = R * c;
-	return d;
-}
+				map = new OpenLayers.Map("Map");
+				var mapnik         = new OpenLayers.Layer.OSM();
+				map.addLayer(mapnik);
 
-function deg2rad(deg) {
-	return deg * (Math.PI/180)
-}
-function loadMap(){
-	var latU;
-	var lngU;
-	var latU2;
-	var lngU2;
-	$.getJSON('https://api.opencagedata.com/geocode/v1/json?q='+document.getElementById("add2").value+'&key=816e747854f64c8389a43b269e5b74d9&language=en&pretty=1',
-	function(data){
-		console.log(data)
-		latU2=data["results"][0]["geometry"]["lat"];
-		lngU2=data["results"][0]["geometry"]["lng"];
-		$.getJSON('https://api.opencagedata.com/geocode/v1/json?q='+document.getElementById("add").value+'&key=816e747854f64c8389a43b269e5b74d9&language=en&pretty=1',
-		function(a){
-			console.log(a["results"][0]["geometry"]);
-			latU=a["results"][0]["geometry"]["lat"];
-			lngU=a["results"][0]["geometry"]["lng"];
-			var lat            = latU;
-			var lon            = lngU;
-			var zoom           = 14;
-			console.log(lat);
-			console.log(lon);
-			var newBound = new OpenLayers.Bounds();
-			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-			var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
-			newBound.extend(position);
-			var position2       = new OpenLayers.LonLat(lngU2, latU2).transform( fromProjection, toProjection);
-			newBound.extend(position2);
+				var markers = new OpenLayers.Layer.Markers( "Markers" );
+				map.addLayer(markers);
 
-			map = new OpenLayers.Map("Map");
-			var mapnik         = new OpenLayers.Layer.OSM();
-			map.addLayer(mapnik);
+				var size = new OpenLayers.Size(30,30);
+				var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+				console.log(document.getElementById("pic").value);
+				var icon = new OpenLayers.Icon(document.getElementById("pic").value,size,offset);
+				markers.addMarker(new OpenLayers.Marker(position,icon));
 
-			var markers = new OpenLayers.Layer.Markers( "Markers" );
-			map.addLayer(markers);
+				//markers.addMarker(new OpenLayers.Marker(position));
+				var markers2 = new OpenLayers.Layer.Markers( "Markers" );
+				map.addLayer(markers2);
+				markers2.addMarker(new OpenLayers.Marker(position2));
 
-			var size = new OpenLayers.Size(30,30);
-			var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-			console.log(document.getElementById("pic").value);
-			var icon = new OpenLayers.Icon(document.getElementById("pic").value,size,offset);
-			markers.addMarker(new OpenLayers.Marker(position,icon));
+				var vector = new OpenLayers.Layer.Vector();
+				vector.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString([position, position2]))]);
+				map.addLayers([vector]);
+				map.zoomToExtent(newBound);
+				//map.setCenter(position, zoom);
 
-			//markers.addMarker(new OpenLayers.Marker(position));
-			var markers2 = new OpenLayers.Layer.Markers( "Markers" );
-			map.addLayer(markers2);
-			markers2.addMarker(new OpenLayers.Marker(position2));
-
-			var vector = new OpenLayers.Layer.Vector();
-			vector.addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString([position, position2]))]);
-			map.addLayers([vector]);
-			map.zoomToExtent(newBound);
-			//map.setCenter(position, zoom);
-
-			var dst = getDistance(lon, lat,lngU2, latU2)
-			console.log(dst);
-			document.getElementById("dst").innerHTML="Distance: "+dst.toFixed(2)+" km";
+				var dst = getDistance(lon, lat,lngU2, latU2)
+				console.log(dst);
+				document.getElementById("dst").innerHTML="Distance: "+dst.toFixed(2)+" km";
 
 
+			});
 		});
-	});
-}
+	}
 </script>
 
 </head>
