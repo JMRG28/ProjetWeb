@@ -18,7 +18,7 @@ $member=unserialize($_SESSION['member']);
 
 //Améliorer les fonctions
 function updateDB($v,$k){
-	$servername = "192.168.1.19";
+	$servername = "k1nd0ne.com";
 	$port="3307";
 	$username = "jmr";
 	$password = "BaseDonnees1234";
@@ -33,7 +33,7 @@ function updateDB($v,$k){
 }
 
 function updateDB_Bien($id,$v,$k){
-	$servername = "192.168.1.19";
+	$servername = "k1nd0ne.com";
 	$port="3307";
 	$username = "jmr";
 	$password = "BaseDonnees1234";
@@ -50,7 +50,7 @@ function updateDB_Bien($id,$v,$k){
 }
 
 function updateDB_Service($id,$v,$k){
-	$servername = "192.168.1.19";
+	$servername = "k1nd0ne.com";
 	$port="3307";
 	$username = "jmr";
 	$password = "BaseDonnees1234";
@@ -68,7 +68,7 @@ function updateDB_Service($id,$v,$k){
 
 //SUPPRESSION DUN BIEN
 function deleteBien($id){
-	$servername = "192.168.1.19";
+	$servername = "k1nd0ne.com";
 	$port="3307";
 	$username = "jmr";
 	$password = "BaseDonnees1234";
@@ -81,7 +81,7 @@ function deleteBien($id){
 }
 
 function deleteService($id){
-	$servername = "192.168.1.19";
+	$servername = "k1nd0ne.com";
 	$port="3307";
 	$username = "jmr";
 	$password = "BaseDonnees1234";
@@ -94,7 +94,7 @@ function deleteService($id){
 }
 
 function updateDB_StatutUser($email,$v,$k){
-	$servername = "192.168.1.19";
+	$servername = "k1nd0ne.com";
 	$port="3307";
 	$username = "jmr";
 	$password = "BaseDonnees1234";

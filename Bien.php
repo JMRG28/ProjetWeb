@@ -94,7 +94,7 @@ class Bien {
 	}
 
 	function getFromURL($bid){
-		$servername = "192.168.1.19";
+		$servername = "k1nd0ne.com";
 		$port="3307";
 		$username = "jmr";
 		$password = "BaseDonnees1234";
@@ -118,7 +118,7 @@ class Bien {
 	}
 
 	function upload(){
-		$servername = "192.168.1.19";
+		$servername = "k1nd0ne.com";
 		$port="3307";
 		$username = "jmr";
 		$password = "BaseDonnees1234";

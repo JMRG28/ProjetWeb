@@ -100,7 +100,7 @@ class Membre {
   }
 
   function getFromURL($url){
-    $servername = "192.168.1.19";
+    $servername = "k1nd0ne.com";
     $port="3307";
     $username = "jmr";
     $password = "BaseDonnees1234";
@@ -119,7 +119,7 @@ class Membre {
   }
 
   function getFromEmail($email){
-    $servername = "192.168.1.19";
+    $servername = "k1nd0ne.com";
     $port="3307";
     $username = "jmr";
     $password = "BaseDonnees1234";
