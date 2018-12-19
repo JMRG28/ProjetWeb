@@ -98,7 +98,7 @@ if(isset($_POST['titre'])){
                         <div class="input-group">
 
                               <label for="pays">Choisissez la catégorie</label><br/>
-                              <div class="rs-select2 js-select-simple select--no-search">
+                                <div class="rs-select2">
                               <select name="categorie">
 
                                 <?php
