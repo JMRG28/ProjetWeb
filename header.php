@@ -14,7 +14,7 @@ $member=unserialize($_SESSION['member']);
   <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'>
 
   <link rel='stylesheet' href='https://npmcdn.com/basscss@8.0.0/css/basscss.min.css'>
-  <link rel="stylesheet" href="css/style_gallery.css">
+  
   <link rel="stylesheet" href="css/menu.css">
 </head>
 
@@ -28,7 +28,7 @@ $member=unserialize($_SESSION['member']);
 
   <div class="menu">
     <ul>
-      <li> <a a href="index.php">Accueil</a></li>
+      <li> <a a href="index_log.php">Accueil</a></li>
       <li> <a href="choice.php">Poster une proposition</a></li>
       <li><a href="gallery.php">Toutes les propositions</a></li>
       <li> <a a href="parameters.php">Paramètres</a></li>

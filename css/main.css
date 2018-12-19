@@ -447,12 +447,11 @@ ul.sublist {
 -------------------------------------------------------------- */
 
 .header {
-    height: 100px;
-    width: 100%;
     background: #fff;
     z-index: 9;
     position: relative;
 }
+/*
 .logo {
     float: left;
     line-height: 100px;
@@ -464,8 +463,9 @@ a>span.site-name{
     font-weight: bold;
     font-size: 16px;
 }
+*/
 a:hover>span.site-name{
-    color: #333;
+    color: #f45942;
 }
 
 .logo h1 {
@@ -893,7 +893,7 @@ span.border-text {
 }
 .slider-controls a:hover,
 .slider-controls a i:hover {
-    color: #7beec7;
+    color: #f45942;
 }
 /* =Menu right
 -------------------------------------------------------------- */
@@ -1061,7 +1061,7 @@ span.border-text {
 }
 .menu-wrap a:hover,
 .menu-wrap a:focus {
-    color: #7beec7;
+    color: #f45942;
 }
 .content-wrap {
     -webkit-overflow-scrolling: touch;
@@ -2218,7 +2218,7 @@ span.press {
     font-size: 38px;
 }
 .load-more a:hover {
-    color: #56c8d4;
+    color: #f45942;
 }
 .spinef {
     -webkit-animation-name: spin;
@@ -3348,3 +3348,7 @@ a:link
 {
 color:black;
 } 
+
+a:hover{
+    color:black;
+}

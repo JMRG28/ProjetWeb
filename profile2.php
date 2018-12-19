@@ -55,10 +55,7 @@ $member->getFromURL($_GET["uid"]);
 					</div>
 				</div>
 
-				<div class="profile-card-ctr">
-					<button class="profile-card__button button--blue js-message-btn">Message</button>
-					<button class="profile-card__button button--orange">Follow</button>
-				</div>
+				
 			</div>
 
 			<div class="profile-card-message js-message">
