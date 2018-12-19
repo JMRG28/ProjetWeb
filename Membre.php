@@ -60,7 +60,7 @@ class Membre {
     $this->Suspendu=$tab[14];
     $this->URL=$tab[15];
     $this->Admin=$tab[16];
-    $this->Adresse=$tab[19];
+    $this->Adresse=$tab[17];
   }
 
   function  toString(){
@@ -100,7 +100,6 @@ class Membre {
   }
 
   function getFromURL($url){
-    echo " Email: ".$email;
     $servername = "k1nd0ne.com";
     $port="3307";
     $username = "jmr";

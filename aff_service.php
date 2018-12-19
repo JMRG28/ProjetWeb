@@ -204,13 +204,16 @@ else{
 
 		<div class="profile-card js-profile-card">
 			<div class="profile-card__img">
-				<img src="<?php echo $service->Prop->Photo;?>" alt="profile card">
+				<a href="<?php echo 'profile2.php?uid='.$bien->Prop->URL;?>">
+				<img src="<?php echo $bien->Prop->Photo;?>"  alt="profile card">
+			</a>
 			</div>
 
 			<div class="profile-card__cnt js-profile-cnt">
 				<div class="profile-card__txt"><?php echo $service->Prop->Prenom." ".$service->Prop->Nom; ?> </div>
 
-				<div class="profile-card__name"><?php echo $service->Titre." ".$service->PrixH."€/h"; ?> </div>
+				<div class="profile-card__name"><?php echo $service->Titre; ?> </div>
+				<div class="profile-card__txt">Prix :<strong><?php echo $service->PrixH."€/h";?></strong></div>
 				<div class="profile-card__txt"><strong>"</strong><?php echo $service->Descriptif;?><strong>"</strong></div>
 				<div class="profile-card-loc">
 					<span class="profile-card-loc__icon">
